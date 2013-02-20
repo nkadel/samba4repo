@@ -17,7 +17,7 @@ SAMBAPKGS+=libtdb-srpm
 SAMBAPKGS+=libldb-srpm
 SAMBAPKGS+=libtevent-srpm
 
-SAMBAPKGS+=samba4-srpm
+SAMBAPKGS+=samba-srpm
 
 all clean distclean build::
 	@for name in $(SAMBAPKGS); do \

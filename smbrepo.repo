@@ -1,0 +1,11 @@
+[smbrepo]
+name=Samba repo - $basearch
+baseurl=http://192.168.1.106/linux/smbrepo/$releasever/$basearch
+enabled=0
+gpgcheck=0
+
+[smbrepo-source]
+name=Samba repo - Source
+baseurl=http://192.168.1.106/linux/smbrepo/$releasever/SRPMS/
+enabled=0
+gpgcheck=0
