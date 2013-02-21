@@ -28,10 +28,19 @@ SAMBAPKGS+=samba-srpm
 
 all:: $(SAMBAPKGS)
 
-all clean install:: FORCE
+all install clean:: FORCE
 	@for name in $(SAMBAPKGS); do \
 	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
 	done  
+
+# Build for locacl OS
+build:: FORCE
+	@for name in $(SAMBAPKGS); do \
+	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
+	done  
+
+maintainer-clean::
+	rm -rf $(SAMBAPKGS)
 
 # Git clone operations, not normally required
 # Targets may change
