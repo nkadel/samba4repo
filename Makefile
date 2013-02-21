@@ -47,19 +47,21 @@ samba-srpm:: libtdb-srpm
 samba-srpm:: iniparser-srpm
 
 
-all:: $(SAMBAPKGS)
+all:: FORCE
+	@for name in $(SAMBAPKGS); do \
+	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
+	done  
 
 $(SAMBAPKGS):: FORCE
 	(cd $@; $(MAKE) $(MLAGS))
 
-install:: $(SAMBAPKGS)
-	@for name in $?; do \
-	     (cd $$name; $(MAKE) $(MFLAGS)); \
+clean install:: FORCE
+	@for name in $(SAMBAPKGS); do \
+	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
 	done  
 
 clean::
 	find . -name \*~ -exec rm -f {} \;
-
 
 FORCE::
 
