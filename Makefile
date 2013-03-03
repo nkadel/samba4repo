@@ -11,7 +11,8 @@
 SAMBAPKGS+=iniparser-srpm
 
 # krb5-1.10 or later required for Samba 4 on RHEL 6
-SAMBAPKGS+=krb5-srpm
+# Part of RHEL 6.4, no longer needed
+#SAMBAPKGS+=krb5-srpm
 
 # libtalloc-2.0.8 rquired for Samba 4 on RHELL 6
 SAMBAPKGS+=libtalloc-srpm
@@ -45,9 +46,9 @@ maintainer-clean::
 # Git clone operations, not normally required
 # Targets may change
 
-krb5-srpm::
-	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/krb5-1.10.3-srpm.git krb5-srpm
+#krb5-srpm::
+#	@[ -d $@/.git ] || \
+#	git clone git://github.com/nkadel/krb5-1.10.3-srpm.git krb5-srpm
 
 iniparser-srpm::
 	@[ -d $@/.git ] || \
@@ -82,7 +83,8 @@ libldb-srpm:: libtdb-srpm
 libldb-srpm:: libtevent-srpm
 
 # Samba rellies on all the othe components
-samba-srpm:: krb5-srpm
+# krb5-1.10 is part of RHEL 6.4, no longer needed
+#samba-srpm:: krb5-srpm
 samba-srpm:: libtalloc-srpm
 samba-srpm:: libldb-srpm
 samba-srpm:: libtevent-srpm
