@@ -60,19 +60,19 @@ libtalloc-srpm::
 
 libtdb-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libtdb-1.2.11-srpm.git libtdb-srpm
+	git clone git://github.com/nkadel/libtdb-1.2.12-srpm.git libtdb-srpm
 
 libldb-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libldb-1.1.15-srpm.git libldb-srpm
+	git clone git://github.com/nkadel/libldb-1.1.16-srpm.git libldb-srpm
 
 libtevent-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libtevent-0.9.17-srpm.git libtevent-srpm
+	git clone git://github.com/nkadel/libtevent-0.9.18-srpm.git libtevent-srpm
 
 samba-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/samba-4.0.3-srpm.git samba-srpm
+	git clone git://github.com/nkadel/samba-4.1.3-srpm.git samba-srpm
 
 
 # Dependencies of libraries on other libraries for compilation
