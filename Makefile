@@ -10,7 +10,7 @@
 # Critical for Samba, not built into RHEL 6
 SAMBAPKGS+=iniparser-srpm
 
-# libtalloc-2.0.8 rquired for Samba 4 on RHELL 6
+# libtalloc-2.1.0 rquired for Samba 4 on RHELL 6
 SAMBAPKGS+=libtalloc-srpm
 
 # libtdb-1.2.12 required for Samba 4 on RHEL 6
@@ -18,7 +18,8 @@ SAMBAPKGS+=libtdb-srpm
 
 # libldb-1.1.16 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libldb-srpm
-# libldb-0.9.18 required for Samba 4 on RHEL 6
+
+# libldb-0.9.20 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtevent-srpm
 
 SAMBAPKGS+=samba-srpm
