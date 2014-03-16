@@ -16,6 +16,9 @@ SAMBAPKGS+=libtalloc-srpm
 # libtdb-1.2.12 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtdb-srpm
 
+# libntdb new in Samba 4.1.x, supply as RPM
+SAMBAPKGS+=libntdb-srpm
+
 # libldb-1.1.16 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libldb-srpm
 
@@ -51,6 +54,10 @@ libtalloc-srpm::
 	@[ -d $@/.git ] || \
 	git clone git://github.com/nkadel/libtalloc-2.0.8-srpm.git libtalloc-srpm
 
+libntdb-srpm::
+	@[ -d $@/.git ] || \
+	git clone git://github.com/nkadel/libntdb-1.0-srpm.git libntdb-srpm
+
 libtdb-srpm::
 	@[ -d $@/.git ] || \
 	git clone git://github.com/nkadel/libtdb-1.2.12-srpm.git libtdb-srpm
@@ -65,7 +72,7 @@ libtevent-srpm::
 
 samba-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/samba-4.1.3-srpm.git samba-srpm
+	git clone git://github.com/nkadel/samba-4.1.x-srpm.git samba-srpm
 
 
 # Dependencies of libraries on other libraries for compilation
