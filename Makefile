@@ -10,21 +10,22 @@
 # Critical for Samba, not built into RHEL 6
 SAMBAPKGS+=iniparser-srpm
 
-# libtalloc-2.1.0 rquired for Samba 4 on RHELL 6
+# libtalloc-2.1.1 rquired for Samba 4 on RHELL 6
 SAMBAPKGS+=libtalloc-srpm
 
-# libtdb-1.2.12 required for Samba 4 on RHEL 6
+# libtdb-1.3.0 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtdb-srpm
 
 # libntdb new in Samba 4.1.x, supply as RPM
 SAMBAPKGS+=libntdb-srpm
 
-# libldb-1.1.16 required for Samba 4 on RHEL 6
+# libldb-1.1.17 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libldb-srpm
 
-# libldb-0.9.20 required for Samba 4 on RHEL 6
+# libtevent-0.9.21 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtevent-srpm
 
+# Current release 4.1.9
 SAMBAPKGS+=samba-srpm
 
 all:: $(SAMBAPKGS)
@@ -87,7 +88,7 @@ samba-srpm:: libtalloc-srpm
 samba-srpm:: libldb-srpm
 samba-srpm:: libtevent-srpm
 samba-srpm:: libtdb-srpm
-samba-srpm:: iniparser-srpm
+#samba-srpm:: iniparser-srpm
 
 
 # Actually build in directories
