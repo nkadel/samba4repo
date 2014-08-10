@@ -7,17 +7,17 @@
 #
 #	Set up local 
 
-# Critical for Samba, not built into RHEL 6
+# libntdb new in Samba 4.1.x, supply as RPM
+SAMBAPKGS+=libntdb-srpm
+
+# Critical for samba-srpm, not built into RHEL 6
 SAMBAPKGS+=iniparser-srpm
 
-# libtalloc-2.1.1 rquired for Samba 4 on RHELL 6
+# libtalloc-2.1.1 required for Samba 4 on RHELL 6
 SAMBAPKGS+=libtalloc-srpm
 
 # libtdb-1.3.0 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtdb-srpm
-
-# libntdb new in Samba 4.1.x, supply as RPM
-SAMBAPKGS+=libntdb-srpm
 
 # libldb-1.1.17 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libldb-srpm
@@ -25,7 +25,7 @@ SAMBAPKGS+=libldb-srpm
 # libtevent-0.9.21 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtevent-srpm
 
-# Current release 4.1.9
+# Current release 4.1.11
 SAMBAPKGS+=samba-srpm
 
 all:: $(SAMBAPKGS)
