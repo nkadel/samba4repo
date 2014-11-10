@@ -1,11 +1,11 @@
 [samba4repo]
 name=Samba repo - $basearch
-baseurl=http://192.168.1.106/linux/samba4repo/$releasever/$basearch
+baseurl=http://127.0.0.1/linux/samba4repo/$releasever/$basearch
 enabled=0
 gpgcheck=0
 
 [samba4repo-source]
 name=Samba repo - Source
-baseurl=http://192.168.1.106/linux/samba4repo/$releasever/SRPMS/
+baseurl=http://127.0.0.1/linux/samba4repo/$releasever/SRPMS/
 enabled=0
 gpgcheck=0
