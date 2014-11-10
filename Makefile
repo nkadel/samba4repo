@@ -7,8 +7,9 @@
 #
 #	Set up local 
 
-# libntdb new in Samba 4.1.x, supply as RPM
-SAMBAPKGS+=libntdb-srpm
+# libntdb new in Samba 4.1.x
+# Build in samba-srpm by default
+#SAMBAPKGS+=libntdb-srpm
 
 # Critical for samba-srpm, not built into RHEL 6
 SAMBAPKGS+=iniparser-srpm
