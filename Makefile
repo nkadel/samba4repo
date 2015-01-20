@@ -17,16 +17,16 @@ SAMBAPKGS+=iniparser-srpm
 # libtalloc-2.1.1 required for Samba 4 on RHELL 6
 SAMBAPKGS+=libtalloc-srpm
 
-# libtdb-1.3.3 required for Samba 4 on RHEL 6
+# libtdb-1.3.4 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtdb-srpm
 
-# libldb-1.1.18 required for Samba 4 on RHEL 6
+# libldb-1.1.19 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libldb-srpm
 
 # libtevent-0.9.22 required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtevent-srpm
 
-# Current release 4.1.14
+# Current release 4.1.16
 SAMBAPKGS+=samba-srpm
 
 all:: $(SAMBAPKGS)

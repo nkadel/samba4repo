@@ -45,7 +45,7 @@ listeed, and and clear away old "mock" configurations. "createrepo
 so actually re-running and createrepo and using "rm -rf" on the mock
 cache works better.
 
-Samba 4.0.3 has strong dependencies on additional components that are
+Samba 4.1.16 has strong dependencies on additional components that are
 not part of RHEL 6, or are not recent enough in RHEL 6, and need to be
 built and deployed for local compilation or for "mock"
 compilation. These dependencies are detailed in the Makefile, but
