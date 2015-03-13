@@ -1,0 +1,21 @@
+[submodule "iniparser-srpm"]
+	path = iniparser-srpm
+	url = git@github.com:nkadel/iniparser-srpm
+[submodule "libldb-srpm"]
+	path = libldb-srpm
+	url = git@github.com:nkadel/libldb-srpm
+[submodule "libntdb-srpm"]
+	path = libntdb-srpm
+	url = git@github.com:nkadel/libntdb-srpm
+[submodule "libtalloc-srpm"]
+	path = libtalloc-srpm
+	url = git@github.com:nkadel/libtalloc-srpm
+[submodule "libtdb-srpm"]
+	path = libtdb-srpm
+	url = git@github.com:nkadel/libtdb-srpm
+[submodule "libtevent-srpm"]
+	path = libtevent-srpm
+	url = git@github.com:nkadel/libtevent-srpm
+[submodule "samba-srpm"]
+	path = samba-srpm
+	url = git@github.com:nkadel/samba-srpm

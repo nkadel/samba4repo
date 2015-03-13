@@ -26,7 +26,7 @@ SAMBAPKGS+=libldb-srpm
 # libtevent-0.9.x required for Samba 4 on RHEL 6
 SAMBAPKGS+=libtevent-srpm
 
-# Current release 4.1.17
+# Current release 4.2.0
 SAMBAPKGS+=samba-srpm
 
 all:: $(SAMBAPKGS)
