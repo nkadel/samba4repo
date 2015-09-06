@@ -1,0 +1,61 @@
+From e00270b51896f168d5013b7dc92ec7f8b9e19da3 Mon Sep 17 00:00:00 2001
+From: Dan Mick <dan.mick@redhat.com>
+Date: Wed, 10 Dec 2014 13:19:16 -0800
+Subject: [PATCH 1/2] rados.py: remove Rados.__del__(); it just causes problems
+
+Recent versions of Python contain a change to thread shutdown that
+causes ceph to hang on exit; see http://bugs.python.org/issue21963.
+As it turns out, this is relatively easy to avoid by not spawning
+threads on exit, as Rados.__del__() will certainly do by calling
+shutdown(); I suspect, but haven't proven, that the problem is
+that shutdown() tries to start() a threading.Thread() that never
+makes it all the way back to signal start().
+
+Also add a PendingReleaseNote and extra doc comments to clarify.
+
+Fixes: #8797
+Signed-off-by: Dan Mick <dan.mick@redhat.com>
+(cherry picked from commit 5ba9b8f21f8010c59dd84a0ef2acfec99e4b048f)
+
+Conflicts:
+	PendingReleaseNotes
+---
+ src/pybind/rados.py | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/src/pybind/rados.py b/src/pybind/rados.py
+index 0fbd10e..ec68919 100644
+--- a/src/pybind/rados.py
++++ b/src/pybind/rados.py
+@@ -246,7 +246,8 @@ Rados object in state %s." % (self.state))
+ 
+     def shutdown(self):
+         """
+-        Disconnects from the cluster.
++        Disconnects from the cluster.  Call this explicitly when a
++        Rados.connect()ed object is no longer used.
+         """
+         if (self.__dict__.has_key("state") and self.state != "shutdown"):
+             run_in_thread(self.librados.rados_shutdown, (self.cluster,))
+@@ -260,9 +261,6 @@ Rados object in state %s." % (self.state))
+         self.shutdown()
+         return False
+ 
+-    def __del__(self):
+-        self.shutdown()
+-
+     def version(self):
+         """
+         Get the version number of the ``librados`` C library.
+@@ -410,7 +408,7 @@ Rados object in state %s." % (self.state))
+ 
+     def connect(self, timeout=0):
+         """
+-        Connect to the cluster.
++        Connect to the cluster.  Use shutdown() to release resources.
+         """
+         self.require_state("configuring")
+         ret = run_in_thread(self.librados.rados_connect, (self.cluster,),
+-- 
+1.9.3
+

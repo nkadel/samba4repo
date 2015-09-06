@@ -1,0 +1,7 @@
+*.rpm
+*.tar.*
+*[0-9]
+*~
+\#*
+rpmbuild
+samba4repo-*

@@ -1,0 +1,13 @@
+--- ceph-0.80.5/src/perfglue/heap_profiler.cc.orig	2014-08-15 16:05:00.161794290 +0200
++++ ceph-0.80.5/src/perfglue/heap_profiler.cc	2014-08-15 16:05:04.691794305 +0200
+@@ -12,8 +12,8 @@
+  * 
+  */
+ 
+-#include <google/heap-profiler.h>
+-#include <google/malloc_extension.h>
++#include <gperftools/heap-profiler.h>
++#include <gperftools/malloc_extension.h>
+ #include "heap_profiler.h"
+ #include "common/environment.h"
+ #include "common/LogClient.h"

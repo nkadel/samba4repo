@@ -1,0 +1,11 @@
+--- ceph-0.80.5/src/test/Makefile.am.orig	2014-08-15 16:30:18.831799418 +0200
++++ ceph-0.80.5/src/test/Makefile.am	2014-08-15 16:23:17.758464663 +0200
+@@ -642,7 +642,7 @@ bin_DEBUGPROGRAMS += ceph_test_librbd
+ if LINUX
+ ceph_test_librbd_fsx_SOURCES = test/librbd/fsx.c
+ ceph_test_librbd_fsx_LDADD = $(LIBRBD) $(LIBRADOS) -lm
+-ceph_test_librbd_fsx_CFLAGS = ${AM_CFLAGS} -Wno-format
++ceph_test_librbd_fsx_CFLAGS = ${AM_CFLAGS}
+ bin_DEBUGPROGRAMS += ceph_test_librbd_fsx
+ endif
+ 

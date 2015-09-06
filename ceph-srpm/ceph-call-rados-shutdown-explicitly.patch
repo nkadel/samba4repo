@@ -1,0 +1,31 @@
+From 11995b329045341c17553269267cfd3688a51b0f Mon Sep 17 00:00:00 2001
+From: Dan Mick <dan.mick@redhat.com>
+Date: Wed, 10 Dec 2014 13:19:53 -0800
+Subject: [PATCH 2/2] Call Rados.shutdown() explicitly before exit
+
+This is mostly a demonstration of good behavior, as the resources will
+be reclaimed on exit anyway.
+
+Signed-off-by: Dan Mick <dan.mick@redhat.com>
+(cherry picked from commit b038e8fbf9103cc42a4cde734b3ee601af6019ea)
+---
+ src/ceph.in | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/src/ceph.in b/src/ceph.in
+index 82c9085..c5b97ef 100755
+--- a/src/ceph.in
++++ b/src/ceph.in
+@@ -841,4 +841,8 @@ def main():
+     return 0
+ 
+ if __name__ == '__main__':
+-    sys.exit(main())
++    retval = main()
++    # shutdown explicitly; Rados() does not
++    if cluster_handle:
++        cluster_handle.shutdown()
++    sys.exit(retval)
+-- 
+1.9.3
+
