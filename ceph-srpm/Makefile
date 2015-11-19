@@ -6,18 +6,15 @@
 LANG=C
 
 # Only needed for RHEL 6
-#MOCKS+=samba4repo-f21-x86_64
+#MOCKS+=samba4repo-f22-x86_64
 #MOCKS+=samba4repo-7-x86_64
 MOCKS+=samba4repo-6-x86_64
 
-#MOCKS+=samba4repo-f21-x86_64
-#MOCKS+=samba4repo-7-i386
 #MOCKS+=samba4repo-6-i386
 
 REPOBASEDIR=/var/www/linux/samba4repo
 
-SPEC := `ls *.spec | head -1`
-PKGNAME := "`ls *.spec | head -1 | sed 's/.spec$$//g'`"
+SPEC := `ls *.spec`
 
 all:: verifyspec $(MOCKS)
 
