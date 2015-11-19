@@ -54,7 +54,7 @@ iniparser-srpm::
 
 libtalloc-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libtalloc-2.0.8-srpm.git libtalloc-srpm
+	git clone git://github.com/nkadel/libtalloc-2.1.x-srpm.git libtalloc-srpm
 
 libntdb-srpm::
 	@[ -d $@/.git ] || \
@@ -62,15 +62,15 @@ libntdb-srpm::
 
 libtdb-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libtdb-1.2.12-srpm.git libtdb-srpm
+	git clone git://github.com/nkadel/libtdb-1.3.x-srpm.git libtdb-srpm
 
 libldb-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libldb-1.1.16-srpm.git libldb-srpm
+	git clone git://github.com/nkadel/libldb-1.1.x-srpm.git libldb-srpm
 
 libtevent-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libtevent-0.9.18-srpm.git libtevent-srpm
+	git clone git://github.com/nkadel/libtevent-0.9.x-srpm.git libtevent-srpm
 
 samba-srpm::
 	@[ -d $@/.git ] || \
