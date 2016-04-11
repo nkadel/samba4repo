@@ -64,7 +64,7 @@ enabled=0
 [samba4repo]
 name=samba4repo
 enabled=1
-baseurl=http://127.0.0.1/linux/samba4repo/6/x86_64/
+baseurl=file://@REPOBASEDIR@/samba4repo/6/x86_64/
 failovermethod=priority
 cost=100
 """
