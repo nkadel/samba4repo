@@ -1,6 +1,3 @@
-[submodule "iniparser-srpm"]
-	path = iniparser-srpm
-	url = git@github.com:nkadel/iniparser-3.x-srpm
 [submodule "libldb-srpm"]
 	path = libldb-srpm
 	url = git@github.com:nkadel/libldb-1.1.x-srpm
@@ -19,3 +16,15 @@
 [submodule "samba-srpm"]
 	path = samba-srpm
 	url = git@github.com:nkadel/samba-4.3.x-srpm
+[submodule "gnutls-3.4.x-srpm"]
+	path = gnutls-srpm
+	url = git@github.com:nkadel/gnutls-3.4.x-srpm
+[submodule "libtasn1-srpm"]
+	path = libtasn1-srpm
+	url = git@github.com:nkadel/libtasn1-4.x-srpm
+[submodule "nettle-srpm"]
+	path = nettle-srpm
+	url = git@github.com:nkadel/nettle-3.1.x-srpm
+[submodule "p11-kit-srpm"]
+	path = p11-kit-srpm
+	url = git@github.com:nkadel/p11-kit-0.23.x-srpm
