@@ -7,12 +7,22 @@
 #
 #	Set up local 
 
-# libntdb new in Samba 4.1.x
-# Build in samba-srpm by default
-#SAMBAPKGS+=libntdb-srpm
-
 # Critical for samba-srpm, not built into RHEL 6
-SAMBAPKGS+=iniparser-srpm
+# RHEL 6 no longer supported
+#SAMBAPKGS+=iniparser-srpm
+
+# Critical for gnutls-srpm and nettle-srpm, not built into RHEL 6 or 7
+SAMBAPKGS+=p11-kit-srpm
+
+# Critical for gnutls-srpm, not built into RHEL 6 or 7
+SAMBAPKGS+=nettle-srpm
+
+# Critical for gnutls-srpm, not built into RHEL 6 or 7
+SAMBAPKGS+=libtasn1-srpm
+
+# Critical for samba-srpm, not built into RHEL, not recent
+# enough for samba-4.4.x
+SAMBAPKGS+=gnutls-srpm
 
 # Current libtalloc-2.1.x required
 SAMBAPKGS+=libtalloc-srpm
@@ -29,6 +39,18 @@ SAMBAPKGS+=libtevent-srpm
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-srpm
 
+REPOS+=samba4repo/6
+REPOS+=samba4repo/7
+REPOS+=samba4repo/f23
+
+REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
+
+CFGS+=samba4repo-f23-x86_64.cfg
+CFGS+=samba4repo-7-x86_64.cfg
+# Discard RHEL 6
+#CFGS+=samba4repo-6-x86_64.cfg
+
+all:: $(REPODIRS)
 all:: $(SAMBAPKGS)
 
 all install clean:: FORCE
@@ -41,9 +63,6 @@ build:: FORCE
 	@for name in $(SAMBAPKGS); do \
 	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
 	done  
-
-maintainer-clean::
-	rm -rf $(SAMBAPKGS)
 
 # Git clone operations, not normally required
 # Targets may change
@@ -96,8 +115,47 @@ samba-srpm:: libtdb-srpm
 #$(SAMBAPKGS):: FORCE
 #	(cd $@; $(MAKE) $(MLAGS))
 
+repos: $(REPOS) $(REPODIRS)
+$(REPOS):
+	install -d -m 755 $@
+
+.PHONY: $(REPODIRS)
+$(REPODIRS): $(REPOS)
+	@install -d -m 755 `dirname $@`
+	/usr/bin/createrepo `dirname $@`
+
+
+CFGS+=samba4repo-f23-x86_64.cfg
+CFGS+=samba4repo-7-x86_64.cfg
+# Discard RHHEL 6
+#CFGS+=samba4repo-6-x86_64.cfg
+
+cfgs: $(CFGS)
+$(CFGS)::
+	sed 's|@REPOBASEDIR@|$(PWD)|g' $@.in > $@
+$(CFGS)::
+	@cmp -s $@ /etc/mock/$@ || \
+	    diff -u $@ /etc/mock/$@
+
+repo: samba4repo.repo
+samba4repo.repo:: samba4repo.repo.in
+	sed 's|@REPOBASEDIR@|$(PWD)|g' $@.in > $@
+samba4repo.repo::
+	@cmp -s $@ /etc/yum.repos.d/$@ || \
+	    diff -u $@ /etc/yum.repos.d/$@
+
 clean::
 	find . -name \*~ -exec rm -f {} \;
+	rm -f *.cfg
+	@for name in $(SAMBAPKGS); do \
+	    $(MAKE) -C $$name clean; \
+	done
+
+distclean:
+	rm -rf $(REPOS)
+
+maintainer-clean:
+	rm -rf $(SAMBAPKGS)
 
 FORCE::
 
