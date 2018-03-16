@@ -41,11 +41,11 @@ SAMBAPKGS+=samba-srpm
 
 REPOS+=samba4repo/6
 REPOS+=samba4repo/7
-REPOS+=samba4repo/f23
+REPOS+=samba4repo/f27
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
-CFGS+=samba4repo-f23-x86_64.cfg
+CFGS+=samba4repo-f27-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
 # Discard RHEL 6
 #CFGS+=samba4repo-6-x86_64.cfg
@@ -125,7 +125,7 @@ $(REPODIRS): $(REPOS)
 	/usr/bin/createrepo `dirname $@`
 
 
-CFGS+=samba4repo-f23-x86_64.cfg
+CFGS+=samba4repo-f27-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
 # Discard RHHEL 6
 #CFGS+=samba4repo-6-x86_64.cfg
