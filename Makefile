@@ -12,17 +12,17 @@
 #SAMBAPKGS+=iniparser-srpm
 
 # Critical for gnutls-srpm and nettle-srpm, not built into RHEL 6 or 7
-SAMBAPKGS+=p11-kit-srpm
+#SAMBAPKGS+=p11-kit-srpm
 
 # Critical for gnutls-srpm, not built into RHEL 6 or 7
-SAMBAPKGS+=nettle-srpm
+#SAMBAPKGS+=nettle-srpm
 
 # Critical for gnutls-srpm, not built into RHEL 6 or 7
-SAMBAPKGS+=libtasn1-srpm
+#SAMBAPKGS+=libtasn1-srpm
 
 # Critical for samba-srpm, not built into RHEL, not recent
 # enough for samba-4.4.x
-SAMBAPKGS+=gnutls-srpm
+#SAMBAPKGS+=gnutls-srpm
 
 # Current libtalloc-2.1.x required
 SAMBAPKGS+=libtalloc-srpm
@@ -147,6 +147,7 @@ samba4repo.repo::
 clean::
 	find . -name \*~ -exec rm -f {} \;
 	rm -f *.cfg
+	rm -f *.out
 	@for name in $(SAMBAPKGS); do \
 	    $(MAKE) -C $$name clean; \
 	done
