@@ -1,4 +1,6 @@
+*.out
 *[0-9]
+*\#*
 *~
 rpmbuild
 samba4repo
