@@ -15,7 +15,7 @@
 	url = git@github.com:nkadel/libtevent-0.9.x-srpm
 [submodule "samba-srpm"]
 	path = samba-srpm
-	url = git@github.com:nkadel/samba-4.3.x-srpm
+	url = git@github.com:nkadel/samba-4.8.x-srpm
 [submodule "gnutls-3.4.x-srpm"]
 	path = gnutls-srpm
 	url = git@github.com:nkadel/gnutls-3.4.x-srpm
