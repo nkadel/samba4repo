@@ -30,16 +30,16 @@ SAMBAPKGS+=libtalloc-srpm
 # Current libtdb-1.3.x required
 SAMBAPKGS+=libtdb-srpm
 
-# Current libldb-1.1.x required
-SAMBAPKGS+=libldb-srpm
-
 # Current libtevent-0.9.x required
 SAMBAPKGS+=libtevent-srpm
+
+# Current libldb-1.3.x required
+# Also reuqires libtevent
+SAMBAPKGS+=libldb-srpm
 
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-srpm
 
-REPOS+=samba4repo/6
 REPOS+=samba4repo/7
 REPOS+=samba4repo/f27
 
