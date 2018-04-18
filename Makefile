@@ -133,9 +133,6 @@ CFGS+=samba4repo-7-x86_64.cfg
 cfgs: $(CFGS)
 $(CFGS)::
 	sed 's|@REPOBASEDIR@|$(PWD)|g' $@.in > $@
-$(CFGS)::
-	@cmp -s $@ /etc/mock/$@ || \
-	    diff -u $@ /etc/mock/$@
 
 repo: samba4repo.repo
 samba4repo.repo:: samba4repo.repo.in
