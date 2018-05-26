@@ -32,6 +32,7 @@ metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch
 gpgkey=file:///usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-28-primary
 gpgcheck=1
 skip_if_unavailable=False
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [updates]
 name=updates
@@ -39,12 +40,14 @@ metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$rele
 gpgkey=file:///usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-28-primary
 gpgcheck=1
 skip_if_unavailable=False
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [updates-testing]
 name=updates-testing
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
 enabled=0
 skip_if_unavailable=False
+exclude=*talloc* *tdb* *tevent* *ldb** *samba*
 
 [local]
 name=local
@@ -52,29 +55,33 @@ baseurl=https://kojipkgs.fedoraproject.org/repos/f28-build/latest/x86_64/
 cost=2000
 enabled=0
 skip_if_unavailable=False
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [fedora-debuginfo]
 name=fedora-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-$releasever&arch=$basearch
 enabled=0
 skip_if_unavailable=False
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [updates-debuginfo]
 name=updates-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-debug-f$releasever&arch=$basearch
 enabled=0
 skip_if_unavailable=False
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [updates-testing-debuginfo]
 name=updates-testing-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-debug-f$releasever&arch=$basearch
 enabled=0
 skip_if_unavailable=False
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [samba4repo]
 name=samba4repo
 enabled=1
 baseurl=file://@REPOBASEDIR@/samba4repo/f28/x86_64/
-cost=100
+cost=2000
 skip_if_unavailable=False
 """
