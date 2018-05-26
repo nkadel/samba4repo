@@ -7,19 +7,6 @@
 #
 #	Set up local 
 
-# Critical for samba-srpm, not built into RHEL 6
-# RHEL 6 no longer supported
-#SAMBAPKGS+=iniparser-srpm
-
-# Critical for gnutls-srpm and nettle-srpm, not built into RHEL 6 or 7
-#SAMBAPKGS+=p11-kit-srpm
-
-# Critical for gnutls-srpm, not built into RHEL 6 or 7
-#SAMBAPKGS+=nettle-srpm
-
-# Critical for gnutls-srpm, not built into RHEL 6 or 7
-#SAMBAPKGS+=libtasn1-srpm
-
 # Critical for samba-srpm, not built into RHEL, not recent
 # enough for samba-4.4.x
 #SAMBAPKGS+=gnutls-srpm
