@@ -1,15 +1,15 @@
 [submodule "libldb-srpm"]
 	path = libldb-srpm
-	url = https://github.com:nkadel/libldb-1.4.x-srpm
+	url = https://github.com/nkadel/libldb-1.4.x-srpm
 [submodule "libtalloc-srpm"]
 	path = libtalloc-srpm
-	url = https://github.com:nkadel/libtalloc-2.1.x-srpm
+	url = https://github.com/nkadel/libtalloc-2.1.x-srpm
 [submodule "libtdb-srpm"]
 	path = libtdb-srpm
-	url = https://github.com:nkadel/libtdb-1.4.x-srpm
+	url = https://github.com/nkadel/libtdb-1.3.x-srpm
 [submodule "libtevent-srpm"]
 	path = libtevent-srpm
-	url = https://github.com:nkadel/libtevent-0.9.x-srpm
+	url = https://github.com/nkadel/libtevent-0.9.x-srpm
 [submodule "samba-srpm"]
 	path = samba-srpm
-	url = https://github.com:nkadel/samba-4.8.x-srpm
+	url = https://github.com/nkadel/samba-4.8.x-srpm
