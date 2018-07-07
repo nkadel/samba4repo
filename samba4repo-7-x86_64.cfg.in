@@ -4,7 +4,7 @@ config_opts['legal_host_arches'] = ('x86_64',)
 config_opts['chroot_setup_cmd'] = 'install @buildsys-build'
 config_opts['dist'] = 'el7'  # only useful for --resultdir variable subst
 config_opts['releasever'] = '7'
-config_opts['package_manager'] = 'yum'
+#config_opts['package_manager'] = 'yum'
 
 config_opts['yum.conf'] = """
 [main]
@@ -30,6 +30,7 @@ failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-7
 gpgcheck=1
 exclude=*ldb* *talloc* *tdb* *tevent* *samba*
+skip_if_unavailable=False
 
 [updates]
 name=updates
@@ -39,6 +40,7 @@ failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-7
 gpgcheck=1
 exclude=*talloc* *tdb* *tevent* *ldb** *samba*
+skip_if_unavailable=False
 
 [epel]
 name=epel
@@ -47,6 +49,7 @@ failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/epel/RPM-GPG-KEY-EPEL-7
 gpgcheck=1
 exclude=*ldb* *talloc* *tdb* *tevent* *samba*
+skip_if_unavailable=False
 
 [extras]
 name=extras
@@ -55,6 +58,23 @@ failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-7
 gpgcheck=1
 exclude=*ldb* *talloc* *tdb* *tevent* *samba*
+skip_if_unavailable=False
+
+[sclo]
+name=sclo
+baseurl=http://mirror.centos.org/centos/7/sclo/x86_64/sclo/
+gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-SCLo
+gpgcheck=1
+includepkgs=devtoolset*
+skip_if_unavailable=False
+
+[sclo-rh]
+name=sclo-rh
+baseurl=http://mirror.centos.org/centos/7/sclo/x86_64/rh/
+gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-SCLo
+gpgcheck=1
+includepkgs=devtoolset*
+skip_if_unavailable=False
 
 [testing]
 name=epel-testing
@@ -62,6 +82,7 @@ enabled=0
 mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=testing-epel7&arch=x86_64
 failovermethod=priority
 exclude=*ldb* *talloc* *tdb* *tevent* *samba*
+skip_if_unavailable=False
 
 [local]
 name=local
