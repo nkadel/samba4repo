@@ -7,10 +7,6 @@
 #
 #	Set up local 
 
-# Critical for samba-srpm, not built into RHEL, not recent
-# enough for samba-4.4.x
-#SAMBAPKGS+=gnutls-srpm
-
 # Current libtalloc-2.1.x required
 SAMBAPKGS+=libtalloc-srpm
 
@@ -117,6 +113,10 @@ CFGS+=samba4repo-7-x86_64.cfg
 # Discard RHHEL 6
 #CFGS+=samba4repo-6-x86_64.cfg
 
+.PHONY: cfg
+cfg:: cfgs
+
+.PHONY: cfgs
 cfgs: $(CFGS)
 $(CFGS)::
 	sed 's|@REPOBASEDIR@|$(PWD)|g' $@.in > $@
