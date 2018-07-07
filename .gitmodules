@@ -6,7 +6,7 @@
 	url = https://github.com:nkadel/libtalloc-2.1.x-srpm
 [submodule "libtdb-srpm"]
 	path = libtdb-srpm
-	url = https://github.com:nkadel/libtdb-1.3.x-srpm
+	url = https://github.com:nkadel/libtdb-1.4.x-srpm
 [submodule "libtevent-srpm"]
 	path = libtevent-srpm
 	url = https://github.com:nkadel/libtevent-0.9.x-srpm
