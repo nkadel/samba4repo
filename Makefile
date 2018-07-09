@@ -16,7 +16,7 @@ SAMBAPKGS+=libtdb-srpm
 # Current libtevent-0.9.x required
 SAMBAPKGS+=libtevent-srpm
 
-# Current libldb-1.3.x required
+# Current libldb-1.4.x required
 # Also reuqires libtevent
 SAMBAPKGS+=libldb-srpm
 
@@ -33,6 +33,7 @@ CFGS+=samba4repo-7-x86_64.cfg
 # Discard RHEL 6
 #CFGS+=samba4repo-6-x86_64.cfg
 
+all:: $(CFGS)
 all:: $(REPODIRS)
 all:: $(SAMBAPKGS)
 
@@ -114,7 +115,7 @@ CFGS+=samba4repo-7-x86_64.cfg
 #CFGS+=samba4repo-6-x86_64.cfg
 
 .PHONY: cfg
-cfg:: cfgs
+cfg:: $(CFGS)
 
 .PHONY: cfgs
 cfgs: $(CFGS)
