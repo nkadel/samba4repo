@@ -1,14 +1,10 @@
+include('/etc/mock/epel-7-x86_64.cfg')
+
 config_opts['root'] = 'samba4repo-7-x86_64'
-config_opts['target_arch'] = 'x86_64'
-config_opts['legal_host_arches'] = ('x86_64',)
-config_opts['chroot_setup_cmd'] = 'install @buildsys-build'
-config_opts['dist'] = 'el7'  # only useful for --resultdir variable subst
-config_opts['releasever'] = '7'
 #config_opts['package_manager'] = 'yum'
 
 config_opts['yum.conf'] = """
 [main]
-cachedir=/var/cache/yum
 keepcache=1
 debuglevel=2
 reposdir=/dev/null
@@ -39,7 +35,7 @@ mirrorlist=http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=updates
 failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-7
 gpgcheck=1
-exclude=*talloc* *tdb* *tevent* *ldb** *samba*
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [epel]
@@ -66,6 +62,7 @@ baseurl=http://mirror.centos.org/centos/7/sclo/x86_64/sclo/
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-SCLo
 gpgcheck=1
 includepkgs=devtoolset*
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [sclo-rh]
@@ -74,6 +71,7 @@ baseurl=http://mirror.centos.org/centos/7/sclo/x86_64/rh/
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-SCLo
 gpgcheck=1
 includepkgs=devtoolset*
+exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [testing]
@@ -90,6 +88,7 @@ baseurl=https://kojipkgs.fedoraproject.org/repos/epel7-build/latest/x86_64/
 cost=2000
 enabled=0
 exclude=*ldb* *talloc* *tdb* *tevent* *samba*
+skip_if_unavailable=False
 
 [epel-debuginfo]
 name=epel-debug
@@ -97,6 +96,7 @@ mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-debug-7&arch=x8
 failovermethod=priority
 enabled=0
 exclude=*ldb* *talloc* *tdb* *tevent* *samba*
+skip_if_unavailable=False
 
 [samba4repo]
 name=samba4repo

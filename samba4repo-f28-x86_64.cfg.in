@@ -1,11 +1,6 @@
+include('/etc/mock/fedora-28-x86_64.cfg')
+
 config_opts['root'] = 'samba4repo-f28-x86_64'
-config_opts['target_arch'] = 'x86_64'
-config_opts['legal_host_arches'] = ('x86_64',)
-config_opts['chroot_setup_cmd'] = 'install @buildsys-build'
-config_opts['dist'] = 'fc28'  # only useful for --resultdir variable subst
-config_opts['extra_chroot_dirs'] = [ '/run/lock', ]
-config_opts['releasever'] = '28'
-config_opts['package_manager'] = 'dnf'
 
 config_opts['yum.conf'] = """
 [main]
@@ -32,51 +27,50 @@ metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch
 gpgkey=file:///usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-28-primary
 gpgcheck=1
 skip_if_unavailable=False
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [updates]
 name=updates
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch
 gpgkey=file:///usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-28-primary
 gpgcheck=1
+#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [updates-testing]
 name=updates-testing
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
 enabled=0
+#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
-exclude=*talloc* *tdb* *tevent* *ldb** *samba*
 
 [local]
 name=local
 baseurl=https://kojipkgs.fedoraproject.org/repos/f28-build/latest/x86_64/
 cost=2000
 enabled=0
+#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [fedora-debuginfo]
 name=fedora-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-$releasever&arch=$basearch
 enabled=0
+#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [updates-debuginfo]
 name=updates-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-debug-f$releasever&arch=$basearch
 enabled=0
+#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [updates-testing-debuginfo]
 name=updates-testing-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-debug-f$releasever&arch=$basearch
 enabled=0
+#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 
 [samba4repo]
 name=samba4repo
