@@ -46,7 +46,7 @@ all install clean:: FORCE
 build:: FORCE
 	@for name in $(SAMBAPKGS); do \
 	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
-	done  
+	done
 
 # Git clone operations, not normally required
 # Targets may change
@@ -96,8 +96,8 @@ samba-srpm:: libtdb-srpm
 
 
 # Actually build in directories
-#$(SAMBAPKGS):: FORCE
-#	(cd $@; $(MAKE) $(MLAGS))
+$(SAMBAPKGS):: FORCE
+	(cd $@; $(MAKE) $(MLAGS) install)
 
 repos: $(REPOS) $(REPODIRS)
 $(REPOS):
