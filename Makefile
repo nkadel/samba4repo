@@ -23,8 +23,8 @@ SAMBAPKGS+=libldb-srpm
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-srpm
 
-REPOS+=samba4repo/7
-REPOS+=samba4repo/f28
+REPOS+=samba4repo/el/7
+REPOS+=samba4repo/fedora/28
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
