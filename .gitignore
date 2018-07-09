@@ -1,8 +1,8 @@
+*.cfg
 *.out
+*.repo
 *[0-9]
 *\#*
 *~
 rpmbuild
 samba4repo
-samba4repo-*.cfg
-samba4repo.repo
