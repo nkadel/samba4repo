@@ -51,17 +51,9 @@ build:: FORCE
 # Git clone operations, not normally required
 # Targets may change
 
-iniparser-srpm::
-	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/iniparser-3.1-srpm.git iniparser-srpm
-
 libtalloc-srpm::
 	@[ -d $@/.git ] || \
 	git clone git://github.com/nkadel/libtalloc-2.1.x-srpm.git libtalloc-srpm
-
-libntdb-srpm::
-	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libntdb-1.0-srpm.git libntdb-srpm
 
 libtdb-srpm::
 	@[ -d $@/.git ] || \
