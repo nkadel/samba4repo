@@ -101,7 +101,7 @@ skip_if_unavailable=False
 [samba4repo]
 name=samba4repo
 enabled=1
-baseurl=file://@REPOBASEDIR@/samba4repo/7/x86_64/
+baseurl=file://@REPOBASEDIR@/samba4repo/el/7/x86_64/
 failovermethod=priority
 cost=2000
 """

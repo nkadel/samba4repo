@@ -75,7 +75,7 @@ skip_if_unavailable=False
 [samba4repo]
 name=samba4repo
 enabled=1
-baseurl=file://@REPOBASEDIR@/samba4repo/f28/x86_64/
+baseurl=file://@REPOBASEDIR@/samba4repo/fedora/28/x86_64/
 cost=2000
 skip_if_unavailable=False
 """
