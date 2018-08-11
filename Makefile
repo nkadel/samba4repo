@@ -30,8 +30,6 @@ REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repoda
 
 CFGS+=samba4repo-f28-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
-# Discard RHEL 6
-#CFGS+=samba4repo-6-x86_64.cfg
 
 all:: $(CFGS)
 all:: $(REPODIRS)
@@ -48,29 +46,10 @@ build:: FORCE
 	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
 	done
 
-# Git clone operations, not normally required
-# Targets may change
-
-libtalloc-srpm::
+# Git submodule checkout operation
+*-srpm::
 	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libtalloc-2.1.x-srpm.git libtalloc-srpm
-
-libtdb-srpm::
-	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libtdb-1.3.x-srpm.git libtdb-srpm
-
-libldb-srpm::
-	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libldb-1.1.x-srpm.git libldb-srpm
-
-libtevent-srpm::
-	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/libtevent-0.9.x-srpm.git libtevent-srpm
-
-samba-srpm::
-	@[ -d $@/.git ] || \
-	git clone git://github.com/nkadel/samba-4.1.x-srpm.git samba-srpm
-
+		git checkout --recurse-submodules
 
 # Dependencies of libraries on other libraries for compilation
 libtevent:: libtalloc-srpm
