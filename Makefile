@@ -31,6 +31,10 @@ REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repoda
 CFGS+=samba4repo-f28-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
 
+# Link from /etc/mock
+MOCKCFGS+=epel-7-x86_64.cfg
+MOCKCFGS+=fedora-28-x86_64.cfg
+
 all:: $(CFGS)
 all:: $(REPODIRS)
 all:: $(SAMBAPKGS)
@@ -80,18 +84,17 @@ $(REPODIRS): $(REPOS)
 	/usr/bin/createrepo `dirname $@`
 
 
-CFGS+=samba4repo-f28-x86_64.cfg
-CFGS+=samba4repo-7-x86_64.cfg
-# Discard RHHEL 6
-#CFGS+=samba4repo-6-x86_64.cfg
-
 .PHONY: cfg
 cfg:: $(CFGS)
 
 .PHONY: cfgs
-cfgs: $(CFGS)
+cfgs: $(CFGS) $(MOCKCFGS)
+
 $(CFGS)::
 	sed 's|@REPOBASEDIR@|$(PWD)|g' $@.in > $@
+
+$(MOCKCFGS)::
+	ln -sf /etc/mock/$@ $@
 
 repo: samba4repo.repo
 samba4repo.repo:: samba4repo.repo.in
