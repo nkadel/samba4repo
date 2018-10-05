@@ -25,7 +25,6 @@ mirrorlist=http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=os
 failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-7
 gpgcheck=1
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [updates]
@@ -35,7 +34,6 @@ mirrorlist=http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=updates
 failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-7
 gpgcheck=1
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [epel]
@@ -44,7 +42,6 @@ mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-7&arch=x86_64
 failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/epel/RPM-GPG-KEY-EPEL-7
 gpgcheck=1
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [extras]
@@ -53,7 +50,6 @@ mirrorlist=http://mirrorlist.centos.org/?release=7&arch=x86_64&repo=extras
 failovermethod=priority
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-7
 gpgcheck=1
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [sclo]
@@ -62,7 +58,6 @@ baseurl=http://mirror.centos.org/centos/7/sclo/x86_64/sclo/
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-SCLo
 gpgcheck=1
 includepkgs=devtoolset*
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [sclo-rh]
@@ -71,7 +66,6 @@ baseurl=http://mirror.centos.org/centos/7/sclo/x86_64/rh/
 gpgkey=file:///usr/share/distribution-gpg-keys/centos/RPM-GPG-KEY-CentOS-SIG-SCLo
 gpgcheck=1
 includepkgs=devtoolset*
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [testing]
@@ -79,7 +73,6 @@ name=epel-testing
 enabled=0
 mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=testing-epel7&arch=x86_64
 failovermethod=priority
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [local]
@@ -87,7 +80,6 @@ name=local
 baseurl=https://kojipkgs.fedoraproject.org/repos/epel7-build/latest/x86_64/
 cost=2000
 enabled=0
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [epel-debuginfo]
@@ -95,7 +87,6 @@ name=epel-debug
 mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-debug-7&arch=x86_64
 failovermethod=priority
 enabled=0
-exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [samba4repo]
@@ -103,5 +94,6 @@ name=samba4repo
 enabled=1
 baseurl=file://@REPOBASEDIR@/samba4repo/el/7/x86_64/
 failovermethod=priority
-cost=2000
+skip_if_unavailable=True
+#cost=2000
 """
