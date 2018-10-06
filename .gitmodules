@@ -12,4 +12,4 @@
 	url = https://github.com/nkadel/libtevent-0.9.x-srpm
 [submodule "samba-srpm"]
 	path = samba-srpm
-	url = https://github.com/nkadel/samba-4.8.x-srpm
+	url = https://github.com/nkadel/samba-4.9.x-srpm
