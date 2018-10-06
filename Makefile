@@ -67,8 +67,6 @@ samba-srpm:: libtalloc-srpm
 samba-srpm:: libldb-srpm
 samba-srpm:: libtevent-srpm
 samba-srpm:: libtdb-srpm
-#samba-srpm:: iniparser-srpm
-
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
