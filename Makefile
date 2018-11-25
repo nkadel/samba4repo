@@ -24,16 +24,16 @@ SAMBAPKGS+=libldb-srpm
 SAMBAPKGS+=samba-srpm
 
 REPOS+=samba4repo/el/7
-REPOS+=samba4repo/fedora/28
+REPOS+=samba4repo/fedora/29
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
-CFGS+=samba4repo-f28-x86_64.cfg
+CFGS+=samba4repo-f29-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
-MOCKCFGS+=fedora-28-x86_64.cfg
+MOCKCFGS+=fedora-29-x86_64.cfg
 
 all:: $(CFGS)
 all:: $(MOCKCFGS)
@@ -55,7 +55,7 @@ build:: FORCE
 # For more recent versions of git, use "git checkout --recurse-submodules"
 *-srpm::
 	@[ -d $@/.git ] || \
-		git submodule update --init --recursive
+		git submodule update --init $@
 
 # Dependencies of libraries on other libraries for compilation
 libtevent:: libtalloc-srpm
@@ -85,7 +85,7 @@ $(REPODIRS): $(REPOS)
 
 
 .PHONY: cfg
-cfg:: $(CFGS)
+cfg:: cfgs
 
 .PHONY: cfgs
 cfgs: $(CFGS) $(MOCKCFGS)
