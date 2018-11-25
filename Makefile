@@ -36,6 +36,7 @@ MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=fedora-29-x86_64.cfg
 
 all:: $(CFGS)
+all:: $(MOCKCFGS)
 all:: $(REPODIRS)
 all:: $(SAMBAPKGS)
 
@@ -51,9 +52,10 @@ build:: FORCE
 	done
 
 # Git submodule checkout operation
+# For more recent versions of git, use "git checkout --recurse-submodules"
 *-srpm::
 	@[ -d $@/.git ] || \
-		git checkout --recurse-submodules
+		git submodule update --init --recursive
 
 # Dependencies of libraries on other libraries for compilation
 libtevent:: libtalloc-srpm
