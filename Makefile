@@ -55,7 +55,7 @@ build:: FORCE
 # For more recent versions of git, use "git checkout --recurse-submodules"
 *-srpm::
 	@[ -d $@/.git ] || \
-		git submodule update --init --recursive
+		git submodule update --init $@
 
 # Dependencies of libraries on other libraries for compilation
 libtevent:: libtalloc-srpm
