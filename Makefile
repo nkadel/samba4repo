@@ -33,7 +33,7 @@ CFGS+=samba4repo-7-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
-MOCKCFGS+=fedora-29-x86_64.cfg
+#MOCKCFGS+=fedora-29-x86_64.cfg
 
 all:: $(CFGS)
 all:: $(MOCKCFGS)
