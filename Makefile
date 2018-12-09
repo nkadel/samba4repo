@@ -20,12 +20,15 @@ SAMBAPKGS+=libtevent-srpm
 # Also reuqires libtevent
 SAMBAPKGS+=libldb-srpm
 
+SAMBAPKGS+=libldb-1.3.x-srpm
+
 # Needed for samba-4.8
 #SAMBAPKGS+=libldb-1.3.6-srpm
 
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-srpm
 
+# Compile 4.8.x for RHEL 7, requires old libldb
 SAMBAPKGS+=samba-4.8.x-srpm
 
 REPOS+=samba4repo/el/7
