@@ -23,3 +23,7 @@
 	url = https://github.com/nkadel/libldb-1.4.x-srpm
 	branch = nkadel-1.3.6
 
+[submodule "samba-4.8.x-srpm"]
+	path = samba-4.8.x-srpm
+	url = https://github.com/nkadel/samba-4.9.x-srpm
+	branch = nkdel-4.8.7
