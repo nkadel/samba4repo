@@ -33,14 +33,12 @@ name=updates
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch
 gpgkey=file:///usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-29-primary
 gpgcheck=1
-#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [updates-testing]
 name=updates-testing
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
 enabled=0
-#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [local]
@@ -48,28 +46,40 @@ name=local
 baseurl=https://kojipkgs.fedoraproject.org/repos/f29-build/latest/x86_64/
 cost=2000
 enabled=0
-#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [fedora-debuginfo]
 name=fedora-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-debug-$releasever&arch=$basearch
 enabled=0
-#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [updates-debuginfo]
 name=updates-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-debug-f$releasever&arch=$basearch
 enabled=0
-#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
 skip_if_unavailable=False
 
 [updates-testing-debuginfo]
 name=updates-testing-debuginfo
 metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-debug-f$releasever&arch=$basearch
 enabled=0
-#exclude=*ldb* *talloc* *tdb* *tevent* *samba*
+skip_if_unavailable=False
+
+[fedora-source]
+name=fedora-source
+metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-source-$releasever&arch=$basearch
+gpgkey=file:///usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-29-primary
+gpgcheck=1
+enabled=0
+skip_if_unavailable=False
+
+[updates-source]
+name=updates-source
+metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-source-f$releasever&arch=$basearch
+gpgkey=file:///usr/share/distribution-gpg-keys/fedora/RPM-GPG-KEY-fedora-29-primary
+gpgcheck=1
+enabled=0
 skip_if_unavailable=False
 
 [samba4repo]
