@@ -16,12 +16,17 @@ SAMBAPKGS+=libtdb-srpm
 # Current libtevent-0.9.x required
 SAMBAPKGS+=libtevent-srpm
 
-# Current libldb-1.4.x required
+# Current libldb-1.4.x required for samba-4.9
 # Also reuqires libtevent
 SAMBAPKGS+=libldb-srpm
 
+# Needed for samba-4.8
+#SAMBAPKGS+=libldb-1.3.6-srpm
+
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-srpm
+
+SAMBAPKGS+=samba-4.8.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/fedora/29
@@ -33,7 +38,7 @@ CFGS+=samba4repo-7-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
-#MOCKCFGS+=fedora-29-x86_64.cfg
+MOCKCFGS+=fedora-29-x86_64.cfg
 
 all:: $(CFGS)
 all:: $(MOCKCFGS)
@@ -90,8 +95,39 @@ cfg:: cfgs
 .PHONY: cfgs
 cfgs: $(CFGS) $(MOCKCFGS)
 
-$(CFGS)::
-	sed 's|@REPOBASEDIR@|$(PWD)|g' $@.in > $@
+samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
+	@echo Generating $@ from $?
+	@cat $? > $@
+	@sed -i 's/epel-7-x86_64/samba4repo-7-x86_64/g' $@
+	@echo '"""' >> $@
+	@echo >> $@
+	@echo '[samba4repo]' >> $@
+	@echo 'name=samba4repo' >> $@
+	@echo 'enabled=1' >> $@
+	@echo 'baseurl=file://$(PWD)/samba4repo/el/7/x86_64/' >> $@
+	@echo 'failovermethod=priority' >> $@
+	@echo 'skip_if_unavailable=True' >> $@
+	@echo '#cost=2000' >> $@
+	@echo '"""' >> $@
+	@uniq -u $@ > $@~
+	@mv $@~ $@
+
+samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
+	@echo Generating $@ from $?
+	@cat $? > $@
+	@sed -i 's/fedora-29-x86_64/samba4repo-f29-x86_64/g' $@
+	@echo '"""' >> $@
+	@echo >> $@
+	@echo '[samba4repo]' >> $@
+	@echo 'name=samba4repo' >> $@
+	@echo 'enabled=1' >> $@
+	@echo 'baseurl=file://$(PWD)/samba4repo/el/7/x86_64/' >> $@
+	@echo 'failovermethod=priority' >> $@
+	@echo 'skip_if_unavailable=True' >> $@
+	@echo '#cost=2000' >> $@
+	@echo '"""' >> $@
+	@uniq -u $@ > $@~
+	@mv $@~ $@
 
 $(MOCKCFGS)::
 	ln -sf /etc/mock/$@ $@
