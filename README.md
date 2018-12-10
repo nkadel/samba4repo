@@ -22,7 +22,7 @@ This is for basic security reasons: you'll need to get the tarballs
 manually, usually from the "Source:" locations designated in the .spec
 file. These are typically available at:
 
-* https://ftp.samba.org/pub/samba/
+* https://www.samba.org/ftp/samba/
 
 Building Samba
 ==============
@@ -32,13 +32,13 @@ and installed in the following order.
 
 * make cfgs # Create local .cfg configs for "mock".
 * * epel-7-x86_64.cfg # Used for some Makefiles
-* * fedora-28-x86_64.cfg # Used for some Makefiles
+* * fedora-29-x86_64.cfg # Used for some Makefiles
 * * samba4repo-7-x86_64.cfg # Activates local RPM dependency repository
-* * samba4repo-428-x86_64.cfg # Activates local RPM dependency repository
+* * samba4repo-f29-x86_64.cfg # Activates local RPM dependency repository
 
 * make repos # Creates local local yum repositories in $PWD/samba4repo
 * * samba4repo/el/7
-* * samba4repo/fedora/28
+* * samba4repo/fedora/29
 
 * make # Make all distinct versions using "mock"
 
@@ -47,16 +47,14 @@ can also be done for testing.
 
 * make build
 
-Samba 4.9 as strong dependencies on additional components that are not
-recent enough in RHEL 7, and may not be up-to-date enough even in
-Fedora. They typically need to be built and deployed for local compilation or for
-"mock" compilation. These dependencies are detailed in the Makefile,
-but include:
+Samba 4.9 has strong dependencies on additional components that may or not be 
+built into the current Fedora releases. These are in the following submodules:
 
-* libtalloc
-* libtdb
-* libldb
-* libtevent
+* libtalloc-srpm
+* libtdb-srpm
+* libldb-srpm
+* libtevent-srpm
+* samba-srpm
 
 Installing Samba
 ==============--
@@ -72,7 +70,7 @@ Samba RPM Build Security
 ====================
 
 There is a significant security risk with enabling yum repositories
-for locally built components. Generating GPF signed packages and
+for locally built components. Generating GPG signed packages and
 ensuring that the compneents are in this build location are securely
 and safely built is not addressed in this test setup.
 
