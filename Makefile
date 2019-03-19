@@ -17,7 +17,7 @@ SAMBAPKGS+=libtdb-srpm
 SAMBAPKGS+=libtevent-srpm
 
 # Current libldb-1.4.x required for samba-4.9
-# Also reuqires libtevent
+# Also requires libtevent
 SAMBAPKGS+=libldb-srpm
 
 # Needed for samba-4.8
