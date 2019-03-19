@@ -28,15 +28,18 @@ SAMBAPKGS+=samba-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/fedora/29
+REPOS+=samba4repo/fedora/rawhide
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
+CFGS+=samba4repo-rawhide-x86_64.cfg
 CFGS+=samba4repo-f29-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=fedora-29-x86_64.cfg
+MOCKCFGS+=fedora-rawhide-x86_64.cfg
 
 all:: $(CFGS)
 all:: $(MOCKCFGS)
@@ -104,7 +107,7 @@ samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=file://$(PWD)/samba4repo/el/7/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
-	@echo 'skip_if_unavailable=True' >> $@
+	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 	@uniq -u $@ > $@~
@@ -119,9 +122,26 @@ samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=file://$(PWD)/samba4repo/el/7/x86_64/' >> $@
+	@echo 'baseurl=file://$(PWD)/samba4repo/fedora/29/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
-	@echo 'skip_if_unavailable=True' >> $@
+	@echo 'skip_if_unavailable=False' >> $@
+	@echo '#cost=2000' >> $@
+	@echo '"""' >> $@
+	@uniq -u $@ > $@~
+	@mv $@~ $@
+
+samba4repo-rawhide-x86_64.cfg: fedora-rawhide-x86_64.cfg
+	@echo Generating $@ from $?
+	@cat $? > $@
+	@sed -i 's/fedora-rawhide-x86_64/samba4repo-rawhide-x86_64/g' $@
+	@echo '"""' >> $@
+	@echo >> $@
+	@echo '[samba4repo]' >> $@
+	@echo 'name=samba4repo' >> $@
+	@echo 'enabled=1' >> $@
+	@echo 'baseurl=file://$(PWD)/samba4repo/fedora/rawhide/x86_64/' >> $@
+	@echo 'failovermethod=priority' >> $@
+	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 	@uniq -u $@ > $@~
