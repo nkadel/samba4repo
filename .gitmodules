@@ -23,6 +23,6 @@
 	url = https://github.com/nkadel/samba-4.9.x-srpm
 	branch = master
 [submodule "samba-4.10.x-srpm"]
-	path = samba-srpm
+	path = samba-4.10.x-srpm
 	url = https://github.com/nkadel/samba-4.9.x-srpm
 	branch = nkadel-4.10.0
