@@ -1,7 +1,7 @@
-[submodule "libldb-srpm"]
-	path = libldb-srpm
+[submodule "libldb-1.4.x-srpm"]
+	path = libldb-1.4.x-srpm
 	url = https://github.com/nkadel/libldb-1.4.x-srpm
-	branch = master
+	branch = nkadel-1.4.6
 [submodule "libtalloc-srpm"]
 	path = libtalloc-srpm
 	url = https://github.com/nkadel/libtalloc-2.1.x-srpm
