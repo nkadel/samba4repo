@@ -1,7 +1,3 @@
-[submodule "libldb-1.5.x-srpm"]
-	path = libldb-1.5.x-srpm
-	url = https://github.com/nkadel/libldb-1.4.x-srpm
-	branch = nkadel-1.5.4
 [submodule "libldb-1.4.x-srpm"]
 	path = libldb-1.4.x-srpm
 	url = https://github.com/nkadel/libldb-1.4.x-srpm

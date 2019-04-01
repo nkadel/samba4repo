@@ -19,11 +19,9 @@ SAMBAPKGS+=libtevent-srpm
 # Current libldb-1.4.x required for samba-4.9
 # Also requires libtevent
 SAMBAPKGS+=libldb-1.4.x-srpm
-SAMBAPKGS+=libldb-1.5.x-srpm
 
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-srpm
-SAMBAPKGS+=samba-4.10.x-srpm
 
 REPOS+=samba4repo/el/6
 REPOS+=samba4repo/el/7
@@ -72,21 +70,11 @@ libldb-1.4.x-srpm:: libtalloc-srpm
 libldb-1.4.x-srpm:: libtdb-srpm
 libldb-1.4.x-srpm:: libtevent-srpm
 
-libldb-1.5.x-srpm:: libtalloc-srpm
-libldb-1.5.x-srpm:: libtdb-srpm
-libldb-1.5.x-srpm:: libtevent-srpm
-
 # Samba rellies on all the othe components
 samba-srpm:: libtalloc-srpm
 samba-srpm:: libldb-1.4.x-srpm
 samba-srpm:: libtevent-srpm
 samba-srpm:: libtdb-srpm
-
-samba-4.10.x-srpm:: libtalloc-srpm
-samba-4.10.x-srpm:: libldb-1.5.x-srpm
-samba-4.10.x-srpm:: libtevent-srpm
-samba-4.10.x-srpm:: libtdb-srpm
-
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
