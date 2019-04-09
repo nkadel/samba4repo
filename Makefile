@@ -7,25 +7,25 @@
 #
 #	Set up local 
 
-# Current libtalloc-2.1.x required
-SAMBAPKGS+=libtalloc-srpm
+# Current libtalloc-2.2.x required
+SAMBAPKGS+=libtalloc-2.2.x-srpm
 
 # Current libtdb-1.3.x required
-SAMBAPKGS+=libtdb-srpm
+SAMBAPKGS+=libtdb-1.4.x-srpm
 
-# Current libtevent-0.9.x required
-SAMBAPKGS+=libtevent-srpm
+# Current libtevent-0.10.x required
+SAMBAPKGS+=libtevent-0.10.x-srpm
 
-# Current libldb-1.4.x required for samba-4.9
 # Also requires libtevent
-SAMBAPKGS+=libldb-1.4.x-srpm
+SAMBAPKGS+=libldb-1.5.x-srpm
 
 # Current samba release, requires all curent libraries
-SAMBAPKGS+=samba-srpm
+SAMBAPKGS+=samba-4.10.x-srpm
 
-REPOS+=samba4repo/el/6
 REPOS+=samba4repo/el/7
+REPOS+=samba4repo/el/8
 REPOS+=samba4repo/fedora/29
+REPOS+=samba4repo/fedora/30
 REPOS+=samba4repo/fedora/rawhide
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
@@ -33,11 +33,10 @@ REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repoda
 CFGS+=samba4repo-rawhide-x86_64.cfg
 CFGS+=samba4repo-f29-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
-CFGS+=samba4repo-6-x86_64.cfg
 
 # Link from /etc/mock
-MOCKCFGS+=epel-6-x86_64.cfg
 MOCKCFGS+=epel-7-x86_64.cfg
+MOCKCFGS+=rhelbeta-8-x86_64.cfg
 MOCKCFGS+=fedora-29-x86_64.cfg
 MOCKCFGS+=fedora-rawhide-x86_64.cfg
 
@@ -64,17 +63,17 @@ build:: FORCE
 		git submodule update --init $@
 
 # Dependencies of libraries on other libraries for compilation
-libtevent:: libtalloc-srpm
+libtevent:: libtalloc-2.2.x-srpm
 
-libldb-1.4.x-srpm:: libtalloc-srpm
-libldb-1.4.x-srpm:: libtdb-srpm
-libldb-1.4.x-srpm:: libtevent-srpm
+#libldb-1.4.x-srpm:: libtalloc-2.2.x-srpm
+#libldb-1.4.x-srpm:: libtdb-1.4.x-srpm
+#libldb-1.4.x-srpm:: libtevent-0.10.x-srpm
 
 # Samba rellies on all the othe components
-samba-srpm:: libtalloc-srpm
-samba-srpm:: libldb-1.4.x-srpm
-samba-srpm:: libtevent-srpm
-samba-srpm:: libtdb-srpm
+samba-4.10.x-srpm:: libtalloc-2.2.x-srpm
+samba-4.10.x-srpm:: libldb-1.5.x-srpm
+samba-4.10.x-srpm:: libtevent-0.10.x-srpm
+samba-4.10.x-srpm:: libtdb-1.4.x-srpm
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
@@ -96,16 +95,16 @@ cfg:: cfgs
 .PHONY: cfgs
 cfgs: $(CFGS) $(MOCKCFGS)
 
-samba4repo-6-x86_64.cfg: epel-6-x86_64.cfg
+samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/epel-6-x86_64/samba4repo-6-x86_64/g' $@
+	@sed -i 's/epel-7-x86_64/samba4repo-7-x86_64/g' $@
 	@echo '"""' >> $@
 	@echo >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=file://$(PWD)/samba4repo/el/6/x86_64/' >> $@
+	@echo 'baseurl=file://$(PWD)/samba4repo/el/7/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
@@ -113,7 +112,7 @@ samba4repo-6-x86_64.cfg: epel-6-x86_64.cfg
 	@uniq -u $@ > $@~
 	@mv $@~ $@
 
-samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
+samba4repo-8-x86_64.cfg: rhelbeta-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/epel-7-x86_64/samba4repo-7-x86_64/g' $@
