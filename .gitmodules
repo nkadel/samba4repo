@@ -15,3 +15,6 @@
 [submodule "libldb-1.5.x-srpm"]
 	path = libldb-1.5.x-srpm
 	url = https://github.com/nkadel/libldb-1.5.x-srpm
+[submodule "doxygen-1.8.x-srpm"]
+	path = doxygen-1.8.x-srpm
+	url = https://github.com/nkadel/doxygen-1.8.x-srpm
