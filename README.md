@@ -1,7 +1,14 @@
 samba4repo
 ==========
 
-Wrapper for SRPM building tools for Samba 4 on CentOS 7 and Fedora 28.
+Wrapper for SRPM building tools for Samba 4 on Fedora 29
+
+Samba 4.10.0 and later are not compatible with the Python 2
+environments of RHEL 7. It will not be available until RHEL 8 is
+released. For RHEL, use the v4.9.5 tag.
+
+RHEL 8 beta lacks critical libraries. Some have been added, such as
+doxygen and cmocka, but they are incomplete.
 
 The samba hers is built with the domain controller fully enabled, in
 the "samba-dc" packagtes. The RPMs from RHEL upstream include only
