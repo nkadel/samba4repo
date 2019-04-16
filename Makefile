@@ -12,8 +12,8 @@ SAMBAPKGS+=doxygen-1.8.x-srpm
 # RHEL 8 beta needs cmocka
 SAMBAPKGS+=cmocka-1.1.x-srpm
 
-# Current libtalloc-2.2.x required
-SAMBAPKGS+=libtalloc-2.2.x-srpm
+# Current libtalloc-1..x required
+SAMBAPKGS+=libtalloc-2.1.x-srpm
 
 # Current libtdb-1.3.x required
 SAMBAPKGS+=libtdb-1.3.x-srpm
@@ -27,6 +27,7 @@ SAMBAPKGS+=libldb-1.5.x-srpm
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.10.x-srpm
 
+REPOS+=samba4repo/el/6
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/fedora/29
@@ -72,19 +73,19 @@ build:: FORCE
 
 # doxygen needed for RHEL 8 beta
 cmocka-1.1.x-srpm:: doxygen-1.8.x-srpm
-libtalloc-2.2.x-srpm:: doxygen-1.8.x-srpm
+libtalloc-2.1.x-srpm:: doxygen-1.8.x-srpm
 libtevent-0.10.x-srpm:: doxygen-1.8.x-srpm
 libtdb-1.3.x-srpm:: doxygen-1.8.x-srpm
 libldb-1.5.x-srpm:: doxygen-1.8.x-srpm
 
-libtevent-0.10.x-srpm:: libtalloc-2.2.x-srpm
+libtevent-0.10.x-srpm:: libtalloc-2.1.x-srpm
 
-libldb-1.5.x-srpm:: libtalloc-2.2.x-srpm
+libldb-1.5.x-srpm:: libtalloc-2.1.x-srpm
 libldb-1.5.x-srpm:: libtdb-1.3.x-srpm
 libldb-1.5.x-srpm:: libtevent-0.10.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.10.x-srpm:: libtalloc-2.2.x-srpm
+samba-4.10.x-srpm:: libtalloc-2.1.x-srpm
 samba-4.10.x-srpm:: libldb-1.5.x-srpm
 samba-4.10.x-srpm:: libtevent-0.10.x-srpm
 samba-4.10.x-srpm:: libtdb-1.3.x-srpm
@@ -123,7 +124,7 @@ samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@~
+	@uniq -u $@ > $@
 	@mv $@~ $@
 
 samba4repo-8-x86_64.cfg: rhelbeta-8-x86_64.cfg
@@ -140,8 +141,8 @@ samba4repo-8-x86_64.cfg: rhelbeta-8-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@~
-	@mv $@~ $@
+	@uniq -u $@ > $@
+	@mv $@ $@
 
 samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo Generating $@ from $?
@@ -157,8 +158,8 @@ samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@~
-	@mv $@~ $@
+	@uniq -u $@ > $@
+	@mv $@ $@
 
 samba4repo-rawhide-x86_64.cfg: fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
@@ -174,8 +175,8 @@ samba4repo-rawhide-x86_64.cfg: fedora-rawhide-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@~
-	@mv $@~ $@
+	@uniq -u $@ > $@
+	@mv $@ $@
 
 $(MOCKCFGS)::
 	ln -sf /etc/mock/$@ $@
