@@ -1,7 +1,3 @@
-[submodule "libtevent-0.10.x-srpm"]
-	path = libtevent-0.10.x-srpm
-	url = https://github.com/nkadel/libtevent-0.10.x-srpm
-	branch = master
 [submodule "samba-4.10.x-srpm"]
 	path = samba-4.10.x-srpm
 	url = https://github.com/nkadel/samba-4.10.x-srpm
@@ -22,3 +18,7 @@
 [submodule "compat-gnutls34-3.x-srpm"]
 	path = compat-gnutls34-3.x-srpm
 	url = https://github.com/nkadel/compat-gnutls34-3.x-srpm
+[submodule "libtevent-0.9.x-srpm"]
+	path = libtevent-0.9.x-srpm
+	url = https://github.com/nkadel/libtevent-0.10.x-srpm
+	branch = nkadel-0.9.39
