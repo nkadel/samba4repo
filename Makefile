@@ -8,26 +8,31 @@
 #	Set up local 
 
 # RHEL 8 beta needs doxygen
-SAMBAPKGS+=doxygen-1.8.x-srpm
+#SAMBAPKGS+=doxygen-1.8.x-srpm
 # RHEL 8 beta needs cmocka
-SAMBAPKGS+=cmocka-1.1.x-srpm
+#SAMBAPKGS+=cmocka-1.1.x-srpm
 
-# Current libtalloc-1..x required
+# RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
+SAMBAPKGS+=compat-nettle32-3.x-srpm
+
+# Current libtalloc-1.x required
 SAMBAPKGS+=libtalloc-2.1.x-srpm
 
 # Current libtdb-1.3.x required
 SAMBAPKGS+=libtdb-1.3.x-srpm
 
-# Current libtevent-0.10.x required
-SAMBAPKGS+=libtevent-0.10.x-srpm
+# RHEL 7 needs compat-gnutls3.4.x-sprm, which uses compat-nettle32
+SAMBAPKGS+=compat-gnutls34-3.x-srpm
 
-# Also requires libtevent
+# Current libtevent-0.9.x required for Samba 4.10
+SAMBAPKGS+=libtevent-0.9.x-srpm
+
+# Also requires libtevent, 1.5.4 required for Samba 4.10
 SAMBAPKGS+=libldb-1.5.x-srpm
 
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.10.x-srpm
 
-REPOS+=samba4repo/el/6
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/fedora/29
@@ -72,22 +77,24 @@ build:: FORCE
 # Dependencies of libraries on other libraries for compilation
 
 # doxygen needed for RHEL 8 beta
-cmocka-1.1.x-srpm:: doxygen-1.8.x-srpm
-libtalloc-2.1.x-srpm:: doxygen-1.8.x-srpm
-libtevent-0.10.x-srpm:: doxygen-1.8.x-srpm
-libtdb-1.3.x-srpm:: doxygen-1.8.x-srpm
-libldb-1.5.x-srpm:: doxygen-1.8.x-srpm
+#cmocka-1.1.x-srpm:: doxygen-1.8.x-srpm
+#libtalloc-2.1.x-srpm:: doxygen-1.8.x-srpm
+#libtevent-0.10.x-srpm:: doxygen-1.8.x-srpm
+#libtdb-1.3.x-srpm:: doxygen-1.8.x-srpm
+#libldb-1.5.x-srpm:: doxygen-1.8.x-srpm
 
-libtevent-0.10.x-srpm:: libtalloc-2.1.x-srpm
+compat-gnutls34-3.x-srpm: compat-nettle32-3.x-srpm
+
+libtevent-0.9.x-srpm:: libtalloc-2.1.x-srpm
 
 libldb-1.5.x-srpm:: libtalloc-2.1.x-srpm
 libldb-1.5.x-srpm:: libtdb-1.3.x-srpm
-libldb-1.5.x-srpm:: libtevent-0.10.x-srpm
+libldb-1.5.x-srpm:: libtevent-0.9.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.10.x-srpm:: libtalloc-2.1.x-srpm
 samba-4.10.x-srpm:: libldb-1.5.x-srpm
-samba-4.10.x-srpm:: libtevent-0.10.x-srpm
+samba-4.10.x-srpm:: libtevent-0.9.x-srpm
 samba-4.10.x-srpm:: libtdb-1.3.x-srpm
 
 # Actually build in directories
@@ -124,8 +131,8 @@ samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@
-	@mv $@~ $@
+	@uniq -u $@ > $@.out
+	@mv $@.out $@
 
 samba4repo-8-x86_64.cfg: rhelbeta-8-x86_64.cfg
 	@echo Generating $@ from $?
@@ -141,8 +148,8 @@ samba4repo-8-x86_64.cfg: rhelbeta-8-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@
-	@mv $@ $@
+	@uniq -u $@ > $@.out
+	@mv $@.out $@
 
 samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo Generating $@ from $?
@@ -158,8 +165,8 @@ samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@
-	@mv $@ $@
+	@uniq -u $@ > $@.out
+	@mv $@.out $@
 
 samba4repo-rawhide-x86_64.cfg: fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
@@ -175,8 +182,8 @@ samba4repo-rawhide-x86_64.cfg: fedora-rawhide-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@
-	@mv $@ $@
+	@uniq -u $@ > $@.out
+	@mv $@.out $@
 
 $(MOCKCFGS)::
 	ln -sf /etc/mock/$@ $@
