@@ -83,7 +83,7 @@ build:: FORCE
 #libtdb-1.3.x-srpm:: doxygen-1.8.x-srpm
 #libldb-1.5.x-srpm:: doxygen-1.8.x-srpm
 
-compat-gnutls34-3.x-srpm: compat-nettle32-3.x-srpm
+compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 libtevent-0.9.x-srpm:: libtalloc-2.1.x-srpm
 
@@ -189,8 +189,20 @@ $(MOCKCFGS)::
 	ln -sf /etc/mock/$@ $@
 
 repo: samba4repo.repo
-samba4repo.repo:: samba4repo.repo.in
-	sed 's|@REPOBASEDIR@|$(PWD)|g' $@.in > $@
+samba4repo.repo:: Makefile samba4repo.repo.in
+	if [ -s /etc/fedora-release ]; then \
+		cat $@.in | \
+			sed "s|@REPOBASEDIR@/|$(PWD)/|g" | \
+			sed "s|/@RELEASEDIR@/|/fedora/|g" > $@; \
+	elif [ -s /etc/redhat-release ]; then \
+		cat $@.in | \
+			sed "s|@REPOBASEDIR@/|$(PWD)/|g" | \
+			sed "s|/@RELEASEDIR@/|/el/|g" > $@; \
+	else \
+		echo Error: unknown release, check /etc/*-release; \
+		exit 1; \
+	fi
+
 samba4repo.repo::
 	@cmp -s $@ /etc/yum.repos.d/$@ || \
 	    diff -u $@ /etc/yum.repos.d/$@
