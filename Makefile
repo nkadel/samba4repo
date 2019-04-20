@@ -215,11 +215,18 @@ clean::
 	    $(MAKE) -C $$name clean; \
 	done
 
-distclean:
+distclean: clean
 	rm -rf $(REPOS)
+	rm -rf samba4repo
+	@for name in $(SAMBAPKGS); do \
+	    (cd $$name; git clean); \
+	done
 
-maintainer-clean:
+maintainer-clean: distclean
 	rm -rf $(SAMBAPKGS)
+	@for name in $(SAMBAPKGS); do \
+	    (cd $$name; git clean -x -d -f); \
+	done
 
 FORCE::
 
