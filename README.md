@@ -3,18 +3,21 @@ samba4repo
 
 Wrapper for SRPM building tools for Samba 4 on Fedora 29
 
-Samba 4.10.0 and later are not compatible with the Python 2
-environments of RHEL 7. It will not be available until RHEL 8 is
-released. For RHEL, use the v4.9.5 tag.
+Samba 4.10.0 and later are not compatible with Python 2.. These tools
+have been updated to use the EPEL published python36-devel, and build
+matching modules.
 
-RHEL 8 beta lacks critical libraries. Some have been added, such as
-doxygen and cmocka, but they are incomplete.
+compat-nettle32 and compat-gnutlf34 are provided for the Samba DC
+to work on RHEL 7. They are based on sergiomdk2's work at:
 
-The samba hers is built with the domain controller fully enabled, in
-the "samba-dc" packagtes. The RPMs from RHEL upstream include only
-stubs, they do not actually include the domain controller components,
+     https://github.com/sergiomb2/SambaAD
+
+The samba here is built with the domain controller fully enabled, in
+the "samba-dc" packagtes. The RPMs from RHEL upstream included only
+stubs, they did not actually include the domain controller components,
 partly because those are incompatible with the default Kerberos built
-into Fedora and RHEL.
+into Fedora and RHEL. The experiemental Samba support for that default
+Kerberos is tentative and not yet suitable for production.
 
 Git Checkout
 ===========
@@ -54,14 +57,14 @@ can also be done for testing.
 
 * make build
 
-Samba 4.9 has strong dependencies on additional components that may or not be 
+Samba 4.10 has strong dependencies on additional components that may or not be 
 built into the current Fedora releases. These are in the following submodules:
 
-* libtalloc-srpm
-* libtdb-srpm
-* libldb-srpm
-* libtevent-srpm
-* samba-srpm
+* libtalloc-xxx-srpm
+* libtdb-xxx-srpm
+* libldb-xxx-srpm
+* libtevent-xxx-srpm
+* samba-xxx-srpm
 
 Installing Samba
 ==============--
