@@ -3,9 +3,11 @@ name=Samba repo - $basearch
 baseurl=file://@REPOBASEDIR@/samba4repo/@RELEASEDIR@/$releasever/$basearch
 enabled=0
 gpgcheck=0
+metadata_expire=1
 
 [samba4repo-source]
 name=Samba repo - Source
 baseurl=file://@REPOBASEDIR@/samba4repo/@RELEASEDIR@/$releasever/SRPMS/
 enabled=0
 gpgcheck=0
+metadata_expire=1
