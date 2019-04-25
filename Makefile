@@ -7,11 +7,6 @@
 #
 #	Set up local 
 
-# RHEL 8 beta needs doxygen
-#SAMBAPKGS+=doxygen-1.8.x-srpm
-# RHEL 8 beta needs cmocka
-#SAMBAPKGS+=cmocka-1.1.x-srpm
-
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle32-3.x-srpm
 
@@ -76,13 +71,6 @@ build:: FORCE
 
 # Dependencies of libraries on other libraries for compilation
 
-# doxygen needed for RHEL 8 beta
-#cmocka-1.1.x-srpm:: doxygen-1.8.x-srpm
-#libtalloc-2.1.x-srpm:: doxygen-1.8.x-srpm
-#libtevent-0.10.x-srpm:: doxygen-1.8.x-srpm
-#libtdb-1.3.x-srpm:: doxygen-1.8.x-srpm
-#libldb-1.5.x-srpm:: doxygen-1.8.x-srpm
-
 compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 libtevent-0.9.x-srpm:: libtalloc-2.1.x-srpm
@@ -90,6 +78,9 @@ libtevent-0.9.x-srpm:: libtalloc-2.1.x-srpm
 libldb-1.5.x-srpm:: libtalloc-2.1.x-srpm
 libldb-1.5.x-srpm:: libtdb-1.3.x-srpm
 libldb-1.5.x-srpm:: libtevent-0.9.x-srpm
+
+# Needed for with_mitkrb5
+samba-4.10.x-srpm:: compat-gnutls34-srpm
 
 # Samba rellies on all the othe components
 samba-4.10.x-srpm:: libtalloc-2.1.x-srpm
@@ -126,9 +117,11 @@ samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=file://$(PWD)/samba4repo/el/7/x86_64/' >> $@
+	@echo 'baseurl=http://localhost/samba4repo/el/7/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
+	@echo 'metadata_expire=3' >> $@
+	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 	@uniq -u $@ > $@.out
@@ -143,9 +136,11 @@ samba4repo-8-x86_64.cfg: rhelbeta-8-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=file://$(PWD)/samba4repo/el/8/x86_64/' >> $@
+	@echo 'baseurl=http://localhost/samba4repo/el/8/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
+	@echo 'metadata_expire=3' >> $@
+	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 	@uniq -u $@ > $@.out
@@ -160,9 +155,11 @@ samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=file://$(PWD)/samba4repo/fedora/29/x86_64/' >> $@
+	@echo 'baseurl=http://localhost/samba4repo/fedora/29/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
+	@echo 'metadata_expire=3' >> $@
+	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 	@uniq -u $@ > $@.out
@@ -177,9 +174,11 @@ samba4repo-rawhide-x86_64.cfg: fedora-rawhide-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=file://$(PWD)/samba4repo/fedora/rawhide/x86_64/' >> $@
+	@echo 'baseurl=http://localhost/samba4repo/fedora/rawhide/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
+	@echo 'metadata_expire=3' >> $@
+	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 	@uniq -u $@ > $@.out
