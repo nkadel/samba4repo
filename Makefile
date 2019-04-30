@@ -37,14 +37,14 @@ REPOS+=samba4repo/fedora/rawhide
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
 CFGS+=samba4repo-rawhide-x86_64.cfg
+CFGS+=samba4repo-f30-x86_64.cfg
 CFGS+=samba4repo-f29-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
-CFGS+=samba4repo-8-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
-MOCKCFGS+=rhelbeta-8-x86_64.cfg
 MOCKCFGS+=fedora-29-x86_64.cfg
+MOCKCFGS+=fedora-30-x86_64.cfg
 MOCKCFGS+=fedora-rawhide-x86_64.cfg
 
 all:: $(CFGS)
@@ -127,25 +127,6 @@ samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
 	@uniq -u $@ > $@.out
 	@mv $@.out $@
 
-samba4repo-8-x86_64.cfg: rhelbeta-8-x86_64.cfg
-	@echo Generating $@ from $?
-	@cat $? > $@
-	@sed -i 's/rhelbeta-8-x86_64/samba4repo-8-x86_64/g' $@
-	@echo '"""' >> $@
-	@echo >> $@
-	@echo '[samba4repo]' >> $@
-	@echo 'name=samba4repo' >> $@
-	@echo 'enabled=1' >> $@
-	@echo 'baseurl=http://localhost/samba4repo/el/8/x86_64/' >> $@
-	@echo 'failovermethod=priority' >> $@
-	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=3' >> $@
-	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
-	@echo '"""' >> $@
-	@uniq -u $@ > $@.out
-	@mv $@.out $@
-
 samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
@@ -156,6 +137,25 @@ samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=http://localhost/samba4repo/fedora/29/x86_64/' >> $@
+	@echo 'failovermethod=priority' >> $@
+	@echo 'skip_if_unavailable=False' >> $@
+	@echo 'metadata_expire=3' >> $@
+	@echo 'gpgcheck=0' >> $@
+	@echo '#cost=2000' >> $@
+	@echo '"""' >> $@
+	@uniq -u $@ > $@.out
+	@mv $@.out $@
+
+samba4repo-f30-x86_64.cfg: fedora-30-x86_64.cfg
+	@echo Generating $@ from $?
+	@cat $? > $@
+	@sed -i 's/fedora-30-x86_64/samba4repo-f30-x86_64/g' $@
+	@echo '"""' >> $@
+	@echo >> $@
+	@echo '[samba4repo]' >> $@
+	@echo 'name=samba4repo' >> $@
+	@echo 'enabled=1' >> $@
+	@echo 'baseurl=http://localhost/samba4repo/fedora/30/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=3' >> $@
