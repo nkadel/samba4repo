@@ -7,6 +7,10 @@
 #
 #	Set up local 
 
+
+#REPOBASE=http://localhost
+REPOBASE=file://$(PWD)
+
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle32-3.x-srpm
 
@@ -117,7 +121,7 @@ samba4repo-7-x86_64.cfg: epel-7-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=http://localhost/samba4repo/el/7/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/el/7/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=3' >> $@
@@ -136,7 +140,7 @@ samba4repo-f29-x86_64.cfg: fedora-29-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=http://localhost/samba4repo/fedora/29/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/29/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=3' >> $@
@@ -155,7 +159,7 @@ samba4repo-f30-x86_64.cfg: fedora-30-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=http://localhost/samba4repo/fedora/30/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/30/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=3' >> $@
@@ -174,7 +178,7 @@ samba4repo-rawhide-x86_64.cfg: fedora-rawhide-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=http://localhost/samba4repo/fedora/rawhide/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/rawhide/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=3' >> $@
