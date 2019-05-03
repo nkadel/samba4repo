@@ -56,22 +56,22 @@ all:: $(MOCKCFGS)
 all:: $(REPODIRS)
 all:: $(SAMBAPKGS)
 
-all install clean:: FORCE
+all install clean getsrc:: FORCE
 	@for name in $(SAMBAPKGS); do \
-	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
+	     (cd $$name && $(MAKE) $(MFLAGS) $@); \
 	done  
 
 # Build for locacl OS
 build:: FORCE
 	@for name in $(SAMBAPKGS); do \
-	     (cd $$name; $(MAKE) $(MFLAGS) $@); \
+	     (cd $$name && $(MAKE) $(MFLAGS) $@); \
 	done
 
 # Git submodule checkout operation
 # For more recent versions of git, use "git checkout --recurse-submodules"
 *-srpm::
 	@[ -d $@/.git ] || \
-		git submodule update --init $@
+	     git submodule update --init $@
 
 # Dependencies of libraries on other libraries for compilation
 
@@ -94,7 +94,7 @@ samba-4.10.x-srpm:: libtdb-1.3.x-srpm
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
-	(cd $@; $(MAKE) $(MLAGS) install)
+	(cd $@ && $(MAKE) $(MLAGS) install)
 
 repos: $(REPOS) $(REPODIRS)
 $(REPOS):
