@@ -26,7 +26,10 @@ SAMBAPKGS+=compat-gnutls34-3.x-srpm
 # Current libtevent-0.9.x required for Samba 4.10
 SAMBAPKGS+=libtevent-0.9.x-srpm
 
-# Also requires libtevent, 1.5.4 required for Samba 4.10
+# RHEL 8 dependency for libldb
+SAMBAPKGS+=cmocka-1.1.x-srpm
+
+# Also requires libtevent, libtevent 1.5.4 required for Samba 4.10
 SAMBAPKGS+=libldb-1.5.x-srpm
 
 # RHEL 8 dependency
