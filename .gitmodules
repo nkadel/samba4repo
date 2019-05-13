@@ -22,3 +22,18 @@
 [submodule "libldb-1.5.x-srpm"]
 	path = libldb-1.5.x-srpm
 	url = https://github.com/nkadel/libldb-1.5.x-srpm
+[submodule "cmocka-1.1.x-srpm"]
+	path = cmocka-1.1.x-srpm
+	url = https://github.com/nkadel/cmocka-1.1.x-srpm
+[submodule "libtommath-1.0.x-srpm"]
+	path = libtommath-1.0.x-srpm
+	url = https://github.com/nkadel/libtommath-1.0.x-srpm
+[submodule "libtomcrypt-1.18.x-srpm"]
+	path = libtomcrypt-1.18.x-srpm
+	url = https://github.com/nkadel/libtomcrypt-1.18.x-srpm
+[submodule "lmdb-0.9.x-srpm"]
+	path = lmdb-0.9.x-srpm
+	url = https://github.com/nkadel/lmdb-0.9.x-srpm
+[submodule "python-crypto-2.6.x-srpm"]
+	path = python-crypto-2.6.x-srpm
+	url = https://github.com/nkadel/python-crypto-2.6.x-srpm

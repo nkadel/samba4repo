@@ -29,6 +29,18 @@ SAMBAPKGS+=libtevent-0.9.x-srpm
 # Also requires libtevent, 1.5.4 required for Samba 4.10
 SAMBAPKGS+=libldb-1.5.x-srpm
 
+# RHEL 8 dependency
+SAMBAPKGS+=lmdb-0.9.x-srpm
+
+# RHEL 8 dependency for libtomcrypt
+SAMBAPKGS+=libtommath-1.0.x-srpm
+
+# RHEL 8 dependency, uses libtommath
+SAMBAPKGS+=libtomcrypt-1.18.x-srpm
+
+# RHEL 8 dependency, uses libtomcrypt
+SAMBAPKGS+=python-crypto-2.6.x-srpm
+
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.10.x-srpm
 
@@ -40,11 +52,11 @@ REPOS+=samba4repo/fedora/rawhide
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
-CFGS+=samba4repo-rawhide-x86_64.cfg
-CFGS+=samba4repo-f30-x86_64.cfg
-CFGS+=samba4repo-f29-x86_64.cfg
 CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
+CFGS+=samba4repo-f29-x86_64.cfg
+CFGS+=samba4repo-f30-x86_64.cfg
+CFGS+=samba4repo-rawhide-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
