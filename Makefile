@@ -166,6 +166,8 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo '"""' >> $@
 	@uniq -u $@ > $@.out
 	@mv $@.out $@
+	@echo "Disabling 'best=1' for $@"
+	@sed -i 's/^best.*=1$$/\#Disable best for RHEL 8\n#best=1\n\nbest=0/g' $@
 
 samba4repo-f29-x86_64.cfg: /etc/mock/fedora-29-x86_64.cfg
 	@echo Generating $@ from $?
