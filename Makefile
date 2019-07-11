@@ -64,7 +64,6 @@ CFGS+=samba4repo-rawhide-x86_64.cfg
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=epel-8-x86_64.cfg
-MOCKCFGS+=fedora-29-x86_64.cfg
 MOCKCFGS+=fedora-30-x86_64.cfg
 MOCKCFGS+=fedora-rawhide-x86_64.cfg
 
@@ -86,9 +85,9 @@ build:: FORCE
 
 # Git submodule checkout operation
 # For more recent versions of git, use "git checkout --recurse-submodules"
-*-srpm::
-	@[ -d $@/.git ] || \
-	     git submodule update --init $@
+#*-srpm::
+#	@[ -d $@/.git ] || \
+#	     git submodule update --init $@
 
 # Dependencies of libraries on other libraries for compilation
 
@@ -158,25 +157,6 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=$(REPOBASE)/samba4repo/el/8/x86_64/' >> $@
-	@echo 'failovermethod=priority' >> $@
-	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=3' >> $@
-	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
-	@echo '"""' >> $@
-	@uniq -u $@ > $@.out
-	@mv $@.out $@
-
-samba4repo-f29-x86_64.cfg: /etc/mock/fedora-29-x86_64.cfg
-	@echo Generating $@ from $?
-	@cat $? > $@
-	@sed -i 's/fedora-29-x86_64/samba4repo-f29-x86_64/g' $@
-	@echo '"""' >> $@
-	@echo >> $@
-	@echo '[samba4repo]' >> $@
-	@echo 'name=samba4repo' >> $@
-	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/29/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=3' >> $@
