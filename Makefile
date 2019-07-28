@@ -7,30 +7,30 @@
 #
 #	Set up local 
 
-
-#REPOBASE=http://localhost
-REPOBASE=file://$(PWD)
+# file:/// does ont work for mock on RHEL 7, works fine on RHEL 8 and fedora
+REPOBASE=http://localhost
+#REPOBASE=file://$(PWD)
 
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle32-3.x-srpm
 
-# Current libtalloc-1.x required
-SAMBAPKGS+=libtalloc-2.1.x-srpm
+# Current libtalloc-2.x required
+SAMBAPKGS+=libtalloc-2.2.x-srpm
 
-# Current libtdb-1.3.x required
-SAMBAPKGS+=libtdb-1.3.x-srpm
+# Current libtdb-1.4.x required
+SAMBAPKGS+=libtdb-1.4.x-srpm
 
 # RHEL 7 needs compat-gnutls3.4.x-sprm, which uses compat-nettle32
 SAMBAPKGS+=compat-gnutls34-3.x-srpm
 
-# Current libtevent-0.9.x required for Samba 4.10
-SAMBAPKGS+=libtevent-0.9.x-srpm
+# Current libtevent-0.10.x required for Samba 4.10
+SAMBAPKGS+=libtevent-0.10.x-srpm
 
 # RHEL 8 dependency for libldb
 SAMBAPKGS+=cmocka-1.1.x-srpm
 
-# Also requires libtevent, libtevent 1.5.4 required for Samba 4.10
-SAMBAPKGS+=libldb-1.5.x-srpm
+# Also requires libtevent
+SAMBAPKGS+=libldb-1.6.x-srpm
 
 # RHEL 8 dependency
 SAMBAPKGS+=lmdb-0.9.x-srpm
@@ -45,11 +45,10 @@ SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 SAMBAPKGS+=python-crypto-2.6.x-srpm
 
 # Current samba release, requires all curent libraries
-SAMBAPKGS+=samba-4.10.x-srpm
+SAMBAPKGS+=samba-4.11.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
-REPOS+=samba4repo/fedora/29
 REPOS+=samba4repo/fedora/30
 REPOS+=samba4repo/fedora/rawhide
 
@@ -57,7 +56,6 @@ REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repoda
 
 CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
-CFGS+=samba4repo-f29-x86_64.cfg
 CFGS+=samba4repo-f30-x86_64.cfg
 CFGS+=samba4repo-rawhide-x86_64.cfg
 
@@ -93,20 +91,20 @@ build:: FORCE
 
 compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
-libtevent-0.9.x-srpm:: libtalloc-2.1.x-srpm
+libtevent-0.9.x-srpm:: libtalloc-2.2.x-srpm
 
-libldb-1.5.x-srpm:: libtalloc-2.1.x-srpm
-libldb-1.5.x-srpm:: libtdb-1.3.x-srpm
-libldb-1.5.x-srpm:: libtevent-0.9.x-srpm
+libldb-1.6.x-srpm:: libtalloc-2.2.x-srpm
+libldb-1.6.x-srpm:: libtdb-1.4.x-srpm
+libldb-1.6.x-srpm:: libtevent-0.10.x-srpm
 
 # Needed for with_mitkrb5
-samba-4.10.x-srpm:: compat-gnutls34-3.x-srpm
+samba-4.11.x-srpm:: compat-gnutls34-3.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.10.x-srpm:: libtalloc-2.1.x-srpm
-samba-4.10.x-srpm:: libldb-1.5.x-srpm
-samba-4.10.x-srpm:: libtevent-0.9.x-srpm
-samba-4.10.x-srpm:: libtdb-1.3.x-srpm
+samba-4.11.x-srpm:: libtalloc-2.2.x-srpm
+samba-4.11.x-srpm:: libldb-1.6.x-srpm
+samba-4.11.x-srpm:: libtevent-0.10.x-srpm
+samba-4.11.x-srpm:: libtdb-1.4.x-srpm
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
@@ -132,6 +130,7 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/epel-7-x86_64/samba4repo-7-x86_64/g' $@
+	@sed -i 's/^best=1/best=0/g' $@
 	@echo '"""' >> $@
 	@echo >> $@
 	@echo '[samba4repo]' >> $@
@@ -140,7 +139,7 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo 'baseurl=$(REPOBASE)/samba4repo/el/7/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=3' >> $@
+	@echo 'metadata_expire=1' >> $@
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
@@ -151,6 +150,7 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/epel-8-x86_64/samba4repo-8-x86_64/g' $@
+	@sed -i 's/^best=1/best=0/g' $@
 	@echo '"""' >> $@
 	@echo >> $@
 	@echo '[samba4repo]' >> $@
@@ -159,7 +159,7 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo 'baseurl=$(REPOBASE)/samba4repo/el/8/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=3' >> $@
+	@echo 'metadata_expire=1' >> $@
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
@@ -172,6 +172,7 @@ samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/fedora-30-x86_64/samba4repo-f30-x86_64/g' $@
+	@sed -i 's/^best=1/best=0/g' $@
 	@echo '"""' >> $@
 	@echo >> $@
 	@echo '[samba4repo]' >> $@
@@ -180,7 +181,7 @@ samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/30/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=3' >> $@
+	@echo 'metadata_expire=1' >> $@
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
@@ -191,6 +192,7 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/fedora-rawhide-x86_64/samba4repo-rawhide-x86_64/g' $@
+	@sed -i 's/^best=1/best=0/g' $@
 	@echo '"""' >> $@
 	@echo >> $@
 	@echo '[samba4repo]' >> $@
@@ -199,7 +201,7 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/rawhide/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=3' >> $@
+	@echo 'metadata_expire=1' >> $@
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
