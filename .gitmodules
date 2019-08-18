@@ -19,3 +19,15 @@
 [submodule "python-crypto-2.6.x-srpm"]
 	path = python-crypto-2.6.x-srpm
 	url = https://github.com/nkadel/python-crypto-2.6.x-srpm
+[submodule "libtalloc-2.2.x-srpm"]
+	path = libtalloc-2.2.x-srpm
+	url = https://github.com/nkadel/libtalloc-2.2.x-srpm
+[submodule "libtdb-1.4.x-srpm"]
+	path = libtdb-1.4.x-srpm
+	url = https://github.com/nkadel/libtdb-1.4.x-srpm
+[submodule "libtevent-0.10.x-srpm"]
+	path = libtevent-0.10.x-srpm
+	url = https://github.com/nkadel/libtevent-0.10.x-srpm
+[submodule "samba-4.11.x-srpm"]
+	path = samba-4.11.x-srpm
+	url = https://github.com/nkadel/samba-4.11.x-srpm
