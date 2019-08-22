@@ -30,7 +30,7 @@ SAMBAPKGS+=libtevent-0.10.x-srpm
 SAMBAPKGS+=cmocka-1.1.x-srpm
 
 # Also requires libtevent
-SAMBAPKGS+=libldb-1.6.x-srpm
+SAMBAPKGS+=libldb-2.0.x-srpm
 
 # RHEL 8 dependency
 SAMBAPKGS+=lmdb-0.9.x-srpm
@@ -93,16 +93,16 @@ compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 libtevent-0.9.x-srpm:: libtalloc-2.2.x-srpm
 
-libldb-1.6.x-srpm:: libtalloc-2.2.x-srpm
-libldb-1.6.x-srpm:: libtdb-1.4.x-srpm
-libldb-1.6.x-srpm:: libtevent-0.10.x-srpm
+libldb-2.0.x-srpm:: libtalloc-2.2.x-srpm
+libldb-2.0.x-srpm:: libtdb-1.4.x-srpm
+libldb-2.0.x-srpm:: libtevent-0.10.x-srpm
 
 # Needed for with_mitkrb5
 samba-4.11.x-srpm:: compat-gnutls34-3.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.11.x-srpm:: libtalloc-2.2.x-srpm
-samba-4.11.x-srpm:: libldb-1.6.x-srpm
+samba-4.11.x-srpm:: libldb-2.0.x-srpm
 samba-4.11.x-srpm:: libtevent-0.10.x-srpm
 samba-4.11.x-srpm:: libtdb-1.4.x-srpm
 
