@@ -31,3 +31,6 @@
 [submodule "samba-4.11.x-srpm"]
 	path = samba-4.11.x-srpm
 	url = https://github.com/nkadel/samba-4.11.x-srpm
+[submodule "libldb-2.0.x-srpm"]
+	path = libldb-2.0.x-srpm
+	url = https://github.com/nkadel/libldb-2.0.x-srpm
