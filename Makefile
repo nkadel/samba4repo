@@ -131,8 +131,8 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@cat $? > $@
 	@sed -i 's/epel-7-x86_64/samba4repo-7-x86_64/g' $@
 	@sed -i 's/^best=1/best=0/g' $@
-	@echo '"""' >> $@
 	@echo >> $@
+	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
@@ -143,16 +143,16 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@.out
-	@mv $@.out $@
 
 samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/epel-8-x86_64/samba4repo-8-x86_64/g' $@
 	@sed -i 's/^best=1/best=0/g' $@
-	@echo '"""' >> $@
+	@echo "Disabling 'best=1' for $@"
+	@sed -i 's/^best.*=1$$/\#Disable best for RHEL 8\n#best=1\n\nbest=0/g' $@
 	@echo >> $@
+	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
@@ -163,18 +163,14 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@.out
-	@mv $@.out $@
-	@echo "Disabling 'best=1' for $@"
-	@sed -i 's/^best.*=1$$/\#Disable best for RHEL 8\n#best=1\n\nbest=0/g' $@
 
 samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/fedora-30-x86_64/samba4repo-f30-x86_64/g' $@
 	@sed -i 's/^best=1/best=0/g' $@
-	@echo '"""' >> $@
 	@echo >> $@
+	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
@@ -185,16 +181,14 @@ samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@.out
-	@mv $@.out $@
 
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/fedora-rawhide-x86_64/samba4repo-rawhide-x86_64/g' $@
 	@sed -i 's/^best=1/best=0/g' $@
-	@echo '"""' >> $@
 	@echo >> $@
+	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
@@ -205,8 +199,6 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
-	@uniq -u $@ > $@.out
-	@mv $@.out $@
 
 $(MOCKCFGS)::
 	ln -sf /etc/mock/$@ $@
