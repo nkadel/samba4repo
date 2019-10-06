@@ -8,8 +8,8 @@
 #	Set up local 
 
 # file:/// does ont work for mock on RHEL 7, works fine on RHEL 8 and fedora
-REPOBASE=http://localhost
-#REPOBASE=file://$(PWD)
+#REPOBASE=http://localhost
+REPOBASE=file://$(PWD)
 
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle32-3.x-srpm
@@ -43,6 +43,9 @@ SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 
 # RHEL 8 dependency, uses libtomcrypt
 SAMBAPKGS+=python-crypto-2.6.x-srpm
+
+# RHEL dependency
+SAMBAPKGS+=quota-4.x-srpm
 
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.11.x-srpm
@@ -130,8 +133,10 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/epel-7-x86_64/samba4repo-7-x86_64/g' $@
-	@sed -i 's/^best=1/best=0/g' $@
 	@echo >> $@
+	@echo "Disabling 'best=' for $@"
+	@sed -i '/^best=/d' $@
+	@echo "best=0" >> $@
 	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
@@ -148,10 +153,10 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/epel-8-x86_64/samba4repo-8-x86_64/g' $@
-	@sed -i 's/^best=1/best=0/g' $@
-	@echo "Disabling 'best=1' for $@"
-	@sed -i 's/^best.*=1$$/\#Disable best for RHEL 8\n#best=1\n\nbest=0/g' $@
 	@echo >> $@
+	@echo "Disabling 'best=' for $@"
+	@sed -i '/^best=/d' $@
+	@echo "best=0" >> $@
 	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
@@ -168,8 +173,10 @@ samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/fedora-30-x86_64/samba4repo-f30-x86_64/g' $@
-	@sed -i 's/^best=1/best=0/g' $@
 	@echo >> $@
+	@echo "Disabling 'best=' for $@"
+	@sed -i '/^best=/d' $@
+	@echo "best=0" >> $@
 	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
@@ -186,8 +193,10 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@sed -i 's/fedora-rawhide-x86_64/samba4repo-rawhide-x86_64/g' $@
-	@sed -i 's/^best=1/best=0/g' $@
 	@echo >> $@
+	@echo "Disabling 'best=' for $@"
+	@sed -i '/^best=/d' $@
+	@echo "best=0" >> $@
 	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
