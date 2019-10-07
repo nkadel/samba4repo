@@ -19,9 +19,6 @@ SAMBAPKGS+=libtalloc-2.2.x-srpm
 # Current libtdb-1.4.x required
 SAMBAPKGS+=libtdb-1.4.x-srpm
 
-# RHEL 7 needs compat-gnutls3.4.x-sprm, which uses compat-nettle32
-SAMBAPKGS+=compat-gnutls34-3.x-srpm
-
 # Current libtevent-0.10.x required for Samba 4.10
 SAMBAPKGS+=libtevent-0.10.x-srpm
 
@@ -30,6 +27,12 @@ SAMBAPKGS+=cmocka-1.1.x-srpm
 
 # Also requires libtevent
 SAMBAPKGS+=libldb-2.0.x-srpm
+
+# RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
+SAMBAPKGS+=compat-nettle32-3.x-srpm
+
+# RHEL 7 needs compat-gnutls3.4.x-sprm, which uses compat-nettle32
+SAMBAPKGS+=compat-gnutls34-3.x-srpm
 
 # RHEL 8 dependency
 SAMBAPKGS+=lmdb-0.9.x-srpm
@@ -98,6 +101,10 @@ libldb-2.0.x-srpm:: libtevent-0.10.x-srpm
 
 # Needed for with_mitkrb5
 samba-4.11.x-srpm:: compat-gnutls34-3.x-srpm
+
+compat-nettle32-3.x-srpm:: libldb-2.0.x-srpm
+
+compat-gnutls34-3.x-srpm:: libldb-2.0.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.11.x-srpm:: libtalloc-2.2.x-srpm
@@ -185,6 +192,7 @@ samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
+<<<<<<< HEAD
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
@@ -205,6 +213,8 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
+=======
+>>>>>>> e2270ade1ca2da3c5a62bd11a6eac288590629f4
 $(MOCKCFGS)::
 	ln -sf /etc/mock/$@ $@
 
