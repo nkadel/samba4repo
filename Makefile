@@ -46,7 +46,7 @@ SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 # RHEL 8 dependency, uses libtomcrypt
 SAMBAPKGS+=python-crypto-2.6.x-srpm
 
-# RHEL dependency
+# RHEL 8dependency
 SAMBAPKGS+=quota-4.x-srpm
 
 # Current samba release, requires all curent libraries
@@ -192,7 +192,6 @@ samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
-<<<<<<< HEAD
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
@@ -213,8 +212,6 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
-=======
->>>>>>> e2270ade1ca2da3c5a62bd11a6eac288590629f4
 $(MOCKCFGS)::
 	ln -sf /etc/mock/$@ $@
 
