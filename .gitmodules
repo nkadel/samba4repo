@@ -1,9 +1,3 @@
-[submodule "compat-nettle32-3.x-srpm"]
-	path = compat-nettle32-3.x-srpm
-	url = https://github.com/nkadel/compat-nettle32-3.x-srpm
-[submodule "compat-gnutls34-3.x-srpm"]
-	path = compat-gnutls34-3.x-srpm
-	url = https://github.com/nkadel/compat-gnutls34-3.x-srpm
 [submodule "cmocka-1.1.x-srpm"]
 	path = cmocka-1.1.x-srpm
 	url = https://github.com/nkadel/cmocka-1.1.x-srpm
