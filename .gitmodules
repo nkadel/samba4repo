@@ -31,3 +31,9 @@
 [submodule "quota-4.x-srpm"]
 	path = quota-4.x-srpm
 	url = https://github.com/nkadel/quota-4.x-srpm
+[submodule "compat-gnutls34-3.x-srpm"]
+	path = compat-gnutls34-3.x-srpm
+	url = https://github.com/nkadel/compat-gnutls34-3.x-srpm
+[submodule "compat-nettle32-3.x-srpm"]
+	path = compat-nettle32-3.x-srpm
+	url = https://github.com/nkadel/compat-nettle32-3.x-srpm
