@@ -10,11 +10,17 @@
 REPOBASE=http://localhost
 $REPOBASE=file://$(PWD)
 
-# Current libtalloc-2.x required
-SAMBAPKGS+=libtalloc-2.2.x-srpm
+# RHEL 8 dependency for libldb
+SAMBAPKGS+=cmocka-1.1.x-srpm
+
+# RHEL 8 dependency for libldb
+SAMBAPKGS+=lmdb-0.9.x-srpm
 
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle32-3.x-srpm
+
+# Current libtalloc-2.x required
+SAMBAPKGS+=libtalloc-2.2.x-srpm
 
 # Current libtdb-1.4.x required
 SAMBAPKGS+=libtdb-1.4.x-srpm
@@ -22,17 +28,11 @@ SAMBAPKGS+=libtdb-1.4.x-srpm
 # Current libtevent-0.10.x required for Samba 4.10
 SAMBAPKGS+=libtevent-0.10.x-srpm
 
-# RHEL 8 dependency for libldb
-SAMBAPKGS+=cmocka-1.1.x-srpm
-
-# Also requires libtevent
-SAMBAPKGS+=libldb-2.0.x-srpm
-
 # RHEL 7 needs compat-gnutls3.4.x-sprm, which uses compat-nettle32
 SAMBAPKGS+=compat-gnutls34-3.x-srpm
 
-# RHEL 8 dependency
-SAMBAPKGS+=lmdb-0.9.x-srpm
+# Also requires libtevent
+SAMBAPKGS+=libldb-2.0.x-srpm
 
 # RHEL 8 dependency for libtomcrypt
 SAMBAPKGS+=libtommath-1.0.x-srpm
@@ -43,7 +43,7 @@ SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 # RHEL 8 dependency, uses libtomcrypt
 SAMBAPKGS+=python-crypto-2.6.x-srpm
 
-# RHEL 8dependency
+# RHEL 8 dependency
 SAMBAPKGS+=quota-4.x-srpm
 
 # Current samba release, requires all curent libraries
@@ -92,6 +92,8 @@ compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 libtevent-0.10.x-srpm:: libtalloc-2.2.x-srpm
 
+libldb-2.0.x-srpm:: cmocka-1.1.x-srpm
+libldb-2.0.x-srpm:: lmdb-0.9.x-srpm
 libldb-2.0.x-srpm:: libtalloc-2.2.x-srpm
 libldb-2.0.x-srpm:: libtdb-1.4.x-srpm
 libldb-2.0.x-srpm:: libtevent-0.10.x-srpm
@@ -102,10 +104,11 @@ compat-gnutls34-3.x-srpm:: libldb-2.0.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.11.x-srpm:: compat-gnutls34-3.x-srpm
+samba-4.11.x-srpm:: lmdb-0.9.x-srpm
 samba-4.11.x-srpm:: libtalloc-2.2.x-srpm
-samba-4.11.x-srpm:: libldb-2.0.x-srpm
-samba-4.11.x-srpm:: libtevent-0.10.x-srpm
 samba-4.11.x-srpm:: libtdb-1.4.x-srpm
+samba-4.11.x-srpm:: libtevent-0.10.x-srpm
+samba-4.11.x-srpm:: libldb-2.0.x-srpm
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
@@ -241,7 +244,7 @@ distclean: clean
 	rm -rf $(REPOS)
 	rm -rf samba4repo
 	@for name in $(SAMBAPKGS); do \
-	    (cd $$name; git clean); \
+	    (cd $$name; git clean -x -d -f); \
 	done
 
 maintainer-clean: distclean
