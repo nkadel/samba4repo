@@ -65,7 +65,7 @@ CFGS+=samba4repo-f31-x86_64.cfg
 MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=epel-8-x86_64.cfg
 MOCKCFGS+=fedora-30-x86_64.cfg
-MOCKCFGS+=fedora-30-x86_64.cfg
+MOCKCFGS+=fedora-31-x86_64.cfg
 
 all:: $(CFGS)
 all:: $(MOCKCFGS)
