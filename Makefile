@@ -194,25 +194,25 @@ samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo '"""' >> $@
 
 samba4repo-f31-x86_64.cfg: /etc/mock/fedora-31-x86_64.cfg
-        @echo Generating $@ from $?
-        @cat $? > $@
-        @sed -i 's/fedora-31-x86_64/samba4repo-f31-x86_64/g' $@
-        @echo >> $@
-        @echo "Disabling 'best=' for $@"
-        @sed -i '/^best=/d' $@
-        @echo "best=0" >> $@
-        @echo "config_opts['yum.conf'] += \"\"\"" >> $@
-        @echo '[samba4repo]' >> $@
-        @echo 'name=samba4repo' >> $@
-        @echo 'enabled=1' >> $@
-        @echo 'baseurl=$(REPOBASE)/samba4repo/fedora/31/x86_64/' >> $@
-        @echo 'failovermethod=priority' >> $@
-        @echo 'skip_if_unavailable=False' >> $@
-        @echo 'metadata_expire=1' >> $@
-        @echo 'gpgcheck=0' >> $@
-        @echo '#cost=2000' >> $@
-        @echo '"""' >> $@
-	
+	@echo Generating $@ from $?
+	@cat $? > $@
+	@sed -i 's/fedora-31-x86_64/samba4repo-f31-x86_64/g' $@
+	@echo >> $@
+	@echo "Disabling 'best=' for $@"
+	@sed -i '/^best=/d' $@
+	@echo "best=0" >> $@
+	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
+	@echo '[samba4repo]' >> $@
+	@echo 'name=samba4repo' >> $@
+	@echo 'enabled=1' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/31/x86_64/' >> $@
+	@echo 'failovermethod=priority' >> $@
+	@echo 'skip_if_unavailable=False' >> $@
+	@echo 'metadata_expire=1' >> $@
+	@echo 'gpgcheck=0' >> $@
+	@echo '#cost=2000' >> $@
+	@echo '"""' >> $@
+
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
