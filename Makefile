@@ -7,8 +7,8 @@
 #
 #	Set up local 
 
-REPOBASE=http://localhost
-$REPOBASE=file://$(PWD)
+#REPOBASE=http://localhost
+REPOBASE=file://$(PWD)
 
 # RHEL 8 dependency for libldb
 SAMBAPKGS+=cmocka-1.1.x-srpm
@@ -51,18 +51,18 @@ SAMBAPKGS+=samba-4.11.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
-REPOS+=samba4repo/fedora/30
+REPOS+=samba4repo/fedora/31
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
 CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
-CFGS+=samba4repo-f30-x86_64.cfg
+CFGS+=samba4repo-f31-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=epel-8-x86_64.cfg
-MOCKCFGS+=fedora-30-x86_64.cfg
+MOCKCFGS+=fedora-31-x86_64.cfg
 
 all:: $(CFGS)
 all:: $(MOCKCFGS)
@@ -170,10 +170,10 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
-samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
+samba4repo-f31-x86_64.cfg: /etc/mock/fedora-31-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/fedora-30-x86_64/samba4repo-f30-x86_64/g' $@
+	@sed -i 's/fedora-31-x86_64/samba4repo-f31-x86_64/g' $@
 	@echo >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
@@ -182,7 +182,7 @@ samba4repo-f30-x86_64.cfg: /etc/mock/fedora-30-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/30/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/31/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=1' >> $@
