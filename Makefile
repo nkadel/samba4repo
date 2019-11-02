@@ -20,7 +20,7 @@ SAMBAPKGS+=lmdb-0.9.x-srpm
 SAMBAPKGS+=compat-nettle32-3.x-srpm
 
 # Current libtalloc-2.x required
-SAMBAPKGS+=libtalloc-2.2.x-srpm
+SAMBAPKGS+=libtalloc-2.3.x-srpm
 
 # Current libtdb-1.4.x required
 SAMBAPKGS+=libtdb-1.4.x-srpm
@@ -90,11 +90,11 @@ build:: FORCE
 
 compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
-libtevent-0.10.x-srpm:: libtalloc-2.2.x-srpm
+libtevent-0.10.x-srpm:: libtalloc-2.3.x-srpm
 
 libldb-2.0.x-srpm:: cmocka-1.1.x-srpm
 libldb-2.0.x-srpm:: lmdb-0.9.x-srpm
-libldb-2.0.x-srpm:: libtalloc-2.2.x-srpm
+libldb-2.0.x-srpm:: libtalloc-2.3.x-srpm
 libldb-2.0.x-srpm:: libtdb-1.4.x-srpm
 libldb-2.0.x-srpm:: libtevent-0.10.x-srpm
 
@@ -105,7 +105,7 @@ compat-gnutls34-3.x-srpm:: libldb-2.0.x-srpm
 # Samba rellies on all the othe components
 samba-4.11.x-srpm:: compat-gnutls34-3.x-srpm
 samba-4.11.x-srpm:: lmdb-0.9.x-srpm
-samba-4.11.x-srpm:: libtalloc-2.2.x-srpm
+samba-4.11.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.11.x-srpm:: libtdb-1.4.x-srpm
 samba-4.11.x-srpm:: libtevent-0.10.x-srpm
 samba-4.11.x-srpm:: libldb-2.0.x-srpm

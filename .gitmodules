@@ -13,9 +13,6 @@
 [submodule "python-crypto-2.6.x-srpm"]
 	path = python-crypto-2.6.x-srpm
 	url = https://github.com/nkadel/python-crypto-2.6.x-srpm
-[submodule "libtalloc-2.2.x-srpm"]
-	path = libtalloc-2.2.x-srpm
-	url = https://github.com/nkadel/libtalloc-2.2.x-srpm
 [submodule "libtdb-1.4.x-srpm"]
 	path = libtdb-1.4.x-srpm
 	url = https://github.com/nkadel/libtdb-1.4.x-srpm
@@ -37,3 +34,6 @@
 [submodule "compat-nettle32-3.x-srpm"]
 	path = compat-nettle32-3.x-srpm
 	url = https://github.com/nkadel/compat-nettle32-3.x-srpm
+[submodule "libtalloc-2.3.x-srpm"]
+	path = libtalloc-2.3.x-srpm
+	url = https://github.com/nkadel/libtalloc-2.3.x-srpm
