@@ -1,7 +1,7 @@
 samba4repo
 ==========
 
-Wrapper for SRPM building tools for Samba 4 on Fedora 29
+Wrapper for SRPM building tools for Samba 4 on Fedora 31, CentOS 7 and 8
 
 Samba 4.10.0 and later are not compatible with Python 2.. These tools
 have been updated to use the EPEL published python36-devel, and build
