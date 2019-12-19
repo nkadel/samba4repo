@@ -69,16 +69,11 @@ all:: $(MOCKCFGS)
 all:: $(REPODIRS)
 all:: $(SAMBAPKGS)
 
-all install clean getsrc:: FORCE
+.PHONY: all install clean getsrc build srpm src.rpm
+all install clean getsrc build srpm src.rpm::
 	@for name in $(SAMBAPKGS); do \
 	     (cd $$name && $(MAKE) $(MFLAGS) $@); \
 	done  
-
-# Build for locacl OS
-build:: FORCE
-	@for name in $(SAMBAPKGS); do \
-	     (cd $$name && $(MAKE) $(MFLAGS) $@); \
-	done
 
 # Git submodule checkout operation
 # For more recent versions of git, use "git checkout --recurse-submodules"
