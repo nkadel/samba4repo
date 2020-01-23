@@ -7,14 +7,14 @@
 #
 #	Set up local 
 
-#REPOBASE=http://localhost
-REPOBASE=file://$(PWD)
+REPOBASE=http://localhost
+#REPOBASE=file://$(PWD)
 
 # RHEL 8 dependency for libldb
-SAMBAPKGS+=cmocka-1.1.x-srpm
+#SAMBAPKGS+=cmocka-1.1.x-srpm
 
 # RHEL 8 dependency for libldb
-SAMBAPKGS+=lmdb-0.9.x-srpm
+#SAMBAPKGS+=lmdb-0.9.x-srpm
 
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle32-3.x-srpm
@@ -43,7 +43,7 @@ SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 # RHEL 8 dependency, uses libtomcrypt
 SAMBAPKGS+=python-crypto-2.6.x-srpm
 
-# RHEL 8 dependency
+# RHEL 8 decided to leave out quota-devel!!!!
 SAMBAPKGS+=quota-4.x-srpm
 
 # Current samba release, requires all curent libraries
@@ -87,8 +87,8 @@ compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 libtevent-0.10.x-srpm:: libtalloc-2.3.x-srpm
 
-libldb-2.0.x-srpm:: cmocka-1.1.x-srpm
-libldb-2.0.x-srpm:: lmdb-0.9.x-srpm
+#libldb-2.0.x-srpm:: cmocka-1.1.x-srpm
+#libldb-2.0.x-srpm:: lmdb-0.9.x-srpm
 libldb-2.0.x-srpm:: libtalloc-2.3.x-srpm
 libldb-2.0.x-srpm:: libtdb-1.4.x-srpm
 libldb-2.0.x-srpm:: libtevent-0.10.x-srpm
@@ -99,11 +99,13 @@ compat-gnutls34-3.x-srpm:: libldb-2.0.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.11.x-srpm:: compat-gnutls34-3.x-srpm
-samba-4.11.x-srpm:: lmdb-0.9.x-srpm
+#samba-4.11.x-srpm:: lmdb-0.9.x-srpm
 samba-4.11.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.11.x-srpm:: libtdb-1.4.x-srpm
 samba-4.11.x-srpm:: libtevent-0.10.x-srpm
 samba-4.11.x-srpm:: libldb-2.0.x-srpm
+# RHEL 8 decided to leave out quota-devel!!!!
+samba-4.11.x-srpm:: quota-4.x-srpm
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
