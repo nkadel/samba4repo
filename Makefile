@@ -7,8 +7,8 @@
 #
 #	Set up local 
 
-REPOBASE=http://localhost
-#REPOBASE=file://$(PWD)
+#REPOBASE=http://localhost
+REPOBASE=file://$(PWD)
 
 # RHEL 8 dependency for libldb
 #SAMBAPKGS+=cmocka-1.1.x-srpm
@@ -64,13 +64,16 @@ MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=epel-8-x86_64.cfg
 MOCKCFGS+=fedora-31-x86_64.cfg
 
-all:: $(CFGS)
-all:: $(MOCKCFGS)
-all:: $(REPODIRS)
-all:: $(SAMBAPKGS)
+all:: install
 
-.PHONY: all install clean getsrc build srpm src.rpm
-all install clean getsrc build srpm src.rpm::
+install:: $(CFGS)
+install:: $(MOCKCFGS)
+install:: $(REPODIRS)
+install:: $(SAMBAPKGS)
+
+# Actually put all the modules in the local repo
+.PHONY: install clean getsrc build srpm src.rpm
+install clean getsrc build srpm src.rpm::
 	@for name in $(SAMBAPKGS); do \
 	     (cd $$name && $(MAKE) $(MFLAGS) $@); \
 	done  
@@ -111,6 +114,7 @@ samba-4.11.x-srpm:: quota-4.x-srpm
 $(SAMBAPKGS):: FORCE
 	(cd $@ && $(MAKE) $(MLAGS) install)
 
+repodirs: $(REPOS) $(REPODIRS)
 repos: $(REPOS) $(REPODIRS)
 $(REPOS):
 	install -d -m 755 $@
