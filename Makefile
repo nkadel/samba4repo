@@ -10,12 +10,6 @@
 #REPOBASE=http://localhost
 REPOBASE=file://$(PWD)
 
-# RHEL 8 dependency for libldb
-#SAMBAPKGS+=cmocka-1.1.x-srpm
-
-# RHEL 8 dependency for libldb
-#SAMBAPKGS+=lmdb-0.9.x-srpm
-
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle32-3.x-srpm
 
