@@ -153,7 +153,7 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
 	@echo "best=0" >> $@
-	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
+	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
@@ -173,7 +173,7 @@ samba4repo-f31-x86_64.cfg: /etc/mock/fedora-31-x86_64.cfg
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
 	@echo "best=0" >> $@
-	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
+	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
