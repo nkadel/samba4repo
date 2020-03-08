@@ -13,9 +13,9 @@
 [submodule "libtevent-0.10.x-srpm"]
 	path = libtevent-0.10.x-srpm
 	url = https://github.com/nkadel/libtevent-0.10.x-srpm
-[submodule "samba-4.11.x-srpm"]
-	path = samba-4.11.x-srpm
-	url = https://github.com/nkadel/samba-4.11.x-srpm
+[submodule "samba-4.12.x-srpm"]
+	path = samba-4.12.x-srpm
+	url = https://github.com/nkadel/samba-4.12.x-srpm
 [submodule "libldb-2.1.x-srpm"]
 	path = libldb-2.1.x-srpm
 	url = https://github.com/nkadel/libldb-2.1.x-srpm
