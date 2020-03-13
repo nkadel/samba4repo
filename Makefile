@@ -10,12 +10,6 @@
 REPOBASE=http://localhost
 #REPOBASE=file://$(PWD)
 
-# RHEL 8 dependency for libldb
-#SAMBAPKGS+=cmocka-1.1.x-srpm
-
-# RHEL 8 dependency for libldb
-#SAMBAPKGS+=lmdb-0.9.x-srpm
-
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle32-3.x-srpm
 
@@ -32,7 +26,7 @@ SAMBAPKGS+=libtevent-0.10.x-srpm
 SAMBAPKGS+=compat-gnutls34-3.x-srpm
 
 # Also requires libtevent
-SAMBAPKGS+=libldb-2.0.x-srpm
+SAMBAPKGS+=libldb-2.1.x-srpm
 
 # RHEL 8 dependency for libtomcrypt
 SAMBAPKGS+=libtommath-1.0.x-srpm
@@ -47,7 +41,7 @@ SAMBAPKGS+=python-crypto-2.6.x-srpm
 SAMBAPKGS+=quota-4.x-srpm
 
 # Current samba release, requires all curent libraries
-SAMBAPKGS+=samba-4.11.x-srpm
+SAMBAPKGS+=samba-4.12.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
@@ -87,25 +81,23 @@ compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 libtevent-0.10.x-srpm:: libtalloc-2.3.x-srpm
 
-#libldb-2.0.x-srpm:: cmocka-1.1.x-srpm
-#libldb-2.0.x-srpm:: lmdb-0.9.x-srpm
-libldb-2.0.x-srpm:: libtalloc-2.3.x-srpm
-libldb-2.0.x-srpm:: libtdb-1.4.x-srpm
-libldb-2.0.x-srpm:: libtevent-0.10.x-srpm
+libldb-2.1.x-srpm:: libtalloc-2.3.x-srpm
+libldb-2.1.x-srpm:: libtdb-1.4.x-srpm
+libldb-2.1.x-srpm:: libtevent-0.10.x-srpm
 
 # Needed for with_mitkrb5
-compat-nettle32-3.x-srpm:: libldb-2.0.x-srpm
-compat-gnutls34-3.x-srpm:: libldb-2.0.x-srpm
+compat-nettle32-3.x-srpm:: libldb-2.1.x-srpm
+compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.11.x-srpm:: compat-gnutls34-3.x-srpm
-#samba-4.11.x-srpm:: lmdb-0.9.x-srpm
-samba-4.11.x-srpm:: libtalloc-2.3.x-srpm
-samba-4.11.x-srpm:: libtdb-1.4.x-srpm
-samba-4.11.x-srpm:: libtevent-0.10.x-srpm
-samba-4.11.x-srpm:: libldb-2.0.x-srpm
+samba-4.12.x-srpm:: compat-gnutls34-3.x-srpm
+#samba-4.12.x-srpm:: lmdb-0.9.x-srpm
+samba-4.12.x-srpm:: libtalloc-2.3.x-srpm
+samba-4.12.x-srpm:: libtdb-1.4.x-srpm
+samba-4.12.x-srpm:: libtevent-0.10.x-srpm
+samba-4.12.x-srpm:: libldb-2.1.x-srpm
 # RHEL 8 decided to leave out quota-devel!!!!
-samba-4.11.x-srpm:: quota-4.x-srpm
+samba-4.12.x-srpm:: quota-4.x-srpm
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
