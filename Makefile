@@ -84,25 +84,23 @@ compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 libtevent-0.10.x-srpm:: libtalloc-2.3.x-srpm
 
-#libldb-2.0.x-srpm:: cmocka-1.1.x-srpm
-#libldb-2.0.x-srpm:: lmdb-0.9.x-srpm
-libldb-2.0.x-srpm:: libtalloc-2.3.x-srpm
-libldb-2.0.x-srpm:: libtdb-1.4.x-srpm
-libldb-2.0.x-srpm:: libtevent-0.10.x-srpm
+libldb-2.1.x-srpm:: libtalloc-2.3.x-srpm
+libldb-2.1.x-srpm:: libtdb-1.4.x-srpm
+libldb-2.1.x-srpm:: libtevent-0.10.x-srpm
 
 # Needed for with_mitkrb5
-compat-nettle32-3.x-srpm:: libldb-2.0.x-srpm
-compat-gnutls34-3.x-srpm:: libldb-2.0.x-srpm
+compat-nettle32-3.x-srpm:: libldb-2.1.x-srpm
+compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.11.x-srpm:: compat-gnutls34-3.x-srpm
-#samba-4.11.x-srpm:: lmdb-0.9.x-srpm
-samba-4.11.x-srpm:: libtalloc-2.3.x-srpm
-samba-4.11.x-srpm:: libtdb-1.4.x-srpm
-samba-4.11.x-srpm:: libtevent-0.10.x-srpm
-samba-4.11.x-srpm:: libldb-2.0.x-srpm
+samba-4.12.x-srpm:: compat-gnutls34-3.x-srpm
+#samba-4.12.x-srpm:: lmdb-0.9.x-srpm
+samba-4.12.x-srpm:: libtalloc-2.3.x-srpm
+samba-4.12.x-srpm:: libtdb-1.4.x-srpm
+samba-4.12.x-srpm:: libtevent-0.10.x-srpm
+samba-4.12.x-srpm:: libldb-2.1.x-srpm
 # RHEL 8 decided to leave out quota-devel!!!!
-samba-4.11.x-srpm:: quota-4.x-srpm
+samba-4.12.x-srpm:: quota-4.x-srpm
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
@@ -140,7 +138,7 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo 'baseurl=$(REPOBASE)/samba4repo/el/7/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=1' >> $@
+	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
@@ -160,7 +158,7 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo 'baseurl=$(REPOBASE)/samba4repo/el/8/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=1' >> $@
+	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
@@ -180,7 +178,7 @@ samba4repo-f31-x86_64.cfg: /etc/mock/fedora-31-x86_64.cfg
 	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/31/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=1' >> $@
+	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
@@ -200,7 +198,7 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/rawhide/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=1' >> $@
+	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
 	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
