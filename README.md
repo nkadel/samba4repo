@@ -19,6 +19,19 @@ partly because those are incompatible with the default Kerberos built
 into Fedora and RHEL. The experiemental Samba support for that default
 Kerberos is tentative and not yet suitable for production.
 
+quota-devel
+===========
+
+Red Hat, for reasons which defy logic, did not elect to publish the
+"quota-devel" package along with "quota" in RHEL 8. CentOS has worked
+around this by adding a "Devel" stream to the 5 arbitrary and
+inconsistently segregated channels of their primary OS channels. This
+Devel channel is disabled by default.
+
+Enable it in /etc/mock/centos-8.tpl gefore trying to compile Samba
+with mock, and enablr it /etc/yum.repos.d/ before compiling Samba
+lodally.
+
 Git Checkout
 ===========
 
