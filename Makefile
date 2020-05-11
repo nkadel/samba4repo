@@ -1,3 +1,4 @@
+#
 # Makefile - build wrapper for Samba 4 on RHEL 6
 #
 #	git clone RHEL 6 SRPM building tools from
@@ -6,7 +7,7 @@
 #
 #	Set up local 
 
-E=http://localhost
+#REOBASEE=http://localhost
 REPOBASE=file://$(PWD)
 
 # RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
