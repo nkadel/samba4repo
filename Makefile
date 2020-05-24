@@ -141,7 +141,6 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
 samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
@@ -161,7 +160,6 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
 samba4repo-f32-x86_64.cfg: /etc/mock/fedora-32-x86_64.cfg
@@ -181,7 +179,6 @@ samba4repo-f32-x86_64.cfg: /etc/mock/fedora-32-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
@@ -201,7 +198,6 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
 $(MOCKCFGS)::
