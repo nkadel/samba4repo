@@ -35,15 +35,18 @@ lodally.
 Git Checkout
 ===========
 
-This repository relies on extensive git submodules. When cloneing it locally, use:
+This repository relies on extensive git submodules. When cloning it locally, use:
 
 * git clone --recurse-submodules https://github.com/nkadel/samba4repo
 
 *** NOTE: The git repos at github.com do not include the tarballs ***
 
-This is for basic security reasons: you'll need to get the tarballs
-manually, usually from the "Source:" locations designated in the .spec
-file. These are typically available at:
+This is for basic security reasons: you'll need to get the tarballs separaately.
+These can normally be pulled from the Source: references, and pulled with this command.
+
+* make getsrc
+    
+If necessary for manual download, look at:
 
 * https://www.samba.org/ftp/samba/
 
@@ -55,13 +58,16 @@ and installed in the following order.
 
 * make cfgs # Create local .cfg configs for "mock".
 * * epel-7-x86_64.cfg # Used for some Makefiles
-* * fedora-29-x86_64.cfg # Used for some Makefiles
+* * epel-8-x86_64.cfg # Used for some Makefiles
+* * fedora-32-x86_64.cfg # Used for some Makefiles
 * * samba4repo-7-x86_64.cfg # Activates local RPM dependency repository
-* * samba4repo-f29-x86_64.cfg # Activates local RPM dependency repository
+* * samba4repo-8-x86_64.cfg # Activates local RPM dependency repository
+* * samba4repo-f32-x86_64.cfg # Activates local RPM dependency repository
 
 * make repos # Creates local local yum repositories in $PWD/samba4repo
 * * samba4repo/el/7
-* * samba4repo/fedora/29
+* * samba4repo/el/8
+* * samba4repo/fedora/32
 
 * make # Make all distinct versions using "mock"
 
