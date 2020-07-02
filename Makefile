@@ -37,8 +37,8 @@ SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 # RHEL 8 dependency, uses libtomcrypt
 SAMBAPKGS+=python-crypto-2.6.x-srpm
 
-##REPOBAS RHEL 8 decided to leave out quota-devel!!!
-# Now in devel channel for CentOS 8
+##RHEL 8 decided to leave out quota-devel!!!
+# Now in devel channel for CentOS 8, enable in /etc/mock/templates/centos-8.tpl
 #SAMBAPKGS+=quota-4.x-srpm
 
 # Current samba release, requires all curent libraries
@@ -100,8 +100,6 @@ samba-4.12.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.12.x-srpm:: libtdb-1.4.x-srpm
 samba-4.12.x-srpm:: libtevent-0.10.x-srpm
 samba-4.12.x-srpm:: libldb-2.1.x-srpm
-# RHEL 8 decided to leave out quota-devel!!!!
-#samba-4.12.x-srpm:: quota-4.x-srpm
 
 # Actually build in directories
 $(SAMBAPKGS):: FORCE
