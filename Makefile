@@ -95,14 +95,14 @@ compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.12.x-srpm:: compat-gnutls34-3.x-srpm
-#samba-4.12.x-srpm:: lmdb-0.9.x-srpm
 samba-4.12.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.12.x-srpm:: libtdb-1.4.x-srpm
 samba-4.12.x-srpm:: libtevent-0.10.x-srpm
 samba-4.12.x-srpm:: libldb-2.1.x-srpm
 
 # Actually build in directories
-$(SAMBAPKGS):: FORCE
+.PHONY: $(SAMBAPKGS)
+$(SAMBAPKGS)::
 	(cd $@ && $(MAKE) $(MLAGS) install)
 
 repodirs: $(REPOS) $(REPODIRS)
@@ -241,5 +241,4 @@ maintainer-clean: distclean
 	    (cd $$name; git clean -x -d -f); \
 	done
 
-FORCE::
 
