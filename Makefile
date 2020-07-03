@@ -37,8 +37,8 @@ SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 # RHEL 8 dependency, uses libtomcrypt
 SAMBAPKGS+=python-crypto-2.6.x-srpm
 
-##REPOBAS RHEL 8 decided to leave out quota-devel!!!
-# Now in devel channel for CentOS 8
+##RHEL 8 decided to leave out quota-devel!!!
+# Now in devel channel for CentOS 8, enable in /etc/mock/templates/centos-8.tpl
 #SAMBAPKGS+=quota-4.x-srpm
 
 # Current samba release, requires all curent libraries
@@ -46,18 +46,18 @@ SAMBAPKGS+=samba-4.12.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
-REPOS+=samba4repo/fedora/31
+REPOS+=samba4repo/fedora/32
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
 CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
-CFGS+=samba4repo-f31-x86_64.cfg
+CFGS+=samba4repo-f32-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=epel-8-x86_64.cfg
-MOCKCFGS+=fedora-31-x86_64.cfg
+MOCKCFGS+=fedora-32-x86_64.cfg
 
 all:: install
 
@@ -95,16 +95,14 @@ compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.12.x-srpm:: compat-gnutls34-3.x-srpm
-#samba-4.12.x-srpm:: lmdb-0.9.x-srpm
 samba-4.12.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.12.x-srpm:: libtdb-1.4.x-srpm
 samba-4.12.x-srpm:: libtevent-0.10.x-srpm
 samba-4.12.x-srpm:: libldb-2.1.x-srpm
-# RHEL 8 decided to leave out quota-devel!!!!
-#samba-4.12.x-srpm:: quota-4.x-srpm
 
 # Actually build in directories
-$(SAMBAPKGS):: FORCE
+.PHONY: $(SAMBAPKGS)
+$(SAMBAPKGS)::
 	(cd $@ && $(MAKE) $(MLAGS) install)
 
 repodirs: $(REPOS) $(REPODIRS)
@@ -141,7 +139,6 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
 samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
@@ -161,13 +158,12 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
-samba4repo-f31-x86_64.cfg: /etc/mock/fedora-31-x86_64.cfg
+samba4repo-f32-x86_64.cfg: /etc/mock/fedora-32-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/fedora-31-x86_64/samba4repo-f31-x86_64/g' $@
+	@sed -i 's/fedora-32-x86_64/samba4repo-f32-x86_64/g' $@
 	@echo >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
@@ -176,12 +172,11 @@ samba4repo-f31-x86_64.cfg: /etc/mock/fedora-31-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/31/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/32/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
@@ -201,7 +196,6 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
-	@echo '#cost=2000' >> $@
 	@echo '"""' >> $@
 
 $(MOCKCFGS)::
@@ -247,5 +241,4 @@ maintainer-clean: distclean
 	    (cd $$name; git clean -x -d -f); \
 	done
 
-FORCE::
 
