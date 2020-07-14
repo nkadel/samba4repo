@@ -26,7 +26,7 @@ SAMBAPKGS+=libtevent-0.10.x-srpm
 SAMBAPKGS+=compat-gnutls34-3.x-srpm
 
 # Also requires libtevent
-SAMBAPKGS+=libldb-2.1.x-srpm
+SAMBAPKGS+=libldb-2.2.x-srpm
 
 # RHEL 8 dependency for libtomcrypt
 SAMBAPKGS+=libtommath-1.0.x-srpm
