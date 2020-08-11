@@ -42,7 +42,7 @@ SAMBAPKGS+=python-crypto-2.6.x-srpm
 #SAMBAPKGS+=quota-4.x-srpm
 
 # Current samba release, requires all curent libraries
-SAMBAPKGS+=samba-4.12.x-srpm
+SAMBAPKGS+=samba-4.13.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
@@ -85,20 +85,20 @@ compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 libtevent-0.10.x-srpm:: libtalloc-2.3.x-srpm
 
-libldb-2.1.x-srpm:: libtalloc-2.3.x-srpm
-libldb-2.1.x-srpm:: libtdb-1.4.x-srpm
-libldb-2.1.x-srpm:: libtevent-0.10.x-srpm
+libldb-2.2.x-srpm:: libtalloc-2.3.x-srpm
+libldb-2.2.x-srpm:: libtdb-1.4.x-srpm
+libldb-2.2.x-srpm:: libtevent-0.10.x-srpm
 
 # Needed for with_mitkrb5
-compat-nettle32-3.x-srpm:: libldb-2.1.x-srpm
+compat-nettle32-3.x-srpm:: libldb-2.2.x-srpm
 compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.12.x-srpm:: compat-gnutls34-3.x-srpm
-samba-4.12.x-srpm:: libtalloc-2.3.x-srpm
-samba-4.12.x-srpm:: libtdb-1.4.x-srpm
-samba-4.12.x-srpm:: libtevent-0.10.x-srpm
-samba-4.12.x-srpm:: libldb-2.1.x-srpm
+samba-4.13.x-srpm:: compat-gnutls34-3.x-srpm
+samba-4.13.x-srpm:: libtalloc-2.3.x-srpm
+samba-4.13.x-srpm:: libtdb-1.4.x-srpm
+samba-4.13.x-srpm:: libtevent-0.10.x-srpm
+samba-4.13.x-srpm:: libldb-2.2.x-srpm
 
 # Actually build in directories
 .PHONY: $(SAMBAPKGS)
