@@ -76,7 +76,7 @@ can also be done for testing.
 
 * make build
 
-Samba 4.10 has strong dependencies on additional components that may or not be 
+Samba 4.10 nad later has strong dependencies on additional components that may or not be 
 built into the current Fedora releases. These are in the following submodules:
 
 * libtalloc-xxx-srpm
