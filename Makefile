@@ -90,8 +90,8 @@ libldb-2.2.x-srpm:: libtdb-1.4.x-srpm
 libldb-2.2.x-srpm:: libtevent-0.10.x-srpm
 
 # Needed for with_mitkrb5
-compat-nettle32-3.x-srpm:: libldb-2.2.x-srpm
 compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
+compat-gnutls34-3.x-srpm:: libldb-2.2.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.13.x-srpm:: compat-gnutls34-3.x-srpm
