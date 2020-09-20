@@ -13,12 +13,6 @@
 [submodule "libtevent-0.10.x-srpm"]
 	path = libtevent-0.10.x-srpm
 	url = https://github.com/nkadel/libtevent-0.10.x-srpm
-[submodule "compat-gnutls34-3.x-srpm"]
-	path = compat-gnutls34-3.x-srpm
-	url = https://github.com/nkadel/compat-gnutls34-3.x-srpm
-[submodule "compat-nettle32-3.x-srpm"]
-	path = compat-nettle32-3.x-srpm
-	url = https://github.com/nkadel/compat-nettle32-3.x-srpm
 [submodule "libtalloc-2.3.x-srpm"]
 	path = libtalloc-2.3.x-srpm
 	url = https://github.com/nkadel/libtalloc-2.3.x-srpm
@@ -28,3 +22,9 @@
 [submodule "libldb-2.2.x-srpm"]
 	path = libldb-2.2.x-srpm
 	url = https://github.com/nkadel/libldb-2.2.x-srpm
+[submodule "compat-gnutls36-3.x-srpm"]
+	path = compat-gnutls36-3.x-srpm
+	url = https://github.com/nkadel/compat-gnutls36-3.x-srpm
+[submodule "compat-nettle34-3.x-srpm"]
+	path = compat-nettle34-3.x-srpm
+	url = https://github.com/nkadel/compat-nettle34-3.x-srpm

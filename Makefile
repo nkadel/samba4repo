@@ -10,8 +10,8 @@
 #REOBASEE=http://localhost
 REPOBASE=file://$(PWD)
 
-# RHEL 7 needs compat-nettle32-3.x, which uses epel-7-x86_64
-SAMBAPKGS+=compat-nettle32-3.x-srpm
+# RHEL 7 needs compat-nettle34-3.x, which uses epel-7-x86_64
+SAMBAPKGS+=compat-nettle34-3.x-srpm
 
 # Current libtalloc-2.x required
 SAMBAPKGS+=libtalloc-2.3.x-srpm
@@ -22,8 +22,8 @@ SAMBAPKGS+=libtdb-1.4.x-srpm
 # Current libtevent-0.10.x required for Samba 4.10
 SAMBAPKGS+=libtevent-0.10.x-srpm
 
-# RHEL 7 needs compat-gnutls3.4.x-sprm, which uses compat-nettle32
-SAMBAPKGS+=compat-gnutls34-3.x-srpm
+# RHEL 7 needs compat-gnutls3.6.3.x-sprm, which uses compat-nettle34
+SAMBAPKGS+=compat-gnutls36-3.x-srpm
 
 # Also requires libtevent
 SAMBAPKGS+=libldb-2.2.x-srpm
@@ -81,20 +81,17 @@ install clean getsrc build srpm src.rpm::
 
 # Dependencies of libraries on other libraries for compilation
 
-compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
-
 libtevent-0.10.x-srpm:: libtalloc-2.3.x-srpm
 
 libldb-2.2.x-srpm:: libtalloc-2.3.x-srpm
 libldb-2.2.x-srpm:: libtdb-1.4.x-srpm
 libldb-2.2.x-srpm:: libtevent-0.10.x-srpm
 
-# Needed for with_mitkrb5
-compat-gnutls34-3.x-srpm:: compat-nettle32-3.x-srpm
-compat-gnutls34-3.x-srpm:: libldb-2.2.x-srpm
+compat-gnutls36-3.x-srpm:: compat-nettle34-3.x-srpm
+compat-gnutls36-3.x-srpm:: libldb-2.2.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.13.x-srpm:: compat-gnutls34-3.x-srpm
+samba-4.13.x-srpm:: compat-gnutls36-3.x-srpm
 samba-4.13.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.13.x-srpm:: libtdb-1.4.x-srpm
 samba-4.13.x-srpm:: libtevent-0.10.x-srpm
