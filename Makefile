@@ -14,19 +14,19 @@ REPOBASE=file://$(PWD)
 SAMBAPKGS+=compat-nettle34-3.x-srpm
 
 # Current libtalloc-2.x required
-SAMBAPKGS+=libtalloc-2.3.x-srpm
+#SAMBAPKGS+=libtalloc-2.3.x-srpm
 
 # Current libtdb-1.4.x required
-SAMBAPKGS+=libtdb-1.4.x-srpm
+#SAMBAPKGS+=libtdb-1.4.x-srpm
 
 # Current libtevent-0.10.x required for Samba 4.10
-SAMBAPKGS+=libtevent-0.10.x-srpm
+#SAMBAPKGS+=libtevent-0.10.x-srpm
 
 # RHEL 7 needs compat-gnutls3.6.3.x-sprm, which uses compat-nettle34
 SAMBAPKGS+=compat-gnutls36-3.x-srpm
 
 # Also requires libtevent
-SAMBAPKGS+=libldb-2.2.x-srpm
+#SAMBAPKGS+=libldb-2.2.x-srpm
 
 # RHEL 8 dependency for libtomcrypt
 SAMBAPKGS+=libtommath-1.0.x-srpm
@@ -47,17 +47,21 @@ SAMBAPKGS+=samba-4.13.x-srpm
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/fedora/32
+REPOS+=samba4repo/amzn/2
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
 CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
 CFGS+=samba4repo-f32-x86_64.cfg
+# Amazon 2 config
+CFGS+=samba4repo-a2-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=epel-8-x86_64.cfg
 MOCKCFGS+=fedora-32-x86_64.cfg
+MOCKCFGS+=amazonlinux-2-x86_64.cfg
 
 all:: install
 
@@ -189,6 +193,25 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/rawhide/x86_64/' >> $@
+	@echo 'failovermethod=priority' >> $@
+	@echo 'skip_if_unavailable=False' >> $@
+	@echo 'metadata_expire=0' >> $@
+	@echo 'gpgcheck=0' >> $@
+	@echo '"""' >> $@
+
+samba4repo-a2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
+	@echo Generating $@ from $?
+	@cat $? > $@
+	@sed -i 's/amzn-2-x86_64/samba4repo-a2-x86_64/g' $@
+	@echo >> $@
+	@echo "Disabling 'best=' for $@"
+	@sed -i '/^best=/d' $@
+	@echo "best=0" >> $@
+	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
+	@echo '[samba4repo]' >> $@
+	@echo 'name=samba4repo' >> $@
+	@echo 'enabled=1' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/amzn/2/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
