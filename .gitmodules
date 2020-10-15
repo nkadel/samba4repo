@@ -4,9 +4,6 @@
 [submodule "libtomcrypt-1.18.x-srpm"]
 	path = libtomcrypt-1.18.x-srpm
 	url = https://github.com/nkadel/libtomcrypt-1.18.x-srpm
-[submodule "python-crypto-2.6.x-srpm"]
-	path = python-crypto-2.6.x-srpm
-	url = https://github.com/nkadel/python-crypto-2.6.x-srpm
 [submodule "libtdb-1.4.x-srpm"]
 	path = libtdb-1.4.x-srpm
 	url = https://github.com/nkadel/libtdb-1.4.x-srpm
