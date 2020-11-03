@@ -14,19 +14,19 @@ REPOBASE=file://$(PWD)
 SAMBAPKGS+=compat-nettle34-3.x-srpm
 
 # Current libtalloc-2.x required
-#SAMBAPKGS+=libtalloc-2.3.x-srpm
+SAMBAPKGS+=libtalloc-2.3.x-srpm
 
 # Current libtdb-1.4.x required
-#SAMBAPKGS+=libtdb-1.4.x-srpm
+SAMBAPKGS+=libtdb-1.4.x-srpm
 
 # Current libtevent-0.10.x required for Samba 4.10
-#SAMBAPKGS+=libtevent-0.10.x-srpm
+SAMBAPKGS+=libtevent-0.10.x-srpm
 
 # RHEL 7 needs compat-gnutls3.6.3.x-sprm, which uses compat-nettle34
 SAMBAPKGS+=compat-gnutls36-3.x-srpm
 
 # Also requires libtevent
-#SAMBAPKGS+=libldb-2.2.x-srpm
+SAMBAPKGS+=libldb-2.2.x-srpm
 
 # RHEL 8 dependency for libtomcrypt
 SAMBAPKGS+=libtommath-1.0.x-srpm
@@ -34,30 +34,26 @@ SAMBAPKGS+=libtommath-1.0.x-srpm
 # RHEL 8 dependency, uses libtommath
 SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 
-##RHEL 8 decided to leave out quota-devel!!!
-# Now in devel channel for CentOS 8, enable in /etc/mock/templates/centos-8.tpl
-#SAMBAPKGS+=quota-4.x-srpm
-
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.13.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
-REPOS+=samba4repo/fedora/32
-REPOS+=samba4repo/amzn/2
+REPOS+=samba4repo/fedora/33
+REPOS+=samba4repo/amz/2
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
 CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
-CFGS+=samba4repo-f32-x86_64.cfg
+CFGS+=samba4repo-f33-x86_64.cfg
 # Amazon 2 config
-CFGS+=samba4repo-a2-x86_64.cfg
+CFGS+=samba4repo-amz2-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
 MOCKCFGS+=epel-8-x86_64.cfg
-MOCKCFGS+=fedora-32-x86_64.cfg
+MOCKCFGS+=fedora-33-x86_64.cfg
 MOCKCFGS+=amazonlinux-2-x86_64.cfg
 
 all:: install
@@ -158,10 +154,10 @@ samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
 	@echo 'gpgcheck=0' >> $@
 	@echo '"""' >> $@
 
-samba4repo-f32-x86_64.cfg: /etc/mock/fedora-32-x86_64.cfg
+samba4repo-f33-x86_64.cfg: /etc/mock/fedora-33-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/fedora-32-x86_64/samba4repo-f32-x86_64/g' $@
+	@sed -i 's/fedora-33-x86_64/samba4repo-f33-x86_64/g' $@
 	@echo >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
@@ -170,7 +166,7 @@ samba4repo-f32-x86_64.cfg: /etc/mock/fedora-32-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/32/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/33/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
@@ -196,10 +192,10 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'gpgcheck=0' >> $@
 	@echo '"""' >> $@
 
-samba4repo-a2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
+samba4repo-amz2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/amzn-2-x86_64/samba4repo-a2-x86_64/g' $@
+	@sed -i 's/amz-2-x86_64/samba4repo-amz2-x86_64/g' $@
 	@echo >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
@@ -208,7 +204,7 @@ samba4repo-a2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/amzn/2/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/amz/2/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
