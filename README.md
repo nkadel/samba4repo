@@ -29,8 +29,8 @@ inconsistently segregated channels of their primary OS channels. This
 Devel channel is disabled by default.
 
 Enable it in /etc/mock/centos-8.tpl gefore trying to compile Samba
-with mock, and enablr it /etc/yum.repos.d/ before compiling Samba
-lodally.
+with mock, and enable it in /etc/yum.repos.d/ before compiling Samba
+locally.
 
 Git Checkout
 ===========
@@ -103,4 +103,13 @@ for locally built components. Generating GPG signed packages and
 ensuring that the compneents are in this build location are securely
 and safely built is not addressed in this test setup.
 
-		Nico Kadel-Garcia <nkadel@gmail.com>
+Amazon Linux Compilation
+========================
+
+Mock on CentOS and RHEL cannot compile Amazon Linux RPMS with mock. A tentative command to do so is:
+
+
+* grep -l '^MOCK.*-7-x86_64' *srpm/Makefile | while read name; do  pushd `dirname $name`; make MOCKS=amazonlinux-2-x86_64; popd; done
+
+
+Nico Kadel-Garcia <nkadel@gmail.com>
