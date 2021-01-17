@@ -41,8 +41,9 @@ This repository relies on extensive git submodules. When cloning it locally, use
 
 *** NOTE: The git repos at github.com do not include the tarballs ***
 
-This is for basic security reasons: you'll need to get the tarballs separaately.
-These can normally be pulled from the Source: references, and pulled with this command.
+This is for basic security reasons: you'll need to get the tarballs
+separaately.  These can normally be pulled from the Source:
+references, and pulled with this command.
 
 * make getsrc
     
@@ -59,15 +60,15 @@ and installed in the following order.
 * make cfgs # Create local .cfg configs for "mock".
 * * epel-7-x86_64.cfg # Used for some Makefiles
 * * epel-8-x86_64.cfg # Used for some Makefiles
-* * fedora-32-x86_64.cfg # Used for some Makefiles
+* * fedora-33-x86_64.cfg # Used for some Makefiles
 * * samba4repo-7-x86_64.cfg # Activates local RPM dependency repository
 * * samba4repo-8-x86_64.cfg # Activates local RPM dependency repository
-* * samba4repo-f32-x86_64.cfg # Activates local RPM dependency repository
+* * samba4repo-f33-x86_64.cfg # Activates local RPM dependency repository
 
 * make repos # Creates local local yum repositories in $PWD/samba4repo
 * * samba4repo/el/7
 * * samba4repo/el/8
-* * samba4repo/fedora/32
+* * samba4repo/fedora/33
 
 * make # Make all distinct versions using "mock"
 
@@ -103,11 +104,22 @@ for locally built components. Generating GPG signed packages and
 ensuring that the compneents are in this build location are securely
 and safely built is not addressed in this test setup.
 
+CentOS 8 Overlap
+========================
+
+CentOS 8 has published libraries such as libtalloc and libldb of
+sufficiently recent release for Samba 4.13. Unfortunately, they
+elected to discard "python3-talloc-devel" and similar components,
+simply to diverge from Fedora and "mark their territory". So
+unfortunately, those have to be built and updated from here.
+
 Amazon Linux Compilation
 ========================
 
-Mock on CentOS and RHEL cannot compile Amazon Linux RPMS with mock. A tentative command to do so is:
-
+Mock on CentOS and RHEL cannot compile Amazon Linux RPMS with
+mock. The necessary yum repositories are accessible on Amazon Linux
+hosts, not publicly available the way CentOS and RHEL repos are.  A
+tentative command to build on an amazon Linux 2 host is:
 
 * grep -l '^MOCK.*-7-x86_64' *srpm/Makefile | while read name; do  pushd `dirname $name`; make MOCKS=amazonlinux-2-x86_64; popd; done
 
