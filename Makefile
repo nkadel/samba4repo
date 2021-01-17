@@ -28,11 +28,11 @@ SAMBAPKGS+=compat-gnutls36-3.x-srpm
 # Also requires libtevent
 SAMBAPKGS+=libldb-2.2.x-srpm
 
-# RHEL 8 dependency for libtomcrypt
-SAMBAPKGS+=libtommath-1.0.x-srpm
+# RHEL 8 dependency for libtomcrypt, no longer needed
+#SAMBAPKGS+=libtommath-1.0.x-srpm
 
-# RHEL 8 dependency, uses libtommath
-SAMBAPKGS+=libtomcrypt-1.18.x-srpm
+# RHEL 8 dependency, uses libtommath, no longer needed
+#SAMBAPKGS+=libtomcrypt-1.18.x-srpm
 
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.13.x-srpm
