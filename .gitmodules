@@ -26,3 +26,6 @@
 	path = samba-4.13.x-srpm
 	url = https://github.com/nkadel/samba-4.13.x-srpm
 	branch = master
+[submodule "quota-4.x-srpm"]
+	path = quota-4.x-srpm
+	url = https://github.com/nkadel/quota-4.x-srpm
