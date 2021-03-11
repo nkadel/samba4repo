@@ -13,6 +13,10 @@ REPOBASE=file://$(PWD)
 # RHEL 7 needs compat-nettle34-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle34-3.x-srpm
 
+# CentOS 8 Stream needs quota-devel, whcih RHEL and CentOS put in a different
+# channel from quiota and quota debugnfo for no sane reason
+SAMBAPKGS+=quota-4.x-srpm
+
 # Current libtalloc-2.x required
 SAMBAPKGS+=libtalloc-2.3.x-srpm
 
@@ -22,7 +26,7 @@ SAMBAPKGS+=libtdb-1.4.x-srpm
 # Current libtevent-0.10.x required for Samba 4.10
 SAMBAPKGS+=libtevent-0.10.x-srpm
 
-# RHEL 7 needs compat-gnutls3.6.3.x-sprm, which uses compat-nettle34
+# RHEL 7 needs compat-gnutls36.3.x-sprm, which uses compat-nettle34
 SAMBAPKGS+=compat-gnutls36-3.x-srpm
 
 # Also requires libtevent
@@ -52,7 +56,7 @@ CFGS+=samba4repo-amz2-x86_64.cfg
 
 # Link from /etc/mock
 MOCKCFGS+=epel-7-x86_64.cfg
-MOCKCFGS+=epel-8-x86_64.cfg
+MOCKCFGS+=centos-stream-x86_64.cfg
 MOCKCFGS+=fedora-33-x86_64.cfg
 MOCKCFGS+=amazonlinux-2-x86_64.cfg
 
@@ -136,10 +140,10 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo 'priority=5' >> $@
 	@echo '"""' >> $@
 
-samba4repo-8-x86_64.cfg: /etc/mock/epel-8-x86_64.cfg
+samba4repo-8-x86_64.cfg: /etc/mock/centos-stream-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/epel-8-x86_64/samba4repo-8-x86_64/g' $@
+	@sed -i 's/centos-stream-x86_64/samba4repo-8-x86_64/g' $@
 	@echo >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
