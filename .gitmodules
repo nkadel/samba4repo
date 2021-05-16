@@ -19,11 +19,11 @@
 	url = https://github.com/nkadel/compat-gnutls36-3.x-srpm
 	branch = master
 [submodule "libldb-2.2.x-srpm"]
-	path = libldb-2.2.x-srpm
+	path = libldb-2.3.x-srpm
 	url = https://github.com/nkadel/libldb-2.2.x-srpm
 	branch = master
 [submodule "samba-4.13.x-srpm"]
-	path = samba-4.13.x-srpm
+	path = samba-4.14.x-srpm
 	url = https://github.com/nkadel/samba-4.13.x-srpm
 	branch = master
 [submodule "quota-4.x-srpm"]
