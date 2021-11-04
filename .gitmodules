@@ -30,3 +30,6 @@
 [submodule "libtevent-0.11.x-srpm"]
 	path = libtevent-0.11.x-srpm
 	url = ssh://git@github.com/nkadel/libtevent-0.11.x-srpm
+[submodule "gmp-6.1.x-srpm"]
+	path = gmp-6.1.x-srpm
+	url = ssh://git@github.com/nkadel/gmp-6.1.x-srpm
