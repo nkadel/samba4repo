@@ -21,9 +21,6 @@
 [submodule "quota-4.x-srpm"]
 	path = quota-4.x-srpm
 	url = ssh://github.com/nkadel/quota-4.x-srpm
-[submodule "samba-4.14.x-srpm"]
-	path = samba-4.14.x-srpm
-	url = ssh://github.com/nkadel/samba-4.14.x-srpm
 [submodule "libldb-2.4.x-srpm"]
 	path = libldb-2.4.x-srpm
 	url = ssh://git@github.com/nkadel/libldb-2.4.x-srpm
@@ -33,3 +30,6 @@
 [submodule "gmp-6.1.x-srpm"]
 	path = gmp-6.1.x-srpm
 	url = ssh://git@github.com/nkadel/gmp-6.1.x-srpm
+[submodule "samba-4.15.x-srpm"]
+	path = samba-4.15.x-srpm
+	url = ssh://github.com/nkadel/samba-4.15.x-srpm
