@@ -60,15 +60,15 @@ and installed in the following order.
 * make cfgs # Create local .cfg configs for "mock".
 * * epel-7-x86_64.cfg # Used for some Makefiles
 * * epel-8-x86_64.cfg # Used for some Makefiles
-* * fedora-33-x86_64.cfg # Used for some Makefiles
+* * fedora-34-x86_64.cfg # Used for some Makefiles
 * * samba4repo-7-x86_64.cfg # Activates local RPM dependency repository
 * * samba4repo-8-x86_64.cfg # Activates local RPM dependency repository
-* * samba4repo-f33-x86_64.cfg # Activates local RPM dependency repository
+* * samba4repo-f34-x86_64.cfg # Activates local RPM dependency repository
 
 * make repos # Creates local local yum repositories in $PWD/samba4repo
 * * samba4repo/el/7
 * * samba4repo/el/8
-* * samba4repo/fedora/33
+* * samba4repo/fedora/34
 
 * make # Make all distinct versions using "mock"
 
@@ -77,9 +77,11 @@ can also be done for testing.
 
 * make build
 
-Samba 4.10 nad later has strong dependencies on additional components that may or not be 
-built into the current Fedora releases. These are in the following submodules:
+Samba 4.10 nad later has strong dependencies on additional components
+that may or not be built into the current Fedora releases. These are
+in the following submodules:
 
+* gmp-xxx-srpm
 * libtalloc-xxx-srpm
 * libtdb-xxx-srpm
 * libldb-xxx-srpm
