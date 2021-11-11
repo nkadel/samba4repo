@@ -13,9 +13,12 @@ REPOBASE=file://$(PWD)
 # RHEL 7 needs compat-nettle34-3.x, which uses epel-7-x86_64
 SAMBAPKGS+=compat-nettle34-3.x-srpm
 
-# CentOS 8 Stream needs quota-devel, whcih RHEL and CentOS put in a different
-# channel from quiota and quota debugnfo for no sane reason
-SAMBAPKGS+=quota-4.x-srpm
+# RHEL 7 needs gmp-6.1.x-srpm, which uses epel-7-x86_64
+SAMBAPKGS+=gmp-6.1.x-srpm
+
+# CentOS 8 needs quota-devel, whcih RHEL 8 and CentOS 8 put in a different
+# channel from quota and quota debuginfo for no sane reason
+#SAMBAPKGS+=quota-4.x-srpm
 
 # Current libtalloc-2.x required
 SAMBAPKGS+=libtalloc-2.3.x-srpm
@@ -23,23 +26,17 @@ SAMBAPKGS+=libtalloc-2.3.x-srpm
 # Current libtdb-1.4.x required
 SAMBAPKGS+=libtdb-1.4.x-srpm
 
-# Current libtevent-0.10.x required for Samba 4.10
-SAMBAPKGS+=libtevent-0.10.x-srpm
+# Current libtevent-0.11.x required for Samba 4.10
+SAMBAPKGS+=libtevent-0.11.x-srpm
 
 # RHEL 7 needs compat-gnutls36.3.x-sprm, which uses compat-nettle34
 SAMBAPKGS+=compat-gnutls36-3.x-srpm
 
 # Also requires libtevent
-SAMBAPKGS+=libldb-2.3.x-srpm
-
-# RHEL 8 dependency for libtomcrypt, no longer needed
-#SAMBAPKGS+=libtommath-1.0.x-srpm
-
-# RHEL 8 dependency, uses libtommath, no longer needed
-#SAMBAPKGS+=libtomcrypt-1.18.x-srpm
+SAMBAPKGS+=libldb-2.4.x-srpm
 
 # Current samba release, requires all curent libraries
-SAMBAPKGS+=samba-4.14.x-srpm
+SAMBAPKGS+=samba-4.15.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
@@ -85,21 +82,22 @@ install clean getsrc build srpm src.rpm::
 
 # Dependencies of libraries on other libraries for compilation
 
-libtevent-0.10.x-srpm:: libtalloc-2.3.x-srpm
+libtevent-0.11.x-srpm:: libtalloc-2.3.x-srpm
 
-libldb-2.3.x-srpm:: libtalloc-2.3.x-srpm
-libldb-2.3.x-srpm:: libtdb-1.4.x-srpm
-libldb-2.3.x-srpm:: libtevent-0.10.x-srpm
+libldb-2.4.x-srpm:: libtalloc-2.3.x-srpm
+libldb-2.4.x-srpm:: libtdb-1.4.x-srpm
+libldb-2.4.x-srpm:: libtevent-0.11.x-srpm
 
 compat-gnutls36-3.x-srpm:: compat-nettle34-3.x-srpm
-compat-gnutls36-3.x-srpm:: libldb-2.3.x-srpm
+compat-gnutls36-3.x-srpm:: gmp-6.1.x-srpm
+compat-gnutls36-3.x-srpm:: libldb-2.4.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.14.x-srpm:: compat-gnutls36-3.x-srpm
-samba-4.14.x-srpm:: libtalloc-2.3.x-srpm
-samba-4.14.x-srpm:: libtdb-1.4.x-srpm
-samba-4.14.x-srpm:: libtevent-0.10.x-srpm
-samba-4.14.x-srpm:: libldb-2.3.x-srpm
+samba-4.15.x-srpm:: compat-gnutls36-3.x-srpm
+samba-4.15.x-srpm:: libtalloc-2.3.x-srpm
+samba-4.15.x-srpm:: libtdb-1.4.x-srpm
+samba-4.15.x-srpm:: libtevent-0.11.x-srpm
+samba-4.15.x-srpm:: libldb-2.4.x-srpm
 
 # Actually build in directories
 .PHONY: $(SAMBAPKGS)
