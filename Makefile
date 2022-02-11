@@ -10,15 +10,8 @@
 #REOBASEE=http://localhost
 REPOBASE=file://$(PWD)
 
-# RHEL 7 needs compat-nettle34-3.x, which uses epel-7-x86_64
-SAMBAPKGS+=compat-nettle34-3.x-srpm
-
-# RHEL 7 needs gmp-6.1.x-srpm, which uses epel-7-x86_64
-SAMBAPKGS+=gmp-6.1.x-srpm
-
-# CentOS 8 needs quota-devel, whcih RHEL 8 and CentOS 8 put in a different
-# channel from quota and quota debuginfo for no sane reason
-#SAMBAPKGS+=quota-4.x-srpm
+# Samba required
+SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 
 # Current libtalloc-2.x required
 SAMBAPKGS+=libtalloc-2.3.x-srpm
@@ -29,9 +22,6 @@ SAMBAPKGS+=libtdb-1.4.x-srpm
 # Current libtevent-0.11.x required for Samba 4.10
 SAMBAPKGS+=libtevent-0.11.x-srpm
 
-# RHEL 7 needs compat-gnutls36.3.x-sprm, which uses compat-nettle34
-SAMBAPKGS+=compat-gnutls36-3.x-srpm
-
 # Also requires libtevent
 SAMBAPKGS+=libldb-2.4.x-srpm
 
@@ -40,24 +30,24 @@ SAMBAPKGS+=samba-4.15.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
-REPOS+=samba4repo/fedora/34
+REPOS+=samba4repo/fedora/35
 REPOS+=samba4repo/amz/2
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
 CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
-CFGS+=samba4repo-f34-x86_64.cfg
+CFGS+=samba4repo-f35-x86_64.cfg
 # Amazon 2 config
 CFGS+=samba4repo-amz2-x86_64.cfg
 
 # /et/cmock version lacks EPEL
-CFGS+=epel-8-x86_64.cfg
+CFGS+=centos-stream+epel-8-x86_64.cfg
 
 # Link from /etc/mock
-MOCKCFGS+=epel-7-x86_64.cfg
-MOCKCFGS+=epel-8-x86_64.cfg
-MOCKCFGS+=fedora-34-x86_64.cfg
+MOCKCFGS+=centos+epel-7-x86_64.cfg
+MOCKCFGS+=centos-stream+epel-8-x86_64.cfg
+MOCKCFGS+=fedora-35-x86_64.cfg
 #MOCKCFGS+=amazonlinux-2-x86_64.cfg
 
 all:: install
@@ -88,12 +78,7 @@ libldb-2.4.x-srpm:: libtalloc-2.3.x-srpm
 libldb-2.4.x-srpm:: libtdb-1.4.x-srpm
 libldb-2.4.x-srpm:: libtevent-0.11.x-srpm
 
-compat-gnutls36-3.x-srpm:: compat-nettle34-3.x-srpm
-compat-gnutls36-3.x-srpm:: gmp-6.1.x-srpm
-compat-gnutls36-3.x-srpm:: libldb-2.4.x-srpm
-
 # Samba rellies on all the othe components
-samba-4.15.x-srpm:: compat-gnutls36-3.x-srpm
 samba-4.15.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.15.x-srpm:: libtdb-1.4.x-srpm
 samba-4.15.x-srpm:: libtevent-0.11.x-srpm
@@ -121,17 +106,17 @@ cfg:: cfgs
 .PHONY: cfgs
 cfgs: $(CFGS) $(MOCKCFGS)
 
-epel-8-x86_64.cfg:: /etc/mock/epel-8-x86_64.cfg
+centos-stream+epel-8-x86_64.cfg:: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
 	@echo >> $@
-	@echo '# epel-8 configs lack EPEL, added here' >> $@
-	@echo "include('templates/epel-8.tpl')" >> $@
+	@echo '# centos-stream+epel-8 configs lack EPEL, added here' >> $@
+	@echo "include('templates/centos-stream+epel-8.tpl')" >> $@
 
-samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
+samba4repo-7-x86_64.cfg: /etc/mock/centos+epel-7-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/epel-7-x86_64/samba4repo-7-x86_64/g' $@
+	@sed -i 's/centos+epel-7-x86_64/samba4repo-7-x86_64/g' $@
 	@echo >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
@@ -148,10 +133,10 @@ samba4repo-7-x86_64.cfg: /etc/mock/epel-7-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-samba4repo-8-x86_64.cfg: epel-8-x86_64.cfg
+samba4repo-8-x86_64.cfg: centos-stream+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/epel-8-x86_64/samba4repo-8-x86_64/g' $@
+	@sed -i 's/centos-stream+epel-8-x86_64/samba4repo-8-x86_64/g' $@
 	@echo >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
@@ -168,10 +153,10 @@ samba4repo-8-x86_64.cfg: epel-8-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-samba4repo-f34-x86_64.cfg: /etc/mock/fedora-34-x86_64.cfg
+samba4repo-f35-x86_64.cfg: /etc/mock/fedora-35-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/fedora-34-x86_64/samba4repo-f34-x86_64/g' $@
+	@sed -i 's/fedora-35-x86_64/samba4repo-f35-x86_64/g' $@
 	@echo >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
@@ -180,7 +165,7 @@ samba4repo-f34-x86_64.cfg: /etc/mock/fedora-34-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/34/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/35/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
@@ -270,5 +255,3 @@ maintainer-clean: distclean
 	@for name in $(SAMBAPKGS); do \
 	    (cd $$name; git clean -x -d -f); \
 	done
-
-

@@ -33,3 +33,6 @@
 [submodule "samba-4.15.x-srpm"]
 	path = samba-4.15.x-srpm
 	url = ssh://github.com/nkadel/samba-4.15.x-srpm
+[submodule "python-pyasn1-0.4.x-srpm"]
+	path = python-pyasn1-0.4.x-srpm
+	url = git@github.com:nkadel/python-pyasn1-0.4.x-srpm
