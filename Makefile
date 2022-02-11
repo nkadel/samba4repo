@@ -23,10 +23,10 @@ SAMBAPKGS+=libtdb-1.4.x-srpm
 SAMBAPKGS+=libtevent-0.11.x-srpm
 
 # Also requires libtevent
-SAMBAPKGS+=libldb-2.4.x-srpm
+SAMBAPKGS+=libldb-2.5.x-srpm
 
 # Current samba release, requires all curent libraries
-SAMBAPKGS+=samba-4.15.x-srpm
+SAMBAPKGS+=samba-4.16.x-srpm
 
 REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
@@ -74,15 +74,15 @@ install clean getsrc build srpm src.rpm::
 
 libtevent-0.11.x-srpm:: libtalloc-2.3.x-srpm
 
-libldb-2.4.x-srpm:: libtalloc-2.3.x-srpm
-libldb-2.4.x-srpm:: libtdb-1.4.x-srpm
-libldb-2.4.x-srpm:: libtevent-0.11.x-srpm
+libldb-2.5.x-srpm:: libtalloc-2.3.x-srpm
+libldb-2.5.x-srpm:: libtdb-1.4.x-srpm
+libldb-2.5.x-srpm:: libtevent-0.11.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.15.x-srpm:: libtalloc-2.3.x-srpm
-samba-4.15.x-srpm:: libtdb-1.4.x-srpm
-samba-4.15.x-srpm:: libtevent-0.11.x-srpm
-samba-4.15.x-srpm:: libldb-2.4.x-srpm
+samba-4.16.x-srpm:: libtalloc-2.3.x-srpm
+samba-4.16.x-srpm:: libtdb-1.4.x-srpm
+samba-4.16.x-srpm:: libtevent-0.11.x-srpm
+samba-4.16.x-srpm:: libldb-2.5.x-srpm
 
 # Actually build in directories
 .PHONY: $(SAMBAPKGS)

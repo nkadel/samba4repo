@@ -36,3 +36,9 @@
 [submodule "python-pyasn1-0.4.x-srpm"]
 	path = python-pyasn1-0.4.x-srpm
 	url = git@github.com:nkadel/python-pyasn1-0.4.x-srpm
+[submodule "samba-4.16.x-srpm"]
+	path = samba-4.16.x-srpm
+	url = ssh://github.com/nkadel/samba-4.16.x-srpm
+[submodule "libldb-2.5.x-srpm"]
+	path = libldb-2.5.x-srpm
+	url = ssh://github.com/nkadel/libldb-2.5.x-srpm
