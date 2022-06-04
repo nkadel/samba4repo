@@ -11,7 +11,10 @@
 REPOBASE=file://$(PWD)
 
 # Samba required
+SAMBAPKGS+=liburing-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
+SAMBAPKGS+=python-nose-srpm
+SAMBAPKGS+=python-setproctitle-srpm
 
 # Current libtalloc-2.x required
 SAMBAPKGS+=libtalloc-2.3.x-srpm
@@ -19,8 +22,8 @@ SAMBAPKGS+=libtalloc-2.3.x-srpm
 # Current libtdb-1.4.x required
 SAMBAPKGS+=libtdb-1.4.x-srpm
 
-# Current libtevent-0.11.x required for Samba 4.10
-SAMBAPKGS+=libtevent-0.11.x-srpm
+# Current libtevent-0.12.x required for Samba 4.10
+SAMBAPKGS+=libtevent-0.12.x-srpm
 
 # Also requires libtevent
 SAMBAPKGS+=libldb-2.5.x-srpm
@@ -28,26 +31,25 @@ SAMBAPKGS+=libldb-2.5.x-srpm
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.16.x-srpm
 
-REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
-REPOS+=samba4repo/fedora/35
+REPOS+=samba4repo/el/9
+REPOS+=samba4repo/fedora/36
 REPOS+=samba4repo/amz/2
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
-CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
-CFGS+=samba4repo-f35-x86_64.cfg
+CFGS+=samba4repo-9-x86_64.cfg
+CFGS+=samba4repo-f36-x86_64.cfg
 # Amazon 2 config
-CFGS+=samba4repo-amz2-x86_64.cfg
+#CFGS+=samba4repo-amz2-x86_64.cfg
 
 # /et/cmock version lacks EPEL
-CFGS+=centos-stream+epel-8-x86_64.cfg
 
 # Link from /etc/mock
-MOCKCFGS+=centos+epel-7-x86_64.cfg
 MOCKCFGS+=centos-stream+epel-8-x86_64.cfg
-MOCKCFGS+=fedora-35-x86_64.cfg
+MOCKCFGS+=centos-stream+epel-9-x86_64.cfg
+MOCKCFGS+=fedora-36-x86_64.cfg
 #MOCKCFGS+=amazonlinux-2-x86_64.cfg
 
 all:: install
@@ -71,17 +73,21 @@ install clean getsrc build srpm src.rpm::
 #	     git submodule update --init $@
 
 # Dependencies of libraries on other libraries for compilation
+python-setproctitle-srpm:: python-nose-srpm
 
 libtevent-0.11.x-srpm:: libtalloc-2.3.x-srpm
 
 libldb-2.5.x-srpm:: libtalloc-2.3.x-srpm
 libldb-2.5.x-srpm:: libtdb-1.4.x-srpm
-libldb-2.5.x-srpm:: libtevent-0.11.x-srpm
+libldb-2.5.x-srpm:: libtevent-0.12.x-srpm
 
 # Samba rellies on all the othe components
+samba-4.16.x-srpm:: liburing-srpm
+samba-4.16.x-srpm:: python-setproctitle-srpm
+
 samba-4.16.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.16.x-srpm:: libtdb-1.4.x-srpm
-samba-4.16.x-srpm:: libtevent-0.11.x-srpm
+samba-4.16.x-srpm:: libtevent-0.12.x-srpm
 samba-4.16.x-srpm:: libldb-2.5.x-srpm
 
 # Actually build in directories
@@ -106,38 +112,13 @@ cfg:: cfgs
 .PHONY: cfgs
 cfgs: $(CFGS) $(MOCKCFGS)
 
-centos-stream+epel-8-x86_64.cfg:: /etc/mock/centos-stream+epel-8-x86_64.cfg
-	@echo Generating $@ from $?
-	@cat $? > $@
-	@echo >> $@
-	@echo '# centos-stream+epel-8 configs lack EPEL, added here' >> $@
-	@echo "include('templates/centos-stream+epel-8.tpl')" >> $@
-
-samba4repo-7-x86_64.cfg: /etc/mock/centos+epel-7-x86_64.cfg
-	@echo Generating $@ from $?
-	@cat $? > $@
-	@sed -i 's/centos+epel-7-x86_64/samba4repo-7-x86_64/g' $@
-	@echo >> $@
-	@echo "Disabling 'best=' for $@"
-	@sed -i '/^best=/d' $@
-	@echo "best=0" >> $@
-	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
-	@echo '[samba4repo]' >> $@
-	@echo 'name=samba4repo' >> $@
-	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/el/7/x86_64/' >> $@
-	@echo 'failovermethod=priority' >> $@
-	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=0' >> $@
-	@echo 'gpgcheck=0' >> $@
-	@echo 'priority=20' >> $@
-	@echo '"""' >> $@
-
 samba4repo-8-x86_64.cfg: centos-stream+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/centos-stream+epel-8-x86_64/samba4repo-8-x86_64/g' $@
+	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
+	@echo Resetting root directory
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
 	@echo "best=0" >> $@
@@ -153,11 +134,13 @@ samba4repo-8-x86_64.cfg: centos-stream+epel-8-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-samba4repo-f35-x86_64.cfg: /etc/mock/fedora-35-x86_64.cfg
+samba4repo-9-x86_64.cfg: centos-stream+epel-9-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/fedora-35-x86_64/samba4repo-f35-x86_64/g' $@
+	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
+	@echo Resetting root directory
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
 	@echo "best=0" >> $@
@@ -165,7 +148,29 @@ samba4repo-f35-x86_64.cfg: /etc/mock/fedora-35-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/35/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/el/9/x86_64/' >> $@
+	@echo 'failovermethod=priority' >> $@
+	@echo 'skip_if_unavailable=False' >> $@
+	@echo 'metadata_expire=0' >> $@
+	@echo 'gpgcheck=0' >> $@
+	@echo 'priority=20' >> $@
+	@echo '"""' >> $@
+
+samba4repo-f36-x86_64.cfg: /etc/mock/fedora-36-x86_64.cfg
+	@echo Generating $@ from $?
+	@cat $? > $@
+	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
+	@echo >> $@
+	@echo Resetting root directory
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
+	@echo "Disabling 'best=' for $@"
+	@sed -i '/^best=/d' $@
+	@echo "best=0" >> $@
+	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
+	@echo '[samba4repo]' >> $@
+	@echo 'name=samba4repo' >> $@
+	@echo 'enabled=1' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/36/x86_64/' >> $@
 	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
@@ -176,8 +181,10 @@ samba4repo-f35-x86_64.cfg: /etc/mock/fedora-35-x86_64.cfg
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/fedora-rawhide-x86_64/samba4repo-rawhide-x86_64/g' $@
+	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
+	@echo Resetting root directory
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
 	@echo "best=0" >> $@
@@ -196,8 +203,10 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 samba4repo-amz2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
 	@echo Generating $@ from $?
 	@cat $? > $@
-	@sed -i 's/amz-2-x86_64/samba4repo-amz2-x86_64/g' $@
+	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
+	@echo Resetting root directory
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "Disabling 'best=' for $@"
 	@sed -i '/^best=/d' $@
 	@echo "best=0" >> $@
