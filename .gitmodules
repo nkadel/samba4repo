@@ -42,3 +42,6 @@
 [submodule "libtevent-0.12.x-srpm"]
 	path = libtevent-0.12.x-srpm
 	url = ssh://github.com/nkadel/libtevent-0.12.x-srpm
+[submodule "liburing-2.x-srpm"]
+	path = liburing-2.x-srpm
+	url = git@github.com:nkadel/liburing-2.x-srpm

@@ -11,7 +11,7 @@
 REPOBASE=file://$(PWD)
 
 # Samba required
-SAMBAPKGS+=liburing-srpm
+SAMBAPKGS+=liburing-2.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 SAMBAPKGS+=python-nose-srpm
 SAMBAPKGS+=python-setproctitle-srpm
@@ -82,7 +82,7 @@ libldb-2.5.x-srpm:: libtdb-1.4.x-srpm
 libldb-2.5.x-srpm:: libtevent-0.12.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.16.x-srpm:: liburing-srpm
+samba-4.16.x-srpm:: liburing-2.x-srpm
 samba-4.16.x-srpm:: python-setproctitle-srpm
 
 samba-4.16.x-srpm:: libtalloc-2.3.x-srpm
