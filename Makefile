@@ -12,6 +12,7 @@ REPOBASE=file://$(PWD)
 
 # Samba required
 SAMBAPKGS+=liburing-2.x-srpm
+SAMBAPKGS+=lmdb-0.9.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 SAMBAPKGS+=python-nose-1.3.x-srpm
 SAMBAPKGS+=python-setproctitle-1.2.x-srpm
@@ -82,6 +83,7 @@ libldb-2.5.x-srpm:: libtdb-1.4.x-srpm
 libldb-2.5.x-srpm:: libtevent-0.12.x-srpm
 
 # Samba rellies on all the othe components
+samba-4.16.x-srpm:: lmdb-0.9.x-srpm
 samba-4.16.x-srpm:: liburing-2.x-srpm
 samba-4.16.x-srpm:: python-setproctitle-1.2.x-srpm
 
@@ -112,15 +114,13 @@ cfg:: cfgs
 .PHONY: cfgs
 cfgs: $(CFGS) $(MOCKCFGS)
 
-samba4repo-8-x86_64.cfg: centos-stream+epel-8-x86_64.cfg
+samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
-	@cat $? > $@
-	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
+	@echo "include('$?')" > $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "Disabling 'best=' for $@"
-	@sed -i '/^best=/d' $@
 	@echo "best=0" >> $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
@@ -133,15 +133,12 @@ samba4repo-8-x86_64.cfg: centos-stream+epel-8-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-samba4repo-9-x86_64.cfg: centos-stream+epel-9-x86_64.cfg
+samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 	@echo Generating $@ from $?
-	@cat $? > $@
-	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
-	@echo >> $@
+	@echo "include('$?')" > $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "Disabling 'best=' for $@"
-	@sed -i '/^best=/d' $@
 	@echo "best=0" >> $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
@@ -156,8 +153,7 @@ samba4repo-9-x86_64.cfg: centos-stream+epel-9-x86_64.cfg
 
 samba4repo-f36-x86_64.cfg: /etc/mock/fedora-36-x86_64.cfg
 	@echo Generating $@ from $?
-	@cat $? > $@
-	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
+	@echo "include('$?')" > $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
@@ -177,7 +173,7 @@ samba4repo-f36-x86_64.cfg: /etc/mock/fedora-36-x86_64.cfg
 
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
-	@cat $? > $@
+	@echo "include('$?')" > $@
 	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
 	@echo Resetting root directory
@@ -198,8 +194,7 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 
 samba4repo-amz2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
 	@echo Generating $@ from $?
-	@cat $? > $@
-	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
+	@echo "include('$?')" > $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@

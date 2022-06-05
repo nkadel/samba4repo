@@ -54,3 +54,6 @@
 [submodule "python-setproctitle-1.2.x-srpm"]
 	path = python-setproctitle-1.2.x-srpm
 	url = git@github.com:nkadel/python-setproctitle-1.2.x-srpm
+[submodule "lmdb-0.9.x-srpm"]
+	path = lmdb-0.9.x-srpm
+	url = git@github.com:nkadel/lmdb-0.9.x-srpm
