@@ -45,3 +45,12 @@
 [submodule "liburing-2.x-srpm"]
 	path = liburing-2.x-srpm
 	url = git@github.com:nkadel/liburing-2.x-srpm
+[submodule "python-iso86001-0.1.x-srpm"]
+	path = python-iso86001-0.1.x-srpm
+	url = git@github.com:nkadel/python-iso86001-0.1.x-srpm.git
+[submodule "python-nose-1.3.x-srpm"]
+	path = python-nose-1.3.x-srpm
+	url = git@github.com:nkadel/python-nose-1.3.x-srpm.git
+[submodule "python-setproctitle-1.2.x-srpm"]
+	path = python-setproctitle-1.2.x-srpm
+	url = git@github.com:nkadel/python-setproctitle-1.2.x-srpm

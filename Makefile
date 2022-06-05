@@ -13,8 +13,8 @@ REPOBASE=file://$(PWD)
 # Samba required
 SAMBAPKGS+=liburing-2.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
-SAMBAPKGS+=python-nose-srpm
-SAMBAPKGS+=python-setproctitle-srpm
+SAMBAPKGS+=python-nose-1.3.x-srpm
+SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 
 # Current libtalloc-2.x required
 SAMBAPKGS+=libtalloc-2.3.x-srpm
@@ -73,7 +73,7 @@ install clean getsrc build srpm src.rpm::
 #	     git submodule update --init $@
 
 # Dependencies of libraries on other libraries for compilation
-python-setproctitle-srpm:: python-nose-srpm
+python-setproctitle-1.2.x-srpm:: python-nose-1.3.x-srpm
 
 libtevent-0.11.x-srpm:: libtalloc-2.3.x-srpm
 
@@ -83,7 +83,7 @@ libldb-2.5.x-srpm:: libtevent-0.12.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.16.x-srpm:: liburing-2.x-srpm
-samba-4.16.x-srpm:: python-setproctitle-srpm
+samba-4.16.x-srpm:: python-setproctitle-1.2.x-srpm
 
 samba-4.16.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.16.x-srpm:: libtdb-1.4.x-srpm
