@@ -127,7 +127,6 @@ samba4repo-8-x86_64.cfg: centos-stream+epel-8-x86_64.cfg
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=$(REPOBASE)/samba4repo/el/8/x86_64/' >> $@
-	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
@@ -149,7 +148,6 @@ samba4repo-9-x86_64.cfg: centos-stream+epel-9-x86_64.cfg
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=$(REPOBASE)/samba4repo/el/9/x86_64/' >> $@
-	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
@@ -171,7 +169,6 @@ samba4repo-f36-x86_64.cfg: /etc/mock/fedora-36-x86_64.cfg
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/36/x86_64/' >> $@
-	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
@@ -193,7 +190,6 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/rawhide/x86_64/' >> $@
-	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
@@ -215,7 +211,6 @@ samba4repo-amz2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
 	@echo 'baseurl=$(REPOBASE)/samba4repo/amz/2/x86_64/' >> $@
-	@echo 'failovermethod=priority' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
