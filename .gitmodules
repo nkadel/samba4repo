@@ -24,9 +24,6 @@
 [submodule "libldb-2.4.x-srpm"]
 	path = libldb-2.4.x-srpm
 	url = ssh://git@github.com/nkadel/libldb-2.4.x-srpm
-[submodule "libtevent-0.11.x-srpm"]
-	path = libtevent-0.11.x-srpm
-	url = ssh://git@github.com/nkadel/libtevent-0.11.x-srpm
 [submodule "gmp-6.1.x-srpm"]
 	path = gmp-6.1.x-srpm
 	url = ssh://git@github.com/nkadel/gmp-6.1.x-srpm
@@ -42,3 +39,6 @@
 [submodule "libldb-2.5.x-srpm"]
 	path = libldb-2.5.x-srpm
 	url = ssh://github.com/nkadel/libldb-2.5.x-srpm
+[submodule "libtevent-0.12.x-srpm"]
+	path = libtevent-0.12.x-srpm
+	url = ssh://github.com/nkadel/libtevent-0.12.x-srpm
