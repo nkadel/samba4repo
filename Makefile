@@ -12,22 +12,24 @@ REPOBASE=file://$(PWD)
 
 # Samba required
 SAMBAPKGS+=liburing-2.x-srpm
-SAMBAPKGS+=lmdb-0.9.x-srpm
+# Only needed for Amazon Linux
+#SAMBAPKGS+=lmdb-0.9.x-srpm
+SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 SAMBAPKGS+=python-nose-1.3.x-srpm
 SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 
 # Current libtalloc-2.x required
-SAMBAPKGS+=libtalloc-2.3.x-srpm
+#SAMBAPKGS+=libtalloc-2.3.x-srpm
 
 # Current libtdb-1.4.x required
-SAMBAPKGS+=libtdb-1.4.x-srpm
+#SAMBAPKGS+=libtdb-1.4.x-srpm
 
 # Current libtevent-0.12.x required for Samba 4.10
-SAMBAPKGS+=libtevent-0.12.x-srpm
+#SAMBAPKGS+=libtevent-0.12.x-srpm
 
 # Also requires libtevent
-SAMBAPKGS+=libldb-2.5.x-srpm
+#SAMBAPKGS+=libldb-2.5.x-srpm
 
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.16.x-srpm
