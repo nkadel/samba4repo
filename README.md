@@ -1,7 +1,7 @@
 samba4repo
 ==========
 
-Wrapper for SRPM building tools for Samba 4 on Fedora 35 and CentOS 8
+Wrapper for SRPM building tools for Samba 4 on Fedora 36, CentOS 8 and 9
 
 The samba here is built with the domain controller fully enabled, in
 the "samba-dc" packagtes. The RPMs from RHEL upstream included only
@@ -36,17 +36,17 @@ These are rebuilt from Fedora rawhide releases, and need to be built
 and installed in the following order.
 
 * make cfgs # Create local .cfg configs for "mock".
-* * epel-7-x86_64.cfg # Used for some Makefiles
-* * epel-8-x86_64.cfg # Used for some Makefiles
-* * fedora-34-x86_64.cfg # Used for some Makefiles
-* * samba4repo-7-x86_64.cfg # Activates local RPM dependency repository
+* * centos-stream+epel-8-x86_64.cfg # Used for some Makefiles
+* * centos-stream+epel-9-x86_64.cfg # Used for some Makefiles
+* * fedora-36-x86_64.cfg # Used for some Makefiles
 * * samba4repo-8-x86_64.cfg # Activates local RPM dependency repository
+* * samba4repo-9-x86_64.cfg # Activates local RPM dependency repository
 * * samba4repo-f34-x86_64.cfg # Activates local RPM dependency repository
 
 * make repos # Creates local local yum repositories in $PWD/samba4repo
-* * samba4repo/el/7
 * * samba4repo/el/8
-* * samba4repo/fedora/34
+* * samba4repo/el/9
+* * samba4repo/fedora/36
 
 * make # Make all distinct versions using "mock"
 
@@ -59,7 +59,11 @@ Samba 4.10 nad later has strong dependencies on additional components
 that may or not be built into the current Fedora releases. These are
 in the following submodules:
 
-* gmp-xxx-srpm
+* lmdb-xxx-srpm
+* python-iso86001-xxx-srpm
+* python-pyasn1-xxx-srpm
+* python-setproctitle-xxx-srpm
+
 * libtalloc-xxx-srpm
 * libtdb-xxx-srpm
 * libldb-xxx-srpm
@@ -84,11 +88,11 @@ for locally built components. Generating GPG signed packages and
 ensuring that the compneents are in this build location are securely
 and safely built is not addressed in this test setup.
 
-CentOS 8 Overlap
+CentOS Overlap
 ========================
 
 CentOS 8 has published libraries such as libtalloc and libldb of
-sufficiently recent release for Samba 4.13. Unfortunately, they
+sufficiently recent release for Samba 4.16. Unfortunately, they
 elected to discard "python3-talloc-devel" and similar components,
 simply to diverge from Fedora and "mark their territory". So
 unfortunately, those have to be built and updated from here.
