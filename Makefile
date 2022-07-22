@@ -116,52 +116,49 @@ cfg:: cfgs
 .PHONY: cfgs
 cfgs: $(CFGS) $(MOCKCFGS)
 
+$(MOCKCFGS)::
+	@echo Generating $@ from /etc/mock/$@
+	@echo "include('/etc/mock/$@')" | tee $@
+
 samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
-	@echo "include('$?')" > $@
-	@echo >> $@
+	@echo "include('$?')" | tee $@
+	@echo | tee -a $@
 	@echo Resetting root directory
-	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
-	@echo "Disabling 'best=' for $@"
-	@echo "best=0" >> $@
-	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
-	@echo '[samba4repo]' >> $@
-	@echo 'name=samba4repo' >> $@
-	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/el/8/x86_64/' >> $@
-	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=0' >> $@
-	@echo 'gpgcheck=0' >> $@
-	@echo 'priority=20' >> $@
-	@echo '"""' >> $@
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
+	@echo "config_opts['dnf.conf'] += \"\"\"" | tee -a $@
+	@echo '[samba4repo]' | tee -a $@
+	@echo 'name=samba4repo' | tee -a $@
+	@echo 'enabled=1' | tee -a $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/el/8/x86_64/' | tee -a $@
+	@echo 'skip_if_unavailable=False' | tee -a $@
+	@echo 'metadata_expire=0' | tee -a $@
+	@echo 'gpgcheck=0' | tee -a $@
+	@echo 'priority=20' | tee -a $@
+	@echo '"""' | tee -a $@
 
 samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 	@echo Generating $@ from $?
-	@echo "include('$?')" > $@
+	@echo "include('$?')" | tee $@
 	@echo Resetting root directory
-	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
-	@echo "Disabling 'best=' for $@"
-	@echo "best=0" >> $@
-	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
-	@echo '[samba4repo]' >> $@
-	@echo 'name=samba4repo' >> $@
-	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/el/9/x86_64/' >> $@
-	@echo 'skip_if_unavailable=False' >> $@
-	@echo 'metadata_expire=0' >> $@
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
+	@echo "config_opts['dnf.conf'] += \"\"\"" | tee -a $@
+	@echo '[samba4repo]' | tee -a $@
+	@echo 'name=samba4repo' | tee -a $@
+	@echo 'enabled=1' | tee -a $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/el/9/x86_64/' | tee -a $@
+	@echo 'skip_if_unavailable=False' | tee -a $@
+	@echo 'metadata_expire=0' | tee -a $@
 	@echo 'gpgcheck=0' >> $@
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
 samba4repo-f36-x86_64.cfg: /etc/mock/fedora-36-x86_64.cfg
 	@echo Generating $@ from $?
-	@echo "include('$?')" > $@
+	@echo "include('$?')" | tee $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
-	@echo "Disabling 'best=' for $@"
-	@sed -i '/^best=/d' $@
-	@echo "best=0" >> $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
@@ -175,14 +172,11 @@ samba4repo-f36-x86_64.cfg: /etc/mock/fedora-36-x86_64.cfg
 
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
-	@echo "include('$?')" > $@
+	@echo "include('$?')" | tee $@
 	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
-	@echo "Disabling 'best=' for $@"
-	@sed -i '/^best=/d' $@
-	@echo "best=0" >> $@
 	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
@@ -196,13 +190,10 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 
 samba4repo-amz2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
 	@echo Generating $@ from $?
-	@echo "include('$?')" > $@
+	@echo "include('$?')" | tee $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
-	@echo "Disabling 'best=' for $@"
-	@sed -i '/^best=/d' $@
-	@echo "best=0" >> $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
@@ -214,19 +205,16 @@ samba4repo-amz2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-$(MOCKCFGS)::
-	ln -sf /etc/mock/$@ $@
-
 repo: samba4repo.repo
 samba4repo.repo:: Makefile samba4repo.repo.in
 	if [ -s /etc/fedora-release ]; then \
 		cat $@.in | \
 			sed "s|@REPOBASEDIR@/|$(PWD)/|g" | \
-			sed "s|/@RELEASEDIR@/|/fedora/|g" > $@; \
+			sed "s|/@RELEASEDIR@/|/fedora/|g" | tee $@; \
 	elif [ -s /etc/redhat-release ]; then \
 		cat $@.in | \
 			sed "s|@REPOBASEDIR@/|$(PWD)/|g" | \
-			sed "s|/@RELEASEDIR@/|/el/|g" > $@; \
+			sed "s|/@RELEASEDIR@/|/el/|g" | tee $@; \
 	else \
 		echo Error: unknown release, check /etc/*-release; \
 		exit 1; \
