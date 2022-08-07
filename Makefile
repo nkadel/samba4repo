@@ -26,7 +26,7 @@ SAMBAPKGS+=libtalloc-2.3.x-srpm
 SAMBAPKGS+=libtdb-1.4.x-srpm
 
 # Current libtevent-0.12.x required for Samba 4.10
-SAMBAPKGS+=libtevent-0.12.x-srpm
+SAMBAPKGS+=libtevent-0.13.x-srpm
 
 # Also requires libtevent
 SAMBAPKGS+=libldb-2.5.x-srpm
@@ -78,11 +78,11 @@ install clean getsrc build srpm src.rpm::
 # Dependencies of libraries on other libraries for compilation
 python-setproctitle-1.2.x-srpm:: python-nose-1.3.x-srpm
 
-libtevent-0.11.x-srpm:: libtalloc-2.3.x-srpm
+libtevent-0.13.x-srpm:: libtalloc-2.3.x-srpm
 
 libldb-2.5.x-srpm:: libtalloc-2.3.x-srpm
 libldb-2.5.x-srpm:: libtdb-1.4.x-srpm
-libldb-2.5.x-srpm:: libtevent-0.12.x-srpm
+libldb-2.5.x-srpm:: libtevent-0.13.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.16.x-srpm:: lmdb-0.9.x-srpm
@@ -91,7 +91,7 @@ samba-4.16.x-srpm:: python-setproctitle-1.2.x-srpm
 
 samba-4.16.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.16.x-srpm:: libtdb-1.4.x-srpm
-samba-4.16.x-srpm:: libtevent-0.12.x-srpm
+samba-4.16.x-srpm:: libtevent-0.13.x-srpm
 samba-4.16.x-srpm:: libldb-2.5.x-srpm
 
 # Actually build in directories
