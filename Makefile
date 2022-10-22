@@ -29,7 +29,7 @@ SAMBAPKGS+=libtdb-1.4.x-srpm
 SAMBAPKGS+=libtevent-0.13.x-srpm
 
 # Also requires libtevent
-SAMBAPKGS+=libldb-2.5.x-srpm
+SAMBAPKGS+=libldb-2.6.x-srpm
 
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.17.x-srpm
@@ -80,9 +80,9 @@ python-setproctitle-1.2.x-srpm:: python-nose-1.3.x-srpm
 
 libtevent-0.13.x-srpm:: libtalloc-2.3.x-srpm
 
-libldb-2.5.x-srpm:: libtalloc-2.3.x-srpm
-libldb-2.5.x-srpm:: libtdb-1.4.x-srpm
-libldb-2.5.x-srpm:: libtevent-0.13.x-srpm
+libldb-2.6.x-srpm:: libtalloc-2.3.x-srpm
+libldb-2.6.x-srpm:: libtdb-1.4.x-srpm
+libldb-2.6.x-srpm:: libtevent-0.13.x-srpm
 
 # Samba rellies on all the othe components
 samba-4.17.x-srpm:: lmdb-0.9.x-srpm
@@ -92,7 +92,7 @@ samba-4.17.x-srpm:: python-setproctitle-1.2.x-srpm
 samba-4.17.x-srpm:: libtalloc-2.3.x-srpm
 samba-4.17.x-srpm:: libtdb-1.4.x-srpm
 samba-4.17.x-srpm:: libtevent-0.13.x-srpm
-samba-4.17.x-srpm:: libldb-2.5.x-srpm
+samba-4.17.x-srpm:: libldb-2.6.x-srpm
 
 # Actually build in directories
 .PHONY: $(SAMBAPKGS)
