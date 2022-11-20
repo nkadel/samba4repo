@@ -2,14 +2,6 @@
 	path = compat-nettle34-3.x-srpm
 	url = ssh://github.com/nkadel/compat-nettle34-3.x-srpm
 	branch = master
-[submodule "libtalloc-2.3.x-srpm"]
-	path = libtalloc-2.3.x-srpm
-	url = ssh://github.com/nkadel/libtalloc-2.3.x-srpm
-	branch = master
-[submodule "libtdb-1.4.x-srpm"]
-	path = libtdb-1.4.x-srpm
-	url = ssh://github.com/nkadel/libtdb-1.4.x-srpm
-	branch = master
 [submodule "libtevent-0.10.x-srpm"]
 	path = libtevent-0.10.x-srpm
 	url = ssh://github.com/nkadel/libtevent-0.10.x-srpm
@@ -45,12 +37,6 @@
 [submodule "lmdb-0.9.x-srpm"]
 	path = lmdb-0.9.x-srpm
 	url = git@github.com:nkadel/lmdb-0.9.x-srpm
-[submodule "libtevent-0.13.x-srpm"]
-	path = libtevent-0.13.x-srpm
-	url = git@github.com:nkadel/libtevent-0.13.x-srpm.git
 [submodule "samba-4.17.x-srpm"]
 	path = samba-4.17.x-srpm
 	url = git@github.com:nkadel/samba-4.17.x-srpm
-[submodule "libldb-2.6.x-srpm"]
-	path = libldb-2.6.x-srpm
-	url = ssh://github.com/nkadel/libldb-2.6.x-srpm
