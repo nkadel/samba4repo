@@ -22,25 +22,28 @@ SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 # Current samba release, requires all curent libraries
 SAMBAPKGS+=samba-4.17.x-srpm
 
+REPOS+=samba4repo/el/7
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/el/9
-REPOS+=samba4repo/fedora/36
+REPOS+=samba4repo/fedora/37
 REPOS+=samba4repo/amz/2
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
+CFGS+=samba4repo-7-x86_64.cfg
 CFGS+=samba4repo-8-x86_64.cfg
 CFGS+=samba4repo-9-x86_64.cfg
-CFGS+=samba4repo-f36-x86_64.cfg
+CFGS+=samba4repo-f37-x86_64.cfg
 # Amazon 2 config
 #CFGS+=samba4repo-amz2-x86_64.cfg
 
 # /et/cmock version lacks EPEL
 
 # Link from /etc/mock
+MOCKCFGS+=centos+epel-7-x86_64.cfg
 MOCKCFGS+=centos-stream+epel-8-x86_64.cfg
 MOCKCFGS+=centos-stream+epel-9-x86_64.cfg
-MOCKCFGS+=fedora-36-x86_64.cfg
+MOCKCFGS+=fedora-37-x86_64.cfg
 #MOCKCFGS+=amazonlinux-2-x86_64.cfg
 
 all:: install
@@ -97,6 +100,23 @@ $(MOCKCFGS)::
 	@echo Generating $@ from /etc/mock/$@
 	@echo "include('/etc/mock/$@')" | tee $@
 
+samba4repo-7-x86_64.cfg: /etc/mock/centos+epel-7-x86_64.cfg
+	@echo Generating $@ from $?
+	@echo "include('$?')" | tee $@
+	@echo | tee -a $@
+	@echo Resetting root directory
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
+	@echo "config_opts['yum.conf'] += \"\"\"" | tee -a $@
+	@echo '[samba4repo]' | tee -a $@
+	@echo 'name=samba4repo' | tee -a $@
+	@echo 'enabled=1' | tee -a $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/el/7/x86_64/' | tee -a $@
+	@echo 'skip_if_unavailable=False' | tee -a $@
+	@echo 'metadata_expire=0' | tee -a $@
+	@echo 'gpgcheck=0' | tee -a $@
+	@echo 'priority=20' | tee -a $@
+	@echo '"""' | tee -a $@
+
 samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
@@ -130,7 +150,7 @@ samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-samba4repo-f36-x86_64.cfg: /etc/mock/fedora-36-x86_64.cfg
+samba4repo-f37-x86_64.cfg: /etc/mock/fedora-37-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo >> $@
@@ -140,7 +160,7 @@ samba4repo-f36-x86_64.cfg: /etc/mock/fedora-36-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/36/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/37/x86_64/' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
