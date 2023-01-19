@@ -19,7 +19,16 @@ SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 SAMBAPKGS+=python-nose-1.3.x-srpm
 SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 
-# Current samba release, requires all curent libraries
+SAMBAPKGS+=libtalloc-2.4.x-srpm
+SAMBAPKGS+=libtdb-1.4.x-srpm
+# Requires libtalloc
+SAMBAPKGS+=libtevent-0.14.x-srpm
+# Requires libtalloc,libtdb,libtevent
+SAMBAPKGS+=libldb-2.7.x-srpm
+
+# Current samba release
+# Now builds internal libraries rather than:
+# libtalloc, libtdb, libtevent, libldb
 SAMBAPKGS+=samba-4.17.x-srpm
 
 REPOS+=samba4repo/el/8

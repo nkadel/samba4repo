@@ -40,3 +40,15 @@
 [submodule "samba-4.17.x-srpm"]
 	path = samba-4.17.x-srpm
 	url = git@github.com:nkadel/samba-4.17.x-srpm
+[submodule "libldb-2.6.x-srpm"]
+	path = libldb-2.7.0-srpm
+	url = git@github.com:nkadel/libldb-2.6.x-srpm
+[submodule "libtalloc-2.3.x-srpm"]
+	path = libtalloc-2.4.x-srpm
+	url = git@github.com:nkadel/libtalloc-2.3.x-srpm
+[submodule "libtevent-0.13.x-srpm"]
+	path = libtevent-0.14.x-srpm
+	url = git@github.com:nkadel/libtevent-0.13.x-srpm
+[submodule "libtdb-1.4.x-srpm"]
+	path = libtdb-1.4.x-srpm
+	url = git@github.com:nkadel/libtdb-1.4.x-srpm
