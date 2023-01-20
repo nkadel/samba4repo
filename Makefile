@@ -7,7 +7,6 @@
 #
 #	Set up local 
 
-#REOBASEE=http://localhost
 REPOBASE=file://$(PWD)
 
 # Samba required

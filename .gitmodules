@@ -41,7 +41,7 @@
 	path = samba-4.17.x-srpm
 	url = git@github.com:nkadel/samba-4.17.x-srpm
 [submodule "libldb-2.6.x-srpm"]
-	path = libldb-2.7.0-srpm
+	path = libldb-2.7.x-srpm
 	url = git@github.com:nkadel/libldb-2.6.x-srpm
 [submodule "libtalloc-2.3.x-srpm"]
 	path = libtalloc-2.4.x-srpm
