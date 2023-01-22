@@ -1,7 +1,7 @@
 samba4repo
 ==========
 
-Wrapper for SRPM building tools for Samba 4 on Fedora 36, CentOS 8 and 9
+Wrapper for SRPM building tools for Samba 4 on Fedora 37, CentOS 8 and 9
 
 The samba here is built with the domain controller fully enabled, in
 the "samba-dc" packagtes. The RPMs from RHEL upstream included only
@@ -38,7 +38,7 @@ and installed in the following order.
 * make cfgs # Create local .cfg configs for "mock".
 * * centos-stream+epel-8-x86_64.cfg # Used for some Makefiles
 * * centos-stream+epel-9-x86_64.cfg # Used for some Makefiles
-* * fedora-36-x86_64.cfg # Used for some Makefiles
+* * fedora-37-x86_64.cfg # Used for some Makefiles
 * * samba4repo-8-x86_64.cfg # Activates local RPM dependency repository
 * * samba4repo-9-x86_64.cfg # Activates local RPM dependency repository
 * * samba4repo-f34-x86_64.cfg # Activates local RPM dependency repository
@@ -46,7 +46,7 @@ and installed in the following order.
 * make repos # Creates local local yum repositories in $PWD/samba4repo
 * * samba4repo/el/8
 * * samba4repo/el/9
-* * samba4repo/fedora/36
+* * samba4repo/fedora/37
 
 * make # Make all distinct versions using "mock"
 
@@ -59,15 +59,22 @@ Samba 4.10 nad later has strong dependencies on additional components
 that may or not be built into the current Fedora releases. These are
 in the following submodules:
 
-* lmdb-xxx-srpm
+* liburing-xxx-srpm
+* lmdb-xxxx-srpm
 * python-iso86001-xxx-srpm
 * python-pyasn1-xxx-srpm
 * python-setproctitle-xxx-srpm
+
+Th following libraries are all now compiled internally with the Samba
+tarball. Building them separately conflicts with the versions used by sssd.
 
 * libtalloc-xxx-srpm
 * libtdb-xxx-srpm
 * libldb-xxx-srpm
 * libtevent-xxx-srpm
+
+Then build the final package.
+
 * samba-xxx-srpm
 
 Installing Samba
