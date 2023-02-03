@@ -28,7 +28,7 @@ SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 # Current samba release
 # Now builds internal libraries rather than:
 # libtalloc, libtdb, libtevent, libldb
-SAMBAPKGS+=samba-4.17.x-srpm
+SAMBAPKGS+=samba-4.18.x-srpm
 
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/el/9
