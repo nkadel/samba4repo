@@ -1,14 +1,6 @@
-[submodule "compat-nettle34-3.x-srpm"]
-	path = compat-nettle34-3.x-srpm
-	url = ssh://github.com/nkadel/compat-nettle34-3.x-srpm
-	branch = master
 [submodule "libtevent-0.10.x-srpm"]
 	path = libtevent-0.10.x-srpm
 	url = ssh://github.com/nkadel/libtevent-0.10.x-srpm
-	branch = master
-[submodule "compat-gnutls36-3.x-srpm"]
-	path = compat-gnutls36-3.x-srpm
-	url = ssh://github.com/nkadel/compat-gnutls36-3.x-srpm
 	branch = master
 [submodule "quota-4.x-srpm"]
 	path = quota-4.x-srpm
@@ -16,6 +8,7 @@
 [submodule "gmp-6.1.x-srpm"]
 	path = gmp-6.1.x-srpm
 	url = ssh://git@github.com/nkadel/gmp-6.1.x-srpm
+	branch = master
 [submodule "samba-4.15.x-srpm"]
 	path = samba-4.15.x-srpm
 	url = ssh://github.com/nkadel/samba-4.15.x-srpm
@@ -23,33 +16,42 @@
 [submodule "python-pyasn1-0.4.x-srpm"]
 	path = python-pyasn1-0.4.x-srpm
 	url = git@github.com:nkadel/python-pyasn1-0.4.x-srpm
+	branch = master
 [submodule "liburing-2.x-srpm"]
 	path = liburing-2.x-srpm
 	url = git@github.com:nkadel/liburing-2.x-srpm
+	branch = master
 [submodule "python-iso86001-0.1.x-srpm"]
 	path = python-iso86001-0.1.x-srpm
 	url = git@github.com:nkadel/python-iso86001-0.1.x-srpm.git
+	branch = master
 [submodule "python-nose-1.3.x-srpm"]
 	path = python-nose-1.3.x-srpm
 	url = git@github.com:nkadel/python-nose-1.3.x-srpm.git
+	branch = master
 [submodule "python-setproctitle-1.2.x-srpm"]
 	path = python-setproctitle-1.2.x-srpm
 	url = git@github.com:nkadel/python-setproctitle-1.2.x-srpm
 [submodule "lmdb-0.9.x-srpm"]
 	path = lmdb-0.9.x-srpm
 	url = git@github.com:nkadel/lmdb-0.9.x-srpm
+	branch = master
 [submodule "samba-4.17.x-srpm"]
 	path = samba-4.18.x-srpm
 	url = git@github.com:nkadel/samba-4.17.x-srpm
+	branch = master
 [submodule "libtalloc-2.3.x-srpm"]
 	path = libtalloc-2.4.x-srpm
 	url = git@github.com:nkadel/libtalloc-2.3.x-srpm
+	branch = master
 [submodule "libtdb-1.4.x-srpm"]
 	path = libtdb-1.4.x-srpm
 	url = git@github.com:nkadel/libtdb-1.4.x-srpm.git
+	branch = master
 [submodule "libtevent-0.13.x-srpm"]
 	path = libtevent-0.14.x-srpm
 	url = git@github.com:nkadel/libtevent-0.13.x-srpm
+	branch = master
 [submodule "libldb-2.6.x-srpm"]
 	path = libldb-2.7.x-srpm
 	url = git@github.com:nkadel/libldb-2.6.x-srpm
