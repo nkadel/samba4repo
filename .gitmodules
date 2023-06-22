@@ -22,9 +22,6 @@
 [submodule "python-pyasn1-0.4.x-srpm"]
 	path = python-pyasn1-0.4.x-srpm
 	url = git@github.com:nkadel/python-pyasn1-0.4.x-srpm
-[submodule "liburing-2.x-srpm"]
-	path = liburing-2.x-srpm
-	url = git@github.com:nkadel/liburing-2.x-srpm
 [submodule "python-iso86001-0.1.x-srpm"]
 	path = python-iso86001-0.1.x-srpm
 	url = git@github.com:nkadel/python-iso86001-0.1.x-srpm.git
@@ -34,9 +31,6 @@
 [submodule "python-setproctitle-1.2.x-srpm"]
 	path = python-setproctitle-1.2.x-srpm
 	url = git@github.com:nkadel/python-setproctitle-1.2.x-srpm
-[submodule "lmdb-0.9.x-srpm"]
-	path = lmdb-0.9.x-srpm
-	url = git@github.com:nkadel/lmdb-0.9.x-srpm
 [submodule "samba-4.17.x-srpm"]
 	path = samba-4.18.x-srpm
 	url = git@github.com:nkadel/samba-4.17.x-srpm

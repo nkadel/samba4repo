@@ -59,19 +59,22 @@ Samba 4.10 nad later has strong dependencies on additional components
 that may or not be built into the current Fedora releases. These are
 in the following submodules:
 
-* liburing-xxx-srpm
-* lmdb-xxxx-srpm
-* python-iso86001-xxx-srpm
-* python-pyasn1-xxx-srpm
-* python-setproctitle-xxx-srpm
+# Formerly not provided by RHEL, no longer needed
+    * liburing-xxx-srpm
+    * lmdb-xxxx-srpm
 
-Th following libraries are all now compiled internally with the Samba
-tarball. Building them separately conflicts with the versions used by sssd.
 
-* libtalloc-xxx-srpm
-* libtdb-xxx-srpm
-* libldb-xxx-srpm
-* libtevent-xxx-srpm
+* Now compiled internally by Samba, to avoid conflict with sssd
+    * libtalloc-xxx-srpm
+    * libtdb-xxx-srpm
+    * libldb-xxx-srpm
+    * libtevent-xxx-srpm
+
+* Still needed
+    * python-iso86001-xxx-srpm
+    * python-nose-1.3.x-srpm/
+    * python-pyasn1-xxx-srpm
+    * python-setproctitle-xxx-srpm
 
 Then build the final package.
 

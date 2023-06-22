@@ -9,10 +9,12 @@
 
 REPOBASE=file://$(PWD)
 
-# Samba required
-SAMBAPKGS+=liburing-2.x-srpm
+# Samba required, -devel packages not in main channels
+# Now published in side channels like EPEL or Code Ready Builder
+#SAMBAPKGS+=liburing-2.x-srpm
 # Only needed for Amazon Linux
 #SAMBAPKGS+=lmdb-0.9.x-srpm
+
 SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 SAMBAPKGS+=python-nose-1.3.x-srpm
@@ -25,21 +27,22 @@ SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 ## Requires libtalloc,libtdb,libtevent
 #SAMBAPKGS+=libldb-2.7.x-srpm
 
-# Current samba release
+## Current samba release
 # Now builds internal libraries rather than:
 # libtalloc, libtdb, libtevent, libldb
+# Internal libraries avoids conflict with sssd dependencies
 SAMBAPKGS+=samba-4.18.x-srpm
 
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/el/9
-REPOS+=samba4repo/fedora/37
+REPOS+=samba4repo/fedora/38
 REPOS+=samba4repo/amz/2
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
 CFGS+=samba4repo-8-x86_64.cfg
 CFGS+=samba4repo-9-x86_64.cfg
-CFGS+=samba4repo-f37-x86_64.cfg
+CFGS+=samba4repo-f38-x86_64.cfg
 # Amazon 2 config
 #CFGS+=samba4repo-amz2-x86_64.cfg
 
@@ -48,7 +51,7 @@ CFGS+=samba4repo-f37-x86_64.cfg
 # Link from /etc/mock
 MOCKCFGS+=centos-stream+epel-8-x86_64.cfg
 MOCKCFGS+=centos-stream+epel-9-x86_64.cfg
-MOCKCFGS+=fedora-37-x86_64.cfg
+MOCKCFGS+=fedora-38-x86_64.cfg
 #MOCKCFGS+=amazonlinux-2-x86_64.cfg
 
 all:: install
@@ -138,7 +141,7 @@ samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-samba4repo-f37-x86_64.cfg: /etc/mock/fedora-37-x86_64.cfg
+samba4repo-f38-x86_64.cfg: /etc/mock/fedora-38-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo >> $@
@@ -148,7 +151,7 @@ samba4repo-f37-x86_64.cfg: /etc/mock/fedora-37-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/37/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/38/x86_64/' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
