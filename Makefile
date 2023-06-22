@@ -49,8 +49,10 @@ CFGS+=samba4repo-f38-x86_64.cfg
 # /et/cmock version lacks EPEL
 
 # Link from /etc/mock
-MOCKCFGS+=centos-stream+epel-8-x86_64.cfg
-MOCKCFGS+=centos-stream+epel-9-x86_64.cfg
+MOCKCFGS+=rocky+epel-8-x86_64.cfg
+MOCKCFGS+=rocky+epel-9-x86_64.cfg
+#MOCKCFGS+=centos-stream+epel-8-x86_64.cfg
+#MOCKCFGS+=centos-stream+epel-9-x86_64.cfg
 MOCKCFGS+=fedora-38-x86_64.cfg
 #MOCKCFGS+=amazonlinux-2-x86_64.cfg
 
@@ -108,7 +110,7 @@ $(MOCKCFGS)::
 	@echo Generating $@ from /etc/mock/$@
 	@echo "include('/etc/mock/$@')" | tee $@
 
-samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
+samba4repo-8-x86_64.cfg: /etc/mock/rocky+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo | tee -a $@
@@ -125,7 +127,7 @@ samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo 'priority=20' | tee -a $@
 	@echo '"""' | tee -a $@
 
-samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
+samba4repo-9-x86_64.cfg: /etc/mock/rocky+epel-9-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo Resetting root directory
