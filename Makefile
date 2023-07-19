@@ -15,6 +15,13 @@ REPOBASE=file://$(PWD)
 # Only needed for Amazon Linux
 #SAMBAPKGS+=lmdb-0.9.x-srpm
 
+# Amazon 2023 additions
+SAMBAPKGS+=mimalloc-srpm
+SAMBAPKGS+=mold-srpm
+SAMBAPKGS+=glusterfs-srpm
+# Requires mold
+SAMBAPKGS+=ceph-srpm
+
 SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 SAMBAPKGS+=python-nose-1.3.x-srpm
@@ -36,7 +43,7 @@ SAMBAPKGS+=samba-4.18.x-srpm
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/el/9
 REPOS+=samba4repo/fedora/38
-REPOS+=samba4repo/amz/2
+REPOS+=samba4repo/amazon/2023
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
@@ -44,7 +51,7 @@ CFGS+=samba4repo-8-x86_64.cfg
 CFGS+=samba4repo-9-x86_64.cfg
 CFGS+=samba4repo-f38-x86_64.cfg
 # Amazon 2 config
-#CFGS+=samba4repo-amz2-x86_64.cfg
+CFGS+=samba4repo-amz2023-x86_64.cfg
 
 # /et/cmock version lacks EPEL
 
@@ -52,7 +59,7 @@ CFGS+=samba4repo-f38-x86_64.cfg
 MOCKCFGS+=centos-stream+epel-8-x86_64.cfg
 MOCKCFGS+=centos-stream+epel-9-x86_64.cfg
 MOCKCFGS+=fedora-38-x86_64.cfg
-#MOCKCFGS+=amazonlinux-2-x86_64.cfg
+MOCKCFGS+=amazonlinux-2023-x86_64.cfg
 
 all:: install
 
@@ -176,7 +183,7 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-samba4repo-amz2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
+samba4repo-amz2023-x86_64.cfg: /etc/mock/amazonlinux-2023-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo >> $@
@@ -186,7 +193,7 @@ samba4repo-amz2-x86_64.cfg: /etc/mock/amazonlinux-2-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/amz/2/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/amazon/2023/x86_64/' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
