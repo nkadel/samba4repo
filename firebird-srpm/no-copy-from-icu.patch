@@ -1,0 +1,52 @@
+diff --git a/builds/posix/Makefile.in b/builds/posix/Makefile.in
+index bb4ceb1..87e75a2 100644
+--- a/builds/posix/Makefile.in
++++ b/builds/posix/Makefile.in
+@@ -534,7 +534,7 @@ $(GSTAT):		$(GSTAT_Objects) $(COMMON_LIB)
+ isql:			$(ISQL)
+ 
+ $(ISQL):		$(ISQL_Objects) $(COMMON_LIB)
+-	$(EXE_LINK) $(EXE_LINK_OPTIONS) $^ -o $@ $(FIREBIRD_LIBRARY_LINK) $(LIBEDITLINE) $(TERMLIB) $(LINK_LIBS) $(call LINK_DARWIN_RPATH,..)
++	$(EXE_LINK) $(EXE_LINK_OPTIONS) $^ -o $@ $(FIREBIRD_LIBRARY_LINK) $(LIBEDITLINE) $(TERMLIB) $(LINK_LIBS) $(ICU_LIBS) $(call LINK_DARWIN_RPATH,..)
+ 
+ nbackup:		$(NBACKUP)
+ 
+diff --git a/src/isql/isql.epp b/src/isql/isql.epp
+index 79da1f7..4554252 100644
+--- a/src/isql/isql.epp
++++ b/src/isql/isql.epp
+@@ -173,34 +173,6 @@ const char* UNKNOWN = "*unknown*";
+ 
+ namespace IcuUtil
+ {
+-	// Duplicate from ICU to not need to link ISQL with it. It's used by U8_NEXT_UNSAFE.
+-	static const uint8_t utf8_countTrailBytes[256] = {
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+-
+-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+-		1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+-
+-		2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+-		3, 3, 3, 3, 3,
+-		3, 3, 3,    /* illegal in Unicode */
+-		4, 4, 4, 4, /* illegal in Unicode */
+-		5, 5,       /* illegal in Unicode */
+-		0, 0        /* illegal bytes 0xfe and 0xff */
+-	};
+-
+ 	// Return the number of characters of a string.
+ 	static unsigned charLength(SSHORT charset, unsigned len, const char* str)
+ 	{

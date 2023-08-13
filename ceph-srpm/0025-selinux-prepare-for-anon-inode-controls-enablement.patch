@@ -1,0 +1,42 @@
+From 73218e291ca68a927965bdffa7d43d0fc62c2718 Mon Sep 17 00:00:00 2001
+From: Ondrej Mosnacek <omosnace@redhat.com>
+Date: Wed, 27 Jul 2022 17:14:25 +0200
+Subject: [PATCH] selinux: prepare for anon inode controls enablement
+
+We plan to start labeling anon inodes (userfaultfd and io_uring file
+descriptors) properly in selinux-policy, which means that domains using
+these will need new rules.
+
+See: https://github.com/fedora-selinux/selinux-policy/pull/1351
+
+Since ceph may optionally use io_uring, this patch adds the necessary
+interface call to its policy to avoid a regression. As the new interface
+call is put under a conditional, the policy package will be buildable
+against selinux-policy with or without the above PR merged, but it will
+need to be rebuilt against the updated selinux-policy to actually pick
+up the new rules.
+
+I tested this on a minimal ceph cluster with 'bdev_ioring = true' added
+to ceph.conf. I got io_uring denials without this patch + with
+selinux-policy with PR#1351 and no denials with ceph rebuilt with this
+patch.
+
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+---
+ selinux/ceph.te | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/selinux/ceph.te b/selinux/ceph.te
+index 77d35d9714b60..729bce1fc8589 100644
+--- a/selinux/ceph.te
++++ b/selinux/ceph.te
+@@ -75,6 +75,9 @@ manage_lnk_files_pattern(ceph_t, ceph_var_run_t, ceph_var_run_t)
+ 
+ kernel_read_system_state(ceph_t)
+ kernel_read_network_state(ceph_t)
++ifdef(`kernel_io_uring_use',`
++	kernel_io_uring_use(ceph_t)
++')
+ allow ceph_t kernel_t:system module_request;
+ 
+ corenet_all_recvfrom_unlabeled(ceph_t)

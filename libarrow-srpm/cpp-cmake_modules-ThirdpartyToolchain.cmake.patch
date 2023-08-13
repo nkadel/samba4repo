@@ -1,0 +1,11 @@
+--- apache-arrow-9.0.0/cpp/cmake_modules/ThirdpartyToolchain.cmake.orig	2022-09-07 07:48:37.767409763 -0400
++++ apache-arrow-9.0.0/cpp/cmake_modules/ThirdpartyToolchain.cmake	2022-09-07 07:49:08.791870145 -0400
+@@ -2242,7 +2242,7 @@
+ endif()
+ 
+ if(ARROW_USE_XSIMD)
+-  resolve_dependency(xsimd REQUIRED_VERSION "8.1.0")
++  resolve_dependency(xsimd REQUIRED_VERSION "9.0.1")
+ 
+   if(xsimd_SOURCE STREQUAL "BUNDLED")
+     add_library(xsimd INTERFACE IMPORTED)

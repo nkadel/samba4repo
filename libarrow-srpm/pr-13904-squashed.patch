@@ -1,0 +1,40 @@
+From d8aa1dc025ccc2c2249f90d9edf17a09848a0ddf Mon Sep 17 00:00:00 2001
+From: Miles Granger <miles59923@gmail.com>
+Date: Wed, 17 Aug 2022 13:15:45 +0200
+Subject: [PATCH] Exclude Python conftest and tests when PYARROW_INSTALL_TESTS
+ not on
+
+---
+ python/setup.py | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/python/setup.py b/python/setup.py
+index 97e0f0772..9fd7c4800 100755
+--- a/python/setup.py
++++ b/python/setup.py
+@@ -622,9 +622,14 @@ else:
+ 
+ if strtobool(os.environ.get('PYARROW_INSTALL_TESTS', '1')):
+     packages = find_namespace_packages(include=['pyarrow*'])
++    exclude_package_data = {}
+ else:
+     packages = find_namespace_packages(include=['pyarrow*'],
+                                        exclude=["pyarrow.tests*"])
++    # setuptools adds back importable packages even when excluded.
++    # https://github.com/pypa/setuptools/issues/3260
++    # https://github.com/pypa/setuptools/issues/3340#issuecomment-1219383976
++    exclude_package_data = {"pyarrow": ["tests*"]}
+ 
+ 
+ setup(
+@@ -633,6 +638,7 @@ setup(
+     zip_safe=False,
+     package_data={'pyarrow': ['*.pxd', '*.pyx', 'includes/*.pxd']},
+     include_package_data=True,
++    exclude_package_data=exclude_package_data,
+     distclass=BinaryDistribution,
+     # Dummy extension to trigger build_ext
+     ext_modules=[Extension('__dummy__', sources=[])],
+-- 
+2.37.1
+

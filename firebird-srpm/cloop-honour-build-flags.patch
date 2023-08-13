@@ -1,0 +1,38 @@
+diff --git a/extern/cloop/Makefile b/extern/cloop/Makefile
+index 08516c2..1573dc2 100644
+--- a/extern/cloop/Makefile
++++ b/extern/cloop/Makefile
+@@ -6,7 +6,7 @@ TARGET	:= release
+ 
+ CC	:= $(CC)
+ CXX	:= $(CXX)
+-LD	:= $(CXX)
++LD	:= $(CXX) $(LDFLAGS)
+ 
+ SRC_DIR		:= src
+ BUILD_DIR	:= build
+@@ -27,8 +27,9 @@ SRCS_CPP := $(foreach sdir,$(SRC_DIRS),$(wildcard $(sdir)/*.cpp))
+ OBJS_C := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS_C))
+ OBJS_CPP := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS_CPP))
+ 
+-C_FLAGS := -ggdb -fPIC -MMD -MP -W -Wall -Wno-unused-parameter
+-CXX_FLAGS := $(C_FLAGS)
++COMMON_C_FLAGS := -ggdb -fPIC -MMD -MP -W -Wall -Wno-unused-parameter
++C_FLAGS := $(COMMON_C_FLAGS) $(CFLAGS) $(CPPFLAGS)
++CXX_FLAGS := $(COMMON_C_FLAGS) $(CXXFLAGS) $(CPPFLAGS)
+ FPC_FLAGS := -Mdelphi
+ 
+ ifeq ($(shell uname),FreeBSD)
+diff --git a/extern/btyacc/Makefile b/extern/btyacc/Makefile
+index f432965..52d8443 100644
+--- a/extern/btyacc/Makefile
++++ b/extern/btyacc/Makefile
+@@ -12,7 +12,7 @@ HDRS	      = defs.h mstring.h
+ # across all of our supported compilers/platforms.
+ 
+ # Vanilla CFLAGS
+-CFLAGS=
++CFLAGS=-fPIE
+ 
+ # No LDFLAGS
+ #LDFLAGS=

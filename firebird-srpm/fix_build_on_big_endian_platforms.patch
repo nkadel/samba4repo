@@ -1,0 +1,36 @@
+From cd0682bc55eb01d53278d09edc1e9e2e9bfb9983 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Dan=20Hor=C3=A1k?= <dan@danny.cz>
+Date: Fri, 11 Jun 2021 12:39:31 +0200
+Subject: [PATCH] fix build on big endian platforms (#6852)
+
+* fix missing declaration of type_alignments[] for big endian platforms
+* add missing definition of lwp for big endian platforms
+---
+ src/jrd/sort.cpp | 1 +
+ src/jrd/sort.h   | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/src/jrd/sort.cpp b/src/jrd/sort.cpp
+index 37f5f816407..77ca69c2536 100644
+--- a/src/jrd/sort.cpp
++++ b/src/jrd/sort.cpp
+@@ -713,6 +713,7 @@ void Sort::diddleKey(UCHAR* record, bool direction, bool duplicateHandling)
+ 	for (sort_key_def* key = m_description.begin(), *end = m_description.end(); key < end; key++)
+ 	{
+ 		UCHAR* p = record + key->getSkdOffset();
++		SORTP* lwp = (SORTP*) p;
+ 		USHORT n = key->getSkdLength();
+ 		USHORT complement = key->skd_flags & SKD_descending;
+ 
+diff --git a/src/jrd/sort.h b/src/jrd/sort.h
+index 8e23e70ccc5..e3bbbb7779c 100644
+--- a/src/jrd/sort.h
++++ b/src/jrd/sort.h
+@@ -27,6 +27,7 @@
+ #include "../include/fb_blk.h"
+ #include "../common/DecFloat.h"
+ #include "../jrd/TempSpace.h"
++#include "../jrd/align.h"
+ 
+ namespace Jrd {
+ 

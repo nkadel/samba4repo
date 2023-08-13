@@ -1,0 +1,37 @@
+--- ceph-17.1.0/src/rgw/store/dbstore/sqlite/CMakeLists.txt.orig	2022-03-01 08:19:04.974902872 -0500
++++ ceph-17.1.0/src/rgw/store/dbstore/sqlite/CMakeLists.txt	2022-03-11 07:55:16.236261471 -0500
+@@ -12,5 +12,5 @@
+ set(SQLITE_COMPILE_FLAGS "-DSQLITE_THREADSAFE=1")
+ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SQLITE_COMPILE_FLAGS}")
+ 
+-add_library(sqlite_db ${sqlite_db_srcs})
++add_library(sqlite_db STATIC ${sqlite_db_srcs})
+ target_link_libraries(sqlite_db sqlite3 dbstore_lib rgw_common)
+--- ceph-17.1.0/src/rgw/store/dbstore/CMakeLists.txt.orig	2022-02-28 14:11:49.987077811 -0500
++++ ceph-17.1.0/src/rgw/store/dbstore/CMakeLists.txt	2022-03-11 08:40:13.409682698 -0500
+@@ -16,7 +16,7 @@
+     dbstore_mgr.cc
+     )
+ 
+-add_library(dbstore_lib ${dbstore_srcs})
++add_library(dbstore_lib STATIC ${dbstore_srcs})
+ target_include_directories(dbstore_lib PUBLIC "${CMAKE_SOURCE_DIR}/src/fmt/include")
+ target_include_directories(dbstore_lib PUBLIC "${CMAKE_SOURCE_DIR}/src/rgw")
+ set(link_targets spawn)
+@@ -38,6 +38,7 @@
+ 
+ # add pthread library
+ set (CMAKE_LINK_LIBRARIES ${CMAKE_LINK_LIBRARIES} pthread)
++set (CMAKE_LINK_LIBRARIES ${CMAKE_LINK_LIBRARIES} global)
+ 
+ find_package(gtest QUIET)
+ if(WITH_TESTS)
+@@ -47,7 +48,7 @@
+ endif()
+ 
+ include_directories(${CMAKE_INCLUDE_DIR})
+-add_library(dbstore ${dbstore_mgr_srcs})
++add_library(dbstore STATIC ${dbstore_mgr_srcs})
+ target_link_libraries(dbstore ${CMAKE_LINK_LIBRARIES})
+ 
+ # testing purpose

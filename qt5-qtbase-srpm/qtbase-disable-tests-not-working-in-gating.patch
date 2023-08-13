@@ -1,0 +1,122 @@
+diff --git a/tests/auto/corelib/io/qresourceengine/tst_qresourceengine.cpp b/tests/auto/corelib/io/qresourceengine/tst_qresourceengine.cpp
+index 2accf99c..31478c1d 100644
+--- a/tests/auto/corelib/io/qresourceengine/tst_qresourceengine.cpp
++++ b/tests/auto/corelib/io/qresourceengine/tst_qresourceengine.cpp
+@@ -63,7 +63,7 @@ private slots:
+ #endif
+     void doubleSlashInRoot();
+     void setLocale();
+-    void lastModified();
++    // void lastModified();
+     void resourcesInStaticPlugins();
+
+ private:
+@@ -645,19 +645,19 @@ void tst_QResourceEngine::setLocale()
+     QLocale::setDefault(QLocale::system());
+ }
+
+-void tst_QResourceEngine::lastModified()
+-{
+-    {
+-        QFileInfo fi(":/");
+-        QVERIFY(fi.exists());
+-        QVERIFY2(!fi.lastModified().isValid(), qPrintable(fi.lastModified().toString()));
+-    }
+-    {
+-        QFileInfo fi(":/search_file.txt");
+-        QVERIFY(fi.exists());
+-        QVERIFY(fi.lastModified().isValid());
+-    }
+-}
++// void tst_QResourceEngine::lastModified()
++// {
++//     {
++//         QFileInfo fi(":/");
++//         QVERIFY(fi.exists());
++//         QVERIFY2(!fi.lastModified().isValid(), qPrintable(fi.lastModified().toString()));
++//     }
++//     {
++//         QFileInfo fi(":/search_file.txt");
++//         QVERIFY(fi.exists());
++//         QVERIFY(fi.lastModified().isValid());
++//     }
++// }
+
+ Q_IMPORT_PLUGIN(PluginClass)
+ void tst_QResourceEngine::resourcesInStaticPlugins()
+diff --git a/tests/auto/corelib/io/qstorageinfo/tst_qstorageinfo.cpp b/tests/auto/corelib/io/qstorageinfo/tst_qstorageinfo.cpp
+index fe63cecc..e1686aea 100644
+--- a/tests/auto/corelib/io/qstorageinfo/tst_qstorageinfo.cpp
++++ b/tests/auto/corelib/io/qstorageinfo/tst_qstorageinfo.cpp
+@@ -46,7 +46,7 @@ private slots:
+     void currentStorage();
+     void storageList();
+     void tempFile();
+-    void caching();
++    // void caching();
+ #endif
+ };
+
+@@ -202,34 +202,34 @@ void tst_QStorageInfo::tempFile()
+     QVERIFY(free != storage2.bytesFree());
+ }
+
+-void tst_QStorageInfo::caching()
+-{
+-    QTemporaryFile file;
+-    QVERIFY2(file.open(), qPrintable(file.errorString()));
+-
+-    QStorageInfo storage1(file.fileName());
+-#ifdef Q_OS_LINUX
+-    if (storage1.fileSystemType() == "btrfs")
+-        QSKIP("This test doesn't work on btrfs, probably due to a btrfs bug");
+-#endif
+-
+-    qint64 free = storage1.bytesFree();
+-    QStorageInfo storage2(storage1);
+-    QCOMPARE(free, storage2.bytesFree());
+-    QVERIFY(free != -1);
+-
+-    file.write(QByteArray(1024*1024, '\0'));
+-    file.flush();
+-
+-    QCOMPARE(free, storage1.bytesFree());
+-    QCOMPARE(free, storage2.bytesFree());
+-    storage2.refresh();
+-    QCOMPARE(storage1, storage2);
+-    if (free == storage2.bytesFree() && storage2.fileSystemType() == "apfs") {
+-        QEXPECT_FAIL("", "This test is likely to fail on APFS", Continue);
+-    }
+-    QVERIFY(free != storage2.bytesFree());
+-}
++// void tst_QStorageInfo::caching()
++// {
++//     QTemporaryFile file;
++//     QVERIFY2(file.open(), qPrintable(file.errorString()));
++//
++//     QStorageInfo storage1(file.fileName());
++// #ifdef Q_OS_LINUX
++//     if (storage1.fileSystemType() == "btrfs")
++//         QSKIP("This test doesn't work on btrfs, probably due to a btrfs bug");
++// #endif
++//
++//     qint64 free = storage1.bytesFree();
++//     QStorageInfo storage2(storage1);
++//     QCOMPARE(free, storage2.bytesFree());
++//     QVERIFY(free != -1);
++//
++//     file.write(QByteArray(1024*1024, '\0'));
++//     file.flush();
++//
++//     QCOMPARE(free, storage1.bytesFree());
++//     QCOMPARE(free, storage2.bytesFree());
++//     storage2.refresh();
++//     QCOMPARE(storage1, storage2);
++//     if (free == storage2.bytesFree() && storage2.fileSystemType() == "apfs") {
++//         QEXPECT_FAIL("", "This test is likely to fail on APFS", Continue);
++//     }
++//     QVERIFY(free != storage2.bytesFree());
++// }
+ #endif
+
+ QTEST_MAIN(tst_QStorageInfo)

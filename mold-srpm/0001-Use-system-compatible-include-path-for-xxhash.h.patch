@@ -1,0 +1,44 @@
+From ad248de144dd4369b785531a758c5aefab13dca4 Mon Sep 17 00:00:00 2001
+Message-Id: <ad248de144dd4369b785531a758c5aefab13dca4.1674306723.git.github@sicherha.de>
+From: Christoph Erhardt <github@sicherha.de>
+Date: Sat, 6 Aug 2022 09:18:54 +0200
+Subject: [PATCH 1/2] Use system-compatible include path for `xxhash.h`
+
+Distributors that build mold against the system-provided xxHash package
+expect its header file `xxhash.h` in the top-level include directory,
+not in an `xxhash` subdirectory. Adjust the include path and the
+`#include` directive accordingly.
+---
+ CMakeLists.txt  | 2 ++
+ common/common.h | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 54c4c86c..635c535b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -197,6 +197,8 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/LICENSE.md")
+   set(MOLD_IS_SOLD ON)
+ endif()
+ 
++target_include_directories(mold PRIVATE third-party/xxhash)
++
+ # We always use Clang to build mold on Windows. MSVC can't compile mold.
+ if(WIN32)
+   if(MSVC AND NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+diff --git a/common/common.h b/common/common.h
+index 5d2f9e20..a5e5ea45 100644
+--- a/common/common.h
++++ b/common/common.h
+@@ -32,7 +32,7 @@
+ #endif
+ 
+ #define XXH_INLINE_ALL 1
+-#include "../third-party/xxhash/xxhash.h"
++#include <xxhash.h>
+ 
+ #ifdef NDEBUG
+ # define unreachable() __builtin_unreachable()
+-- 
+2.39.0
+
