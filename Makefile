@@ -9,19 +9,6 @@
 
 REPOBASE=file://$(PWD)
 
-# Samba required, -devel packages not in main channels
-# Now published in side channels like EPEL or Code Ready Builder
-#SAMBAPKGS+=liburing-2.x-srpm
-# Only needed for Amazon Linux
-#SAMBAPKGS+=lmdb-0.9.x-srpm
-
-# Amazon 2023 additions
-SAMBAPKGS+=mimalloc-srpm
-SAMBAPKGS+=mold-srpm
-SAMBAPKGS+=glusterfs-srpm
-# Requires mold
-SAMBAPKGS+=ceph-srpm
-
 SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 SAMBAPKGS+=python-nose-1.3.x-srpm
@@ -38,7 +25,7 @@ SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 # Now builds internal libraries rather than:
 # libtalloc, libtdb, libtevent, libldb
 # Internal libraries avoids conflict with sssd dependencies
-SAMBAPKGS+=samba-4.18.x-srpm
+SAMBAPKGS+=samba-srpm
 
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/el/9
@@ -85,10 +72,6 @@ install clean getsrc build srpm src.rpm::
 python-setproctitle-1.2.x-srpm:: python-nose-1.3.x-srpm
 
 # Samba rellies on all the othe components
-samba-4.17.x-srpm:: lmdb-0.9.x-srpm
-samba-4.17.x-srpm:: liburing-2.x-srpm
-samba-4.17.x-srpm:: python-setproctitle-1.2.x-srpm
-
 # Actually build in directories
 .PHONY: $(SAMBAPKGS)
 $(SAMBAPKGS)::
