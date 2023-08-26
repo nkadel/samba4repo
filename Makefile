@@ -97,10 +97,12 @@ cfgs: $(CFGS) $(MOCKCFGS)
 $(MOCKCFGS)::
 	@echo Generating $@ from /etc/mock/$@
 	@echo "include('/etc/mock/$@')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 
 samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo | tee -a $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
@@ -118,6 +120,7 @@ samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" | tee -a $@
@@ -134,6 +137,7 @@ samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 samba4repo-f38-x86_64.cfg: /etc/mock/fedora-38-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
@@ -151,6 +155,7 @@ samba4repo-f38-x86_64.cfg: /etc/mock/fedora-38-x86_64.cfg
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
 	@echo Resetting root directory
@@ -169,6 +174,7 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 samba4repo-amz2023-x86_64.cfg: /etc/mock/amazonlinux-2023-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
