@@ -13,7 +13,7 @@ Release:        0.7%{?prever}%{?dist}
 #  coverage/htmlfiles/jquery.isonscreen.js
 License:        ASL 2.0 and MIT and (MIT or GPL)
 URL:            http://nedbatchelder.com/code/modules/coverage.html
-Source0:        http://pypi.python.org/packages/source/c/coverage/coverage-%{version}%{?prever}.tar.gz
+Source0:        https://pypi.python.org/packages/source/c/coverage/coverage-%{version}%{?prever}.tar.gz
 
 BuildRequires:  gcc
 
@@ -23,7 +23,7 @@ execution. It uses the code analysis tools and tracing hooks provided in the
 Python standard library to determine which lines are executable, and which 
 have been executed.
 
-%package -n platform-python-coverage
+%package -n python%{python3_pkgversion}-coverage
 Summary:        Code coverage testing module for Python 3
 BuildRequires:  python%{python3_pkgversion}-devel
 BuildRequires:  python%{python3_pkgversion}-setuptools
@@ -36,20 +36,6 @@ Provides:       bundled(js-jquery-isonscreen) = 1.2.0
 Provides:       bundled(js-jquery-tablesorter)
 
 Conflicts:      python%{python3_pkgversion}-coverage < 4.5.1-7%{?dist}
-
-%description -n platform-python-coverage
-Coverage.py is a Python 3 module that measures code coverage during Python
-execution. It uses the code analysis tools and tracing hooks provided in the 
-Python standard library to determine which lines are executable, and which 
-have been executed.
-
-
-%package -n python%{python3_pkgversion}-coverage
-Summary:        Code coverage testing module for Python 3
-Requires:       platform-python-coverage = %{version}-%{release}
-# for alternatives
-Requires:       python3
-%{?python_provide:%python_provide python%{python3_pkgversion}-coverage}
 
 %description -n python%{python3_pkgversion}-coverage
 Coverage.py is a Python 3 module that measures code coverage during Python
@@ -75,40 +61,19 @@ sed -i 's/\r//g' README.rst
 pushd %{buildroot}%{_bindir}
 rm -rf coverage-3* coverage3
 mv coverage coverage-%{python3_version}
-
-# All ghost files controlled by alternatives need to exist for the files
-# section check to succeed
-touch coverage-3
 popd
 
-%post -n python3-coverage
-alternatives --add-slave python3 %{_bindir}/python%{python3_version} \
-    %{_bindir}/coverage-3 \
-    coverage-3 \
-    %{_bindir}/coverage-%{python3_version}
-
-%postun -n python3-coverage
-# Do this only during uninstall process (not during update)
-if [ $1 -eq 0 ]; then
-    alternatives --remove-slave python3 \
-        %{_bindir}/python%{python3_version} coverage-3
-fi
-
-
-%files -n platform-python-coverage
+%files -n python%{python3_pkgversion}-coverage
 %license LICENSE.txt NOTICE.txt
 %doc README.rst
 %{python3_sitearch}/coverage/
 %{python3_sitearch}/coverage*.egg-info/
-
-%files -n python3-coverage
-%license LICENSE.txt NOTICE.txt
-%doc README.rst
 %{_bindir}/coverage-%{python3_version}
-%ghost %{_bindir}/coverage-3
-
 
 %changelog
+* Wed Aug 30 2023 Nico Kadel-Garcia <nkadel@gmail.com> - 4.5.1-0.7
+- Discard platform-python, unwelcome and confusing for RHEL 9 compilation
+
 * Wed Dec 12 2018 Tomas Orsava <torsava@redhat.com> - 4.5.1-7
 - New subpackage platform-python-coverage without files from /usr/bin/*
 - python3-coverage contains only files from /usr/bin/* and depends
