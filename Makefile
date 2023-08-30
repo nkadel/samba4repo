@@ -9,6 +9,7 @@
 
 REPOBASE=file://$(PWD)
 
+<<<<<<< HEAD
 # Buildable without samba4repo, many needed only for amaozn Linux 2023
 SAMBAPKGS+=firebird-srpm
 SAMBAPKGS+=freetds-sprm
@@ -35,6 +36,14 @@ SAMBAPKGS+=ceph-srpm
 
 SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
+=======
+SAMBAPKGS+=python-iso86001-0.1.x-srpm
+SAMBAPKGS+=python-pyasn1-0.4.x-srpm
+SAMBAPKGS+=python-coverage-srpm
+# Requires coverage
+SAMBAPKGS+=python-nose-srpm
+# Needs nose
+>>>>>>> master
 SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 
 # Requires nose
@@ -51,7 +60,7 @@ SAMBAPKGS+=python-etcd-srpm
 # Now builds internal libraries rather than:
 # libtalloc, libtdb, libtevent, libldb
 # Internal libraries avoids conflict with sssd dependencies
-SAMBAPKGS+=samba-4.18.x-srpm
+SAMBAPKGS+=samba-srpm
 
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/el/9
@@ -94,9 +103,6 @@ install clean getsrc build srpm src.rpm::
 #	@[ -d $@/.git ] || \
 #	     git submodule update --init $@
 
-# Dependencies of libraries on other libraries for compilation
-python-setproctitle-1.2.x-srpm:: python-nose-1.3.x-srpm
-
 # Actually build in directories
 .PHONY: $(SAMBAPKGS)
 $(SAMBAPKGS)::
@@ -122,10 +128,12 @@ cfgs: $(CFGS) $(MOCKCFGS)
 $(MOCKCFGS)::
 	@echo Generating $@ from /etc/mock/$@
 	@echo "include('/etc/mock/$@')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 
 samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo | tee -a $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
@@ -143,6 +151,7 @@ samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" | tee -a $@
@@ -159,6 +168,7 @@ samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 samba4repo-f38-x86_64.cfg: /etc/mock/fedora-38-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
@@ -176,6 +186,7 @@ samba4repo-f38-x86_64.cfg: /etc/mock/fedora-38-x86_64.cfg
 samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
 	@echo Resetting root directory
@@ -194,6 +205,7 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 samba4repo-amz2023-x86_64.cfg: /etc/mock/amazonlinux-2023-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo >> $@
 	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
