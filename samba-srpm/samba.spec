@@ -1,11 +1,3 @@
-# Force python38 for RHEL 8, which has python 3.6 by default
-%if 0%{?el8} || 0%{?el9}
-%global python3_version 3.11
-%global python3_pkgversion 3.11
-# For RHEL 'platform python' insanity: Simply put, no.
-%global __python3 %{_bindir}/python%{python3_version}
-%endif
-
 # The testsuite is disabled by default.
 #
 # To build and run the tests use:
@@ -145,7 +137,7 @@
 %global baserelease 109
 # This should be rc1 or %%nil
 #%%global pre_release %%nil
-%global pre_release rc3
+%global pre_release rc4
 
 %global samba_release %{baserelease}
 %if "x%{?pre_release}" != "x"
@@ -4489,6 +4481,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 30 2023 Nico Kadel-Garcia <nkadel@gmail.com>- 4.19.0rc4
+- Update to 4.19.0rc4
+
 * Sat Aug 26 2023 Nico Kadel-Garcia <nkadel@gmail.com>- 4.19.0rc3
 - Update to 4.19.0rc2
 - Switch to python3.11
