@@ -25,22 +25,17 @@ have been executed.
 
 %package -n platform-python-coverage
 Summary:        Code coverage testing module for Python 3
-BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools
-# As the "coverage" executable requires the setuptools at runtime (#556290),
-# so the "python3-coverage" executable requires python3-setuptools:
-%if 0%{?rhel} && 0%{?rhel} >= 8
-Requires:       platform-python-setuptools
-%else
-Requires:       python3-setuptools
-%endif
+BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  python%{python3_pkgversion}-setuptools
+
+Requires:       python%{python3_pkgversion}-setuptools
 Provides:       bundled(js-jquery) = 1.11.1
 Provides:       bundled(js-jquery-debounce) = 1.1
 Provides:       bundled(js-jquery-hotkeys) = 0.8
 Provides:       bundled(js-jquery-isonscreen) = 1.2.0
 Provides:       bundled(js-jquery-tablesorter)
 
-Conflicts:      python3-coverage < 4.5.1-7%{?dist}
+Conflicts:      python%{python3_pkgversion}-coverage < 4.5.1-7%{?dist}
 
 %description -n platform-python-coverage
 Coverage.py is a Python 3 module that measures code coverage during Python
@@ -49,16 +44,14 @@ Python standard library to determine which lines are executable, and which
 have been executed.
 
 
-%package -n python3-coverage
+%package -n python%{python3_pkgversion}-coverage
 Summary:        Code coverage testing module for Python 3
 Requires:       platform-python-coverage = %{version}-%{release}
 # for alternatives
-Requires:       python36
-Requires(post): python36
-Requires(postun): python36
-%{?python_provide:%python_provide python3-coverage}
+Requires:       python3
+%{?python_provide:%python_provide python%{python3_pkgversion}-coverage}
 
-%description -n python3-coverage
+%description -n python%{python3_pkgversion}-coverage
 Coverage.py is a Python 3 module that measures code coverage during Python
 execution. It uses the code analysis tools and tracing hooks provided in the 
 Python standard library to determine which lines are executable, and which 
@@ -87,7 +80,6 @@ mv coverage coverage-%{python3_version}
 # section check to succeed
 touch coverage-3
 popd
-
 
 %post -n python3-coverage
 alternatives --add-slave python3 %{_bindir}/python%{python3_version} \
