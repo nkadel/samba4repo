@@ -49,7 +49,7 @@ BuildRequires: make
 BuildRequires: pkgconfig(libsystemd)
 
 %global examples 1
-%global build_tests 0
+%global build_tests 1
 
 ## skip for now, until we're better at it --rex
 #global tests 1
@@ -57,8 +57,7 @@ BuildRequires: pkgconfig(libsystemd)
 Name:    qt5-qtbase
 Summary: Qt5 - QtBase components
 Version: 5.15.9
-#Release: 7%%{?dist}
-Release: 0.7%{?dist}
+Release: 7%{?dist}
 
 
 # See LGPL_EXCEPTIONS.txt, for exception details
@@ -138,9 +137,7 @@ Patch90: %{name}-gcc11.patch
 # https://invent.kde.org/qt/qt/qtbase, kde/5.15 branch
 # git diff v5.15.9-lts-lgpl..HEAD | gzip > kde-5.15-rollup-$(date +%Y%m%d).patch.gz
 # patch100 in lookaside cache due to large'ish size -- rdieter
-Patch100: kde-5.15-rollup-20230411.patch.gz
-# HACK to make 'fedpkg sources' consider it 'used"
-Source100: kde-5.15-rollup-20230411.patch.gz
+Patch100: kde-5.15-rollup-20230411.patch
 
 Patch101: qtbase-5.15.8-fix-missing-qtsan-include.patch
 
