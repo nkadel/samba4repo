@@ -131,12 +131,12 @@
 
 %define samba_requires_eq()  %(LC_ALL="C" echo '%*' | xargs -r rpm -q --qf 'Requires: %%{name} = %%{epoch}:%%{version}\\n' | sed -e 's/ (none):/ /' -e 's/ 0:/ /' | grep -v "is not")
 
-%global samba_version 4.19.0
+%global samba_version 4.19.2
 # Update to 108 to exceed RHEL and Fedora published releases
 #%%global baserelease 8
 %global baserelease 109
 # This should be rc1 or %%nil
-%global pre_release %%nil
+%global pre_release %nil
 #%%global pre_release rc1
 
 %global samba_release %{baserelease}
@@ -215,11 +215,11 @@ Summary:        Server and Client software to interoperate with Windows machines
 License:        GPLv3+ and LGPLv3+
 URL:            https://www.samba.org
 
-#Source0:        https://download.samba.org/pub/samba/%%{?pre_release:}samba-%%{version}%%{pre_release}.tar.gz
-#Source1:        https://download.samba.org/pub/samba/%%{?pre_release:}samba-%%{version}%%{pre_release}.tar.asc
+Source0:        https://download.samba.org/pub/samba/%{?pre_release:}samba-%{version}%{pre_release}.tar.gz
+Source1:        https://download.samba.org/pub/samba/%{?pre_release:}samba-%{version}%{pre_release}.tar.asc
 
-Source0:        https://download.samba.org/pub/samba/rc/samba-%{version}%{pre_release}.tar.gz
-Source1:        https://download.samba.org/pub/samba/rc/samba-%{version}%{pre_release}.tar.asc
+#Source0:        https://download.samba.org/pub/samba/rc/samba-%%{version}%%{pre_release}.tar.gz
+#Source1:        https://download.samba.org/pub/samba/rc/samba-%%{version}%%{pre_release}.tar.asc
 
 Source2:        https://download.samba.org/pub/samba/samba-pubkey.asc
 
