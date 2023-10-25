@@ -8,7 +8,7 @@ Release: 0.1%{?dist}
 License: LGPLv2+ and GPLv2+
 URL: http://www.freetds.org/
 
-Source0: ftp://ftp.freetds.org/pub/freetds/stable/freetds-%{version}.tar.bz2
+Source0: https://www.freetds.org/files/stable/freetds-%{version}.tar.bz2
 Source1: freetds-tds_sysdep_public.h
 
 BuildRequires: unixODBC-devel, readline-devel, gnutls-devel, krb5-devel
