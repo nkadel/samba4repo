@@ -5,7 +5,7 @@
 # Assure that sorting is case sensitive
 LANG=C
 
-MOCKS+=samba4repo-f38-x86_64
+MOCKS+=samba4repo-f39-x86_64
 MOCKS+=samba4repo-9-x86_64
 MOCKS+=samba4repo-8-x86_64
 #MOCKS+=samba4repo-amz2023-x86_64
@@ -61,8 +61,8 @@ install:: $(MOCKS)
 		*-amz2023-x86_64) yumrelease=amazon/2023; yumarch=x86_64; ;; \
 		*-8-x86_64) yumrelease=el/8; yumarch=x86_64; ;; \
 		*-9-x86_64) yumrelease=el/9; yumarch=x86_64; ;; \
-		*-38-x86_64) yumrelease=fedora/38; yumarch=x86_64; ;; \
-		*-f38-x86_64) yumrelease=fedora/38; yumarch=x86_64; ;; \
+		*-39-x86_64) yumrelease=fedora/39; yumarch=x86_64; ;; \
+		*-f39-x86_64) yumrelease=fedora/39; yumarch=x86_64; ;; \
 		*-rawhide-x86_64) yumrelease=fedora/rawhide; yumarch=x86_64; ;; \
 		*) echo "Unrecognized release for $$repo, exiting" >&2; exit 1; ;; \
 	    esac; \
@@ -70,10 +70,10 @@ install:: $(MOCKS)
 	    srpmdir=$(REPOBASEDIR)/$$yumrelease/SRPMS; \
 	    echo "Pushing SRPMS to $$srpmdir"; \
 	    rsync -av $$repo/*.src.rpm --no-owner --no-group $$repo/*.src.rpm $$srpmdir/. || exit 1; \
-	    createrepo -q $$srpmdir/.; \
+	    createrepo_c -q $$srpmdir/.; \
 	    echo "Pushing RPMS to $$rpmdir"; \
 	    rsync -av $$repo/*.rpm --exclude=*.src.rpm --exclude=*debuginfo*.rpm --no-owner --no-group $$repo/*.rpm $$rpmdir/. || exit 1; \
-	    createrepo -q $$rpmdir/.; \
+	    createrepo_c -q $$rpmdir/.; \
 	done
 	@for repo in $(MOCKCFGS); do \
 	    echo "Touching $(PWD)/../$$repo.cfg"; \
