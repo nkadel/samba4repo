@@ -1,1 +1,1 @@
-../Makefile.samba9
+../Makefile.samba9-amz2023

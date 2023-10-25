@@ -1,43 +1,15 @@
-%bcond_without python3
-
 %global modname nose
-
-# Enable building without docs to avoid a circular dependency between this and python-sphinx
-#
-# Docs disabled permanently because the docs build config is not ported to
-# Python 3 and thus cannot be built with Python 3 version of Sphinx.
-%bcond_with docs
-
-# python2X and python3X are built form the same module, so we need a conditional for python2 bits
-# the state of the conditional is not important in the spec, it is set in modulemd
-%bcond_with python2
-
-%global desc nose extends the test loading and running features of unit test, making\
-it easier to write, find and run tests.\
-\
-By default, nose will run tests in files or directories under the\
-current working directory whose names include "test" or "Test" at a\
-word boundary (like "test_this" or "functional_test" or "TestClass"\
-but not "libtest"). Test output is similar to that of unit test, but\
-also includes captured stdout output from failing tests, for easy\
-print-style debugging.\
-\
-These features, and many more, are customizable through the use of\
-plugins. Plugins included with nose provide support for doctest, code\
-coverage and profiling, flexible attribute-based test selection,\
-output capture and more.\
-
 
 Name:           python-%{modname}
 Version:        1.3.7
-#Release:        31%%{?dist}
-Release:        0.31%{?dist}
+#Release:        39%%{?dist}
+Release:        0.39%{?dist}
 BuildArch:      noarch
 
 License:        LGPLv2+ and Public Domain
-Summary:        Discovery-based unit test extension for Python
+Summary:        Deprecated test runner for Python
 URL:            https://nose.readthedocs.org/en/latest/
-Source0:        http://pypi.python.org/packages/source/n/nose/nose-%{version}.tar.gz
+Source0:        https://pypi.python.org/packages/source/n/nose/nose-%{version}.tar.gz
 # Make compatible with coverage 4.1
 # https://github.com/nose-devs/nose/pull/1004
 Patch0:         python-nose-coverage4.patch
@@ -53,237 +25,160 @@ Patch3:         python-nose-readunicode.patch
 # Python now returns ModuleNotFoundError instead of the previous ImportError
 # https://github.com/nose-devs/nose/pull/1029
 Patch4:         python-nose-py36.patch
+# Remove a SyntaxWarning (other projects may treat it as error)
+Patch5:         python-nose-py38.patch
+# Remove use_2to3 from setuptools.setup() call
+# We call the command line tool in %%prep instead
+# https://fedoraproject.org/wiki/Changes/Setuptools_58+
+Patch6:         python-nose-no-use_2to3.patch
+# Import unittest.TextTestResult instead of removed unittest._TextTestResult
+# Use ConfigParser.read_file() instead of .readfp()
+# Adapt test_xunit to tracebacks/exceptions with ^^^^^^^^ lines
+# Migrate from removed inspect.getargspec() to inspect.getfullargspec()
+Patch7:         python-nose-py311.patch
+
+# Adapt doctest to new tracebacks/exceptions on Python 3.11+
+Patch311:       python-nose-py311-doctest.patch
 
 BuildRequires:  dos2unix
 
-%description
-%{desc}
+%global _description %{expand:
+A deprecated test runner for Python.
 
-%package docs
-Summary:        Nose Documentation
-%if %{with python3}
-%if %{with docs}
-BuildRequires:  %{_bindir}/sphinx-build-3
-%endif
-%endif
+See https://fedoraproject.org/wiki/Changes/DeprecateNose}
 
-%description docs
-Documentation for Nose.
+%description %_description
 
-%if %{with python2}
-%package -n python2-%{modname}
-Summary:        %{summary}
-BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-coverage >= 3.4-1
-Requires:       python2-setuptools
-%{?python_provide:%python_provide python2-%{modname}}
-
-%description -n python2-%{modname}
-%{desc}
-%endif
-
-%if %{with python3}
 %package -n python%{python3_pkgversion}-%{modname}
 Summary:        %{summary}
 BuildRequires:  python%{python3_pkgversion}-devel
+BuildRequires:  /usr/bin/2to3
 BuildRequires:  python%{python3_pkgversion}-setuptools
 BuildRequires:  python%{python3_pkgversion}-coverage >= 3.4-1
-
-# Require alternatives version that implements the --keep-foreign flag
-Requires(postun): alternatives >= 1.19.1-1
-# For alternatives
-Requires:       python%{python3_pkgversion}
 Requires:       python%{python3_pkgversion}-setuptools
+%{?python_provide:%python_provide python%{python3_pkgversion}-%{modname}}
+Conflicts:      python-%{modname} < %{version}-%{release}
+Obsoletes:      python-%{modname}-docs < 1.3.7-30
 
-%description -n python%{python3_pkgversion}-%{modname}
-%{desc}
+# This package is deprecated, no new packages in Fedora can depend on it
+# https://fedoraproject.org/wiki/Changes/DeprecateNose
+# Contact the change owners for help migrating to pytest
+Provides:       deprecated()
 
-This package installs the nose module and nosetests3 program that can discover
-python3 unit tests.
-%endif
+%description -n python%{python3_pkgversion}-%{modname} %_description
 
 %prep
-%setup -qc
-pushd %{modname}-%{version}
-%autopatch -p1
-dos2unix examples/attrib_plugin.py
-cp -pr lgpl.txt AUTHORS CHANGELOG examples NEWS README.txt ..
-popd
+%autosetup -N -n %{modname}-%{version}
+# apply all patches up until number 300
+%autopatch -p1 -M 300
 
-%if %{with python3}
-mv %{modname}-%{version} python3
+# Use cleaner 3.11 logic
+%if 0%{?el8} || 0%{?el9}
+%patch311 -p1
+%else
+%if v"0%{?python3_version}" >= v"3.11"
+%patch311 -p1
 %endif
-%if %{with python2}
-mv %{modname}-%{version} python2
 %endif
+
+dos2unix examples/attrib_plugin.py
 
 %build
-%if %{with python2}
-pushd python2
-%py2_build
-popd
-%endif
-
-%if %{with python3}
-pushd python3
+2to3 %{?_smp_mflags} --write --nobackups --no-diffs .
+2to3 %{?_smp_mflags} --write --nobackups --no-diffs -d $(find -name '*.rst')
 %py3_build
-popd
-%endif
 
 %install
 mkdir -p %{buildroot}%{_mandir}/man1
-
-%if %{with python2}
-pushd python2
-%py2_install
-mv %{buildroot}%{_bindir}/nosetests{,-%{python2_version}}
-ln -sf nosetests-%{python2_version} %{buildroot}%{_bindir}/nosetests-2
-mv %{buildroot}%{_prefix}/man/man1/nosetests.1 %{buildroot}%{_mandir}/man1/nosetests-%{python2_version}.1
-ln -sf nosetests-%{python2_version}.1 %{buildroot}%{_mandir}/man1/nosetests-2.1
-popd
-%endif
-
-%if %{with python3}
-pushd python3
 %py3_install
 mv %{buildroot}%{_bindir}/nosetests{,-%{python3_version}}
-touch %{buildroot}%{_bindir}/nosetests-3 # for alternatives
+ln -sf nosetests-%{python3_version} %{buildroot}%{_bindir}/nosetests-3
 mv %{buildroot}%{_prefix}/man/man1/nosetests.1 %{buildroot}%{_mandir}/man1/nosetests-%{python3_version}.1
-touch %{buildroot}%{_mandir}/man1/nosetests-3.1 # for alternatives
-popd
-%endif
+ln -sf nosetests-%{python3_version}.1 %{buildroot}%{_mandir}/man1/nosetests-3.1
+ln -sf nosetests-3 %{buildroot}%{_bindir}/nosetests
+ln -sf nosetests-3.1 %{buildroot}%{_mandir}/man1/nosetests.1
 
-%if %{with python2}
-ln -sf nosetests-2.1 %{buildroot}%{_mandir}/man1/nosetests.1
-%endif
+%check
+%{__python3} setup.py build_tests
+%{__python3} selftest.py
 
-%if %{with python3}
-%if %{with docs}
-pushd python3/doc
-  sphinx-build-${python3_pkgversion} -b html -d .build/doctrees . .build/html
-  rm -vrf .build/html/.buildinfo .build/html/_sources
-  mv .build/html ../..
-  rm -vrf .build
-popd
-%endif
-cp -a python3/doc reST
-rm -vrf reST/{.static,.templates}
-%endif
-
-# Disable checks until further notice <nkadel@gmail.com>
-#%check
-#%if %{with python2}
-#pushd python2
-#%{__python2} selftest.py
-#popd
-#%endif
-#
-#%if %{with python3}
-#pushd python3
-#%{__python3} setup.py build_tests
-#%{__python3} selftest.py
-#popd
-#%endif
-
-%if %{with python3}
-%post -n python%{python3_pkgversion}-%{modname}
-alternatives --add-slave python3 %{_bindir}/python%{python3_version} \
-    %{_bindir}/nosetests-3 \
-    nosetests-3 \
-    %{_bindir}/nosetests-%{python3_version}
-
-alternatives --add-slave python3 %{_bindir}/python%{python3_version} \
-    %{_mandir}/man1/nosetests-3.1.gz \
-    nosetests-3-man \
-    %{_mandir}/man1/nosetests-%{python3_version}.1.gz
-
-%postun -n python%{python3_pkgversion}-%{modname}
-if [ $1 -eq 0 ]; then
-  alternatives --keep-foreign --remove-slave python3 \
-      %{_bindir}/python%{python3_version} nosetests-3
-
-  alternatives --keep-foreign --remove-slave python3 \
-      %{_bindir}/python%{python3_version} nosetests-3-man
-fi
-%endif
-
-%if %{with python2}
-%files -n python2-%{modname}
-%license lgpl.txt
-%{_bindir}/nosetests-2
-%{_bindir}/nosetests-%{python2_version}
-%{_mandir}/man1/nosetests.1*
-%{_mandir}/man1/nosetests-2.1*
-%{_mandir}/man1/nosetests-%{python2_version}.1*
-%{python2_sitelib}/nose-*.egg-info/
-%{python2_sitelib}/nose/
-%endif
-
-%if %{with python3}
 %files -n python%{python3_pkgversion}-%{modname}
 %license lgpl.txt
-%ghost %{_bindir}/nosetests-3
+%doc AUTHORS CHANGELOG NEWS README.txt
+%{_bindir}/nosetests
+%{_bindir}/nosetests-3
 %{_bindir}/nosetests-%{python3_version}
-%ghost %{_mandir}/man1/nosetests-3.1*
+%{_mandir}/man1/nosetests.1*
+%{_mandir}/man1/nosetests-3.1*
 %{_mandir}/man1/nosetests-%{python3_version}.1*
 %{python3_sitelib}/nose-*.egg-info/
 %{python3_sitelib}/nose/
-%endif
-
-%files docs
-%license lgpl.txt
-%doc AUTHORS CHANGELOG examples NEWS README.txt
-%if %{with python3}
-%if %{with docs}
-%doc html reST
-%endif  # with docs
-%endif  # with python3
 
 %changelog
-* Fri Jul 30 2021 Tomas Orsava <torsava@redhat.com> - 1.3.7-31
-- Adjusted the postun scriptlets to enable upgrading to RHEL 9
-- Resolves: rhbz#1933055
+* Fri Jul 22 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-39
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 
-* Thu Apr 25 2019 Tomas Orsava <torsava@redhat.com> - 1.3.7-30
-- Bumping due to problems with modular RPM upgrade path
-- Resolves: rhbz#1695587
+* Mon Jun 13 2022 Python Maint <python-maint@redhat.com> - 1.3.7-38
+- Rebuilt for Python 3.11
 
-* Thu Oct 04 2018 Lumír Balhar <lbalhar@redhat.com> - 1.3.7-29
-- Fix alternatives - post and postun sections only with python3
-- Resolves: rhbz#1633534
+* Fri Jan 21 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-37
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
 
-* Tue Oct 02 2018 Lumír Balhar <lbalhar@redhat.com> - 1.3.7-28
-- Add alternatives for the executable and manpage
-- Resolves: rhbz#1633534
+* Mon Nov 01 2021 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-36
+- Fix build with setuptools 58+
+- Fixes rhbz#2018972
 
-* Wed Aug 15 2018 Lumír Balhar <lbalhar@redhat.com> - 1.3.7-27
-- Remove nosetest-3 executable/manpage. This will be provided by python3 module.
-- Resolves: rhbz#1615727
+* Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-35
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
-* Wed Aug 08 2018 Lumír Balhar <lbalhar@redhat.com> - 1.3.7-26
-- Remove unversioned binaries from python2 subpackage
-- Resolves: rhbz#1613343
+* Wed Jun 02 2021 Python Maint <python-maint@redhat.com> - 1.3.7-34
+- Rebuilt for Python 3.10
 
-* Tue Jul 31 2018 Lumír Balhar <lbalhar@redhat.com> - 1.3.7-25
-- Make possible to disable python3 subpackage
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-33
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
-* Wed Jul 18 2018 Tomas Orsava <torsava@redhat.com> - 1.3.7-24
-- BuildRequire also python36-rpm-macros as part of the python36 module build
+* Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-32
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
-* Wed Jul 04 2018 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-23
-- Add a bcond for python2
-- Build docs with python3 explicitly
+* Fri May 22 2020 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-31
+- Rebuilt for Python 3.9
 
-* Tue Jun 26 2018 Tomas Orsava <torsava@redhat.com> - 1.3.7-22
-- Use python2 macros instead of unversioned python macros
+* Fri Jan 31 2020 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-30
+- Deprecate the package
+  https://fedoraproject.org/wiki/Changes/DeprecateNose
+- Drop the docs subpackage
 
-* Mon Jun 18 2018 Tomas Orsava <torsava@redhat.com> - 1.3.7-21
-- Disabled docs because the docs build config is not ported to Python 3 and
-  thus cannot be built with Python 3 version of Sphinx
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-29
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
-* Mon Apr 30 2018 Tomas Orsava <torsava@redhat.com> - 1.3.7-20
-- Require the python36-devel package when building for the python36 module
+* Fri Nov 15 2019 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-28
+- Subpackage python2-nose has been removed
+  See https://fedoraproject.org/wiki/Changes/Mass_Python_2_Package_Removal
+
+* Thu Oct 31 2019 Petr Viktorin <pviktori@redhat.com> - 1.3.7-27
+- Remove build dependency on python2-coverage
+  Don't test coverage plugin on Python 2
+
+* Thu Oct 03 2019 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-26
+- Rebuilt for Python 3.8.0rc1 (#1748018)
+
+* Thu Aug 15 2019 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-25
+- Rebuilt for Python 3.8
+
+* Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-24
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
+* Mon Jul 22 2019 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-23
+- Make /usr/bin/nosetests Python 3
+
+* Sat Feb 02 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-22
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
+* Sat Jul 14 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-21
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
+* Thu Jun 14 2018 Miro Hrončok <mhroncok@redhat.com> - 1.3.7-20
+- Rebuilt for Python 3.7
 
 * Fri Feb 09 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.7-19
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
