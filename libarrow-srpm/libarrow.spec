@@ -30,7 +30,7 @@
 %bcond_without have_utf8proc
 
 Name:		libarrow
-Version:	9.0.0
+Version:	12.0.0
 #Release:	9%%{?dist}
 Release:	0.9%{?dist}
 Summary:	A toolbox for accelerated data interchange and in-memory processing
@@ -851,7 +851,7 @@ export LD_LIBRARY_PATH='%{buildroot}%{_libdir}'
 #--------------------------------------------------------------------
 
 %changelog
-* Fri Jun 30 2022  Kaleb S. KEITHLEY <kkeithle [at] redhat.com> - 9.0.0-9
+* Fri Sep 23 2022  Kaleb S. KEITHLEY <kkeithle [at] redhat.com> - 9.0.0-9
 - Arrow 9.0.0, rebuild with thrift 0.15.0
 
 * Wed Sep 7 2022  Kaleb S. KEITHLEY <kkeithle [at] redhat.com> - 9.0.0-8
