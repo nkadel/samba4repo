@@ -4,10 +4,10 @@
 
 # Assure that sorting is case sensitive
 LANG=C
-MOCKS+=samba4repo-8-x86_64
+#MOCKS+=samba4repo-8-x86_64
 MOCKS+=samba4repo-9-x86_64
 #MOCKS+=samba4repo-f39-x86_64
-#MOCKS+=samba4repo-amz2023-x86_64
+MOCKS+=samba4repo-amz2023-x86_64
 
 MOCKCFGS+=$(MOCKS)
 
