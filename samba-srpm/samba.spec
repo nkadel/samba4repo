@@ -136,7 +136,7 @@
 #%%global baserelease 8
 %global baserelease 109
 # This should be rc1 or %%nil
-%global pre_release %nil
+%global pre_release %%nil
 #%%global pre_release rc1
 
 %global samba_release %{baserelease}
@@ -215,11 +215,11 @@ Summary:        Server and Client software to interoperate with Windows machines
 License:        GPLv3+ and LGPLv3+
 URL:            https://www.samba.org
 
-Source0:        https://download.samba.org/pub/samba/%{?pre_release:}samba-%{version}%{pre_release}.tar.gz
-Source1:        https://download.samba.org/pub/samba/%{?pre_release:}samba-%{version}%{pre_release}.tar.asc
+#Source0:        https://download.samba.org/pub/samba/%%{?pre_release:}samba-%%{version}%%{pre_release}.tar.gz
+#Source1:        https://download.samba.org/pub/samba/%%{?pre_release:}samba-%%{version}%%{pre_release}.tar.asc
 
-#Source0:        https://download.samba.org/pub/samba/rc/samba-%%{version}%%{pre_release}.tar.gz
-#Source1:        https://download.samba.org/pub/samba/rc/samba-%%{version}%%{pre_release}.tar.asc
+Source0:        https://download.samba.org/pub/samba/rc/samba-%{version}%{pre_release}.tar.gz
+Source1:        https://download.samba.org/pub/samba/rc/samba-%{version}%{pre_release}.tar.asc
 
 Source2:        https://download.samba.org/pub/samba/samba-pubkey.asc
 
@@ -1769,7 +1769,6 @@ fi
 %{_libexecdir}/samba/rpcd_fsrvp
 %{_libexecdir}/samba/rpcd_lsad
 %{_libexecdir}/samba/rpcd_mdssvc
-%{_libexecdir}/samba/rpcd_rpcecho
 %{_libexecdir}/samba/rpcd_spoolss
 %{_libexecdir}/samba/rpcd_winreg
 
