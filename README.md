@@ -1,7 +1,7 @@
 samba4repo
 ==========
 
-Wrapper for SRPM building tools for Samba 4 on Fedora 37, CentOS 8 and 9
+Wrapper for SRPM building tools for Samba 4 on Fedora 39, CentOS 8 and 9
 
 The samba here is built with the domain controller fully enabled, in
 the "samba-dc" packagtes. The RPMs from RHEL upstream included only

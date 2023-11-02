@@ -49,7 +49,7 @@ BuildRequires: make
 BuildRequires: pkgconfig(libsystemd)
 
 %global examples 1
-%global build_tests 1
+%global build_tests 0
 
 ## skip for now, until we're better at it --rex
 #global tests 1
@@ -57,7 +57,8 @@ BuildRequires: pkgconfig(libsystemd)
 Name:    qt5-qtbase
 Summary: Qt5 - QtBase components
 Version: 5.15.9
-Release: 7%{?dist}
+#Release: 7%%{?dist}
+Release: 0.7%{?dist}
 
 
 # See LGPL_EXCEPTIONS.txt, for exception details

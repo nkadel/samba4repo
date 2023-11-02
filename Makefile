@@ -14,13 +14,13 @@ SAMBAPKGS+=firebird-srpm
 SAMBAPKGS+=freetds-sprm
 SAMBAPKGS+=fmt-srpm
 SAMBAPKGS+=gflags-srpm
+SAMBAPKGS+=libmng-srpm
 SAMBAPKGS+=mimalloc-srpm
 SAMBAPKGS+=qt5-srpm
 
 # Requires locally build components
 SAMBAPKGS+=mold-srpm
 SAMBAPKGS+=glusterfs-srpm
-SAMBAPKGS+=libmng-srpm
 SAMBAPKGS+=qt5-qtbase-srpm
 # Requires qt5 and libmng and qt5-qtbase
 SAMBAPKGS+=thrift-srpm
@@ -130,7 +130,6 @@ samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo "include('$?')" | tee $@
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo | tee -a $@
-	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" | tee -a $@
 	@echo '[samba4repo]' | tee -a $@
@@ -147,7 +146,6 @@ samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
-	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" | tee -a $@
 	@echo '[samba4repo]' | tee -a $@
@@ -165,7 +163,6 @@ samba4repo-f39-x86_64.cfg: /etc/mock/fedora-39-x86_64.cfg
 	@echo "include('$?')" | tee $@
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo >> $@
-	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
@@ -184,7 +181,6 @@ samba4repo-rawhide-x86_64.cfg: /etc/mock/fedora-rawhide-x86_64.cfg
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@sed -i "s/^config_opts\['root'\] =/#config_opts\['root'\] =/g" $@
 	@echo >> $@
-	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "config_opts['yum.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
@@ -202,7 +198,6 @@ samba4repo-amz2023-x86_64.cfg: /etc/mock/amazonlinux-2023-x86_64.cfg
 	@echo "include('$?')" | tee $@
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 	@echo >> $@
-	@echo Resetting root directory
 	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" >> $@
 	@echo "config_opts['dnf.conf'] += \"\"\"" >> $@
 	@echo '[samba4repo]' >> $@
