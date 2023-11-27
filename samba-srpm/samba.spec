@@ -131,7 +131,7 @@
 
 %define samba_requires_eq()  %(LC_ALL="C" echo '%*' | xargs -r rpm -q --qf 'Requires: %%{name} = %%{epoch}:%%{version}\\n' | sed -e 's/ (none):/ /' -e 's/ 0:/ /' | grep -v "is not")
 
-%global samba_version 4.19.2
+%global samba_version 4.19.3
 # Update to 108 to exceed RHEL and Fedora published releases
 #%%global baserelease 8
 %global baserelease 109
@@ -4480,6 +4480,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 27 2023 Nico Kadel-Garcia <nkadel@gmail.com>- 4.19.3
+- Update to 4.19.3
+
 * Wed Sep 13 2023 Nico Kadel-Garcia <nkadel@gmail.com>- 4.19.0
 - Update to 4.19.0
 
