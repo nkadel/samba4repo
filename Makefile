@@ -34,12 +34,11 @@ SAMBAPKGS+=ceph-srpm
 
 SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
-SAMBAPKGS+=python-coverage-srpm
+#SAMBAPKGS+=python-coverage-srpm
 # Requires coverage
 SAMBAPKGS+=python-nose-srpm
-
-
-SAMBAPKGS+=python-setproctitle-1.2.x-srpm
+# Needs nose
+#SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 
 # Requires nose
 SAMBAPKGS+=python-etcd-srpm
