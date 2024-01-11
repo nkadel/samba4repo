@@ -5,16 +5,12 @@
 # Assure that sorting is case sensitive
 LANG=C
 
-#MOCKS+=fedora-39-x86_64
-#MOCKS+=centos-stream+epel-9-x86_64
-MOCKS+=centos-stream+epel-8-x86_64
-#MOCKS+=amazonlinux-2023-x86_64
+#MOCKS+=samba4repo-f39-x86_64
+MOCKS+=samba4repo-9-x86_64
+MOCKS+=samba4repo-8-x86_64
+#MOCKS+=samba4repo-amz2023-x86_64
 
 MOCKCFGS+=$(MOCKS)
-#MOCKCFGS+=samba4repo-f39-x86_64
-#MOCKCFGS+=samba4repo-9-x86_64
-MOCKCFGS+=samba4repo-8-x86_64
-#MOCKCFGS+=samba4repo-amz2023-x86_64
 
 REPOBASEDIR:=`/bin/pwd`/../samba4repo
 
@@ -61,8 +57,8 @@ install:: $(MOCKS)
 	@for repo in $(MOCKS); do \
 	    echo Installing $$repo; \
 	    case $$repo in \
-		amazonlinux-2-x86_64) yumrelease=amazon/2; yumarch=x86_64; ;; \
-		*-amz2-x86_64) yumrelease=amazon/2; yumarch=x86_64; ;; \
+		amazonlinux-2023-x86_64) yumrelease=amazon/2023; yumarch=x86_64; ;; \
+		*-amz2023-x86_64) yumrelease=amazon/2023; yumarch=x86_64; ;; \
 		*-8-x86_64) yumrelease=el/8; yumarch=x86_64; ;; \
 		*-9-x86_64) yumrelease=el/9; yumarch=x86_64; ;; \
 		*-39-x86_64) yumrelease=fedora/39; yumarch=x86_64; ;; \

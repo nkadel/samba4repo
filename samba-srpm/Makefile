@@ -1,1 +1,1 @@
-../Makefile.epel8-39
+../Makefile.samba
