@@ -27,12 +27,8 @@
 # Define _make_verbose if it doesn't exist (RHEL8)
 %{!?_make_verbose:%define _make_verbose V=1 VERBOSE=1}
 
-# Build with Active Directory Domain Controller support by default on Fedora
-#%%if 0%%{?fedora}
+# Build with Active Directory Domain Controller support
 %bcond_without dc
-#%%else
-#%%bcond_with dc
-#%endif
 
 # Build a libsmbclient package by default
 %bcond_without libsmbclient
