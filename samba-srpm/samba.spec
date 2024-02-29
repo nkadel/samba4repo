@@ -14,7 +14,7 @@
 # or
 # rpmbuild --rebuild --with=testsuite --with=includelibs samba.src.rpm
 #
-## Use includelibs for RHEL 8 and 9
+## Use includelibs to avoid conflicts with sssd requirements
 #%%bcond_with includelibs
 %bcond_without includelibs
 
@@ -147,7 +147,7 @@
 %global samba_version 4.20.0
 %global baserelease 2
 # This should be rc1 or %%nil
-%global pre_release rc2
+%global pre_release rc3
 
 %global samba_release %{baserelease}
 %if "x%{?pre_release}" != "x"
@@ -183,7 +183,8 @@
 %global tevent_version 0.16.1
 %global ldb_version 2.9.0
 
-%bcond_without system_mit_krb5
+# Disable use of MIT KRB5, use Heimdal until approved
+%bcond_with system_mit_krb5
 %if %{with system_mit_krb5}
 %global required_mit_krb5 1.20.1
 %endif
@@ -320,6 +321,7 @@ BuildRequires: pam-devel
 BuildRequires: perl-interpreter
 BuildRequires: perl-generators
 BuildRequires: perl(Archive::Tar)
+BuildRequires: perl(JSON::PP)
 BuildRequires: perl(Test::More)
 BuildRequires: popt-devel
 BuildRequires: python3-cryptography
@@ -1239,10 +1241,12 @@ Support for using an existing CEPH cluster as a mutex helper for CTDB
 #%endif
 %autosetup -n samba-%{version}%{pre_release} -p1
 
+%if %{with system_mit_krb5}
 # Ensure we rely on GnuTLS and do not build any other crypto code shipping with
 # the sources.
 rm -rf third_party/{aesni-intel,heimdal}
 rm -f lib/crypto/{aes,rijndael}*.c
+%endif
 
 %build
 %if %{with includelibs}
@@ -1642,7 +1646,7 @@ fi
 
 %post winbind-krb5-locator
 %{_sbindir}/update-alternatives --install %{_libdir}/krb5/plugins/libkrb5/winbind_krb5_locator.so \
-                                winbind_krb5_locator.so %{_libdir}/samba/krb5/winbind_krb5_locator.so 10
+      winbind_krb5_locator.so %{_libdir}/samba/krb5/winbind_krb5_locator.so 10
 
 %preun winbind-krb5-locator
 if [ $1 -eq 0 ]; then
@@ -2086,7 +2090,9 @@ fi
 %{_sbindir}/samba_spnupdate
 %{_sbindir}/samba_upgradedns
 
+%if %{with system_mit_krb5}
 %{_libdir}/krb5/plugins/kdb/samba.so
+%endif
 
 %{_libdir}/samba/auth/samba4.so
 %dir %{_libdir}/samba/gensec
@@ -3632,7 +3638,7 @@ fi
 %{_libdir}/samba/krb5/winbind_krb5_localauth.so
 %{_mandir}/man1/ntlm_auth.1.gz
 %{_mandir}/man1/wbinfo.1*
-%{_mandir}/man8/winbind_krb5_localauth.8*
+#%%{_mandir}/man8/winbind_krb5_localauth.8*
 
 ### WINBIND-KRB5-LOCATOR
 %files winbind-krb5-locator
@@ -4607,6 +4613,10 @@ fi
 %endif
 
 %changelog
+* Wed Feb 28 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0rc3
+- Stop deleting heimdal if system_mit_krb5 is not enabled
+- Add BuildRequires: perl(JSON::PP) requirement
+
 * Thu Feb 15 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0rc2
 - Update from Fedora development package
 - Use includelibs for RHEL 8 and 9
