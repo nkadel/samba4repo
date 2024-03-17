@@ -147,7 +147,7 @@
 %global samba_version 4.20.0
 %global baserelease 2
 # This should be rc1 or %%nil
-%global pre_release rc3
+%global pre_release rc4
 
 %global samba_release %{baserelease}
 %if "x%{?pre_release}" != "x"
@@ -204,11 +204,6 @@
 # Make a copy of this variable to prevent repeated evaluation of the
 # embedded shell command.  Avoid recursive macro definition if undefined.
 %{?python3_sitearch: %global python3_sitearch %{python3_sitearch}}
-
-# Disable debugfiles
-%if 0%{?rhel}
-%global debug_pachage %{nil}
-%endif
 
 Name:           samba
 Version:        %{samba_version}
@@ -1249,6 +1244,11 @@ rm -f lib/crypto/{aes,rijndael}*.c
 %endif
 
 %build
+# Disable debugfiles
+%if 0%{?rhel}
+%global debug_pachage %{nil}
+%endif
+
 %if %{with includelibs}
 %global _talloc_lib ,talloc,pytalloc,pytalloc-util
 %global _tevent_lib ,tevent,pytevent
@@ -3635,7 +3635,7 @@ fi
 %files winbind-clients
 %{_bindir}/ntlm_auth
 %{_bindir}/wbinfo
-%{_libdir}/samba/krb5/winbind_krb5_localauth.so
+#%%{_libdir}/samba/krb5/winbind_krb5_localauth.so
 %{_mandir}/man1/ntlm_auth.1.gz
 %{_mandir}/man1/wbinfo.1*
 #%%{_mandir}/man8/winbind_krb5_localauth.8*
@@ -3754,6 +3754,7 @@ fi
 %{_datadir}/ctdb/events/legacy/31.clamd.script
 %{_datadir}/ctdb/events/legacy/40.vsftpd.script
 %{_datadir}/ctdb/events/legacy/41.httpd.script
+%{_datadir}/ctdb/events/legacy/47.samba-dcerpcd.script
 %{_datadir}/ctdb/events/legacy/48.netbios.script
 %{_datadir}/ctdb/events/legacy/49.winbind.script
 %{_datadir}/ctdb/events/legacy/50.samba.script
