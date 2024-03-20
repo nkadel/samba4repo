@@ -186,7 +186,7 @@
 # Disable use of MIT KRB5, use Heimdal until approved
 %bcond_with system_mit_krb5
 %if %{with system_mit_krb5}
-%global required_mit_krb5 1.20.1
+%global required_mit_krb5 1.21.1
 %endif
 
 # This is a network daemon, do a hardened build
@@ -2205,6 +2205,25 @@ fi
 %{_libdir}/samba/libdsdb-garbage-collect-tombstones-private-samba.so
 %{_libdir}/samba/libscavenge-dns-records-private-samba.so
 
+# Added with 4.20.0
+%if %{without system_mit_krb5}
+%{_libdir}/samba/libHDB-SAMBA4-private-samba.so
+%{_libdir}/samba/libasn1-private-samba.so
+%{_libdir}/samba/libcom-err-private-samba.so
+%{_libdir}/samba/libgss-preauth-private-samba.so
+%{_libdir}/samba/libgssapi-private-samba.so
+%{_libdir}/samba/libhcrypto-private-samba.so
+%{_libdir}/samba/libhdb-private-samba.so
+%{_libdir}/samba/libheimbase-private-samba.so
+%{_libdir}/samba/libheimntlm-private-samba.so
+%{_libdir}/samba/libhx509-private-samba.so
+%{_libdir}/samba/libkdc-private-samba.so
+%{_libdir}/samba/libkrb5-private-samba.so
+%{_libdir}/samba/libroken-private-samba.so
+%{_libdir}/samba/libwind-private-samba.so
+%endif
+
+
 ### DC-BIND
 %files dc-bind-dlz
 %attr(770,root,named) %dir /var/lib/samba/bind-dns
@@ -3635,10 +3654,12 @@ fi
 %files winbind-clients
 %{_bindir}/ntlm_auth
 %{_bindir}/wbinfo
-#%%{_libdir}/samba/krb5/winbind_krb5_localauth.so
 %{_mandir}/man1/ntlm_auth.1.gz
 %{_mandir}/man1/wbinfo.1*
-#%%{_mandir}/man8/winbind_krb5_localauth.8*
+%if %{with system_mit_krb5}
+%{_libdir}/samba/krb5/winbind_krb5_localauth.so
+%{_mandir}/man8/winbind_krb5_localauth.8*
+%endif
 
 ### WINBIND-KRB5-LOCATOR
 %files winbind-krb5-locator
