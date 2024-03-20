@@ -9,7 +9,7 @@
 
 REPOBASE=file://$(PWD)
 
-SAMBAPKGS+=python-iso86001-0.1.x-srpm
+#SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 #SAMBAPKGS+=python-coverage-srpm
 # Requires coverage
@@ -46,8 +46,8 @@ CFGS+=samba4repo-amz2023-x86_64.cfg
 # /et/cmock version lacks EPEL
 
 # Link from /etc/mock
-MOCKCFGS+=centos-stream+epel-8-x86_64.cfg
-MOCKCFGS+=centos-stream+epel-9-x86_64.cfg
+MOCKCFGS+=centos-stream+epel-next-8-x86_64.cfg
+MOCKCFGS+=centos-stream+epel-next-9-x86_64.cfg
 MOCKCFGS+=fedora-39-x86_64.cfg
 MOCKCFGS+=amazonlinux-2023-x86_64.cfg
 
@@ -99,7 +99,7 @@ $(MOCKCFGS)::
 	@echo "include('/etc/mock/$@')" | tee $@
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
 
-samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
+samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-next-8-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
@@ -117,7 +117,7 @@ samba4repo-8-x86_64.cfg: /etc/mock/centos-stream+epel-8-x86_64.cfg
 	@echo 'priority=20' | tee -a $@
 	@echo '"""' | tee -a $@
 
-samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-9-x86_64.cfg
+samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-next-9-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
