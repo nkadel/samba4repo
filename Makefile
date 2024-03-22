@@ -11,11 +11,12 @@ REPOBASE=file://$(PWD)
 
 # Buildable without samba4repo, many needed only for amaozn Linux 2023
 SAMBAPKGS+=firebird-srpm
-SAMBAPKGS+=freetds-sprm
 SAMBAPKGS+=fmt-srpm
+SAMBAPKGS+=freetds-sprm
 SAMBAPKGS+=gflags-srpm
 SAMBAPKGS+=libmng-srpm
 SAMBAPKGS+=mimalloc-srpm
+SAMBAPKGS+=python-nose-srpm
 SAMBAPKGS+=qt5-srpm
 
 # Requires locally build components
@@ -25,7 +26,7 @@ SAMBAPKGS+=qt5-qtbase-srpm
 # Requires qt5 and libmng and qt5-qtbase
 SAMBAPKGS+=thrift-srpm
 
-# Requires gflags-sprm
+# Requires gflags
 SAMBAPKGS+=glog-srpm
 # Requires gflags
 SAMBAPKGS+=libarrow-srpm
@@ -34,11 +35,6 @@ SAMBAPKGS+=ceph-srpm
 
 SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
-#SAMBAPKGS+=python-coverage-srpm
-# Requires coverage
-SAMBAPKGS+=python-nose-srpm
-# Needs nose
-#SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 
 # Requires nose
 SAMBAPKGS+=python-etcd-srpm
