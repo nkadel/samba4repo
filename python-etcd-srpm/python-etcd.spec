@@ -40,7 +40,7 @@ election.
 Summary:        %summary
 Requires:       python%{python3_pkgversion}-dns
 Requires:       python%{python3_pkgversion}-urllib3
-Obsoletes:      python%{python3_pkgversion}-python-etcd < %{vesion}-%{release}
+Obsoletes:      python%{python3_pkgversion}-python-etcd < %{version}-%{release}
 Provides:       python%{python3_pkgversion}-python-etcd
 %{?python_provide:%python_provide python3-etcd}
 
