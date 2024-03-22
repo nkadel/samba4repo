@@ -11,11 +11,7 @@ REPOBASE=file://$(PWD)
 
 #SAMBAPKGS+=python-iso86001-0.1.x-srpm
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
-#SAMBAPKGS+=python-coverage-srpm
-# Requires coverage
 #SAMBAPKGS+=python-nose-srpm
-# Needs nose
-#SAMBAPKGS+=python-setproctitle-1.2.x-srpm
 
 #SAMBAPKGS+=libtalloc-2.4.x-srpm
 #SAMBAPKGS+=libtdb-1.4.x-srpm
