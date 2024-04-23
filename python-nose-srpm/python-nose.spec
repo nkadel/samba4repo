@@ -91,7 +91,9 @@ BuildRequires:  python%{python3_pkgversion}-setuptools
 BuildRequires:  python%{python3_pkgversion}-coverage >= 3.4-1
 
 # Require alternatives version that implements the --keep-foreign flag
-Requires(postun): alternatives >= 1.19.1-1
+# Discard for AMZ compilaation
+#Requires(postun): alternatives >= 1.19.1-1
+Requires(postun): alternatives
 # For alternatives
 Requires:       python%{python3_pkgversion}
 Requires:       python%{python3_pkgversion}-setuptools
