@@ -5,13 +5,13 @@
 # Assure that sorting is case sensitive
 LANG=C
 
-#MOCKS+=fedora-39-x86_64
+#MOCKS+=fedora-40-x86_64
 #MOCKS+=centos-stream+epel-next-9-x86_64
 #MOCKS+=centos-stream+epel-next-8-x86_64
 MOCKS+=amazonlinux-2023-x86_64
 
 MOCKCFGS+=$(MOCKS)
-#MOCKCFGS+=samba4repo-f39-x86_64
+#MOCKCFGS+=samba4repo-f40-x86_64
 #MOCKCFGS+=samba4repo-9-x86_64
 #MOCKCFGS+=samba4repo-8-x86_64
 MOCKCFGS+=samba4repo-amz2023-x86_64
@@ -65,8 +65,8 @@ install:: $(MOCKS)
 		*-amz2023-x86_64) yumrelease=amazon/2023; yumarch=x86_64; ;; \
 		*-8-x86_64) yumrelease=el/8; yumarch=x86_64; ;; \
 		*-9-x86_64) yumrelease=el/9; yumarch=x86_64; ;; \
-		*-39-x86_64) yumrelease=fedora/39; yumarch=x86_64; ;; \
-		*-f39-x86_64) yumrelease=fedora/39; yumarch=x86_64; ;; \
+		*-40-x86_64) yumrelease=fedora/40; yumarch=x86_64; ;; \
+		*-f40-x86_64) yumrelease=fedora/40; yumarch=x86_64; ;; \
 		*-rawhide-x86_64) yumrelease=fedora/rawhide; yumarch=x86_64; ;; \
 		*) echo "Unrecognized release for $$repo, exiting" >&2; exit 1; ;; \
 	    esac; \

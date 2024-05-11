@@ -13,12 +13,13 @@ REPOBASE=file://$(PWD)
 SAMBAPKGS+=python-pyasn1-0.4.x-srpm
 #SAMBAPKGS+=python-nose-srpm
 
-#SAMBAPKGS+=libtalloc-2.4.x-srpm
-#SAMBAPKGS+=libtdb-1.4.x-srpm
+## Compiled directly into Samba package to avoid conflict with sssd
+#SAMBAPKGS+=libtalloc-srpm
+#SAMBAPKGS+=libtdb-srpm
 ## Requires libtalloc
-#SAMBAPKGS+=libtevent-0.14.x-srpm
+#SAMBAPKGS+=libtevent-srpm
 ## Requires libtalloc,libtdb,libtevent
-#SAMBAPKGS+=libldb-2.7.x-srpm
+#SAMBAPKGS+=libldb-srpm
 
 ## Current samba release
 # Now builds internal libraries rather than:
@@ -28,14 +29,14 @@ SAMBAPKGS+=samba-srpm
 
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/el/9
-REPOS+=samba4repo/fedora/39
+REPOS+=samba4repo/fedora/40
 REPOS+=samba4repo/amazon/2023
 
 REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repodata,$(REPOS))
 
 CFGS+=samba4repo-8-x86_64.cfg
 CFGS+=samba4repo-9-x86_64.cfg
-CFGS+=samba4repo-f39-x86_64.cfg
+CFGS+=samba4repo-f40-x86_64.cfg
 # Amazon 2 config
 CFGS+=samba4repo-amz2023-x86_64.cfg
 
@@ -44,7 +45,7 @@ CFGS+=samba4repo-amz2023-x86_64.cfg
 # Link from /etc/mock
 MOCKCFGS+=centos-stream+epel-next-8-x86_64.cfg
 MOCKCFGS+=centos-stream+epel-next-9-x86_64.cfg
-MOCKCFGS+=fedora-39-x86_64.cfg
+MOCKCFGS+=fedora-40-x86_64.cfg
 MOCKCFGS+=amazonlinux-2023-x86_64.cfg
 
 all:: install
@@ -130,7 +131,7 @@ samba4repo-9-x86_64.cfg: /etc/mock/centos-stream+epel-next-9-x86_64.cfg
 	@echo 'priority=20' >> $@
 	@echo '"""' >> $@
 
-samba4repo-f39-x86_64.cfg: /etc/mock/fedora-39-x86_64.cfg
+samba4repo-f40-x86_64.cfg: /etc/mock/fedora-40-x86_64.cfg
 	@echo Generating $@ from $?
 	@echo "include('$?')" | tee $@
 	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
@@ -141,7 +142,7 @@ samba4repo-f39-x86_64.cfg: /etc/mock/fedora-39-x86_64.cfg
 	@echo '[samba4repo]' >> $@
 	@echo 'name=samba4repo' >> $@
 	@echo 'enabled=1' >> $@
-	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/39/x86_64/' >> $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/fedora/40/x86_64/' >> $@
 	@echo 'skip_if_unavailable=False' >> $@
 	@echo 'metadata_expire=0' >> $@
 	@echo 'gpgcheck=0' >> $@
