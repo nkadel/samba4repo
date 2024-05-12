@@ -144,10 +144,10 @@
 
 %define samba_requires_eq()  %(LC_ALL="C" echo '%*' | xargs -r rpm -q --qf 'Requires: %%{name} = %%{epoch}:%%{version}\\n' | sed -e 's/ (none):/ /' -e 's/ 0:/ /' | grep -v "is not")
 
-%global samba_version 4.20.0
+%global samba_version 4.20.1
 %global baserelease 2
 # This should be rc1 or %%nil
-%global pre_release rc4
+%global pre_release %nil
 
 %global samba_release %{baserelease}
 %if "x%{?pre_release}" != "x"
@@ -221,11 +221,11 @@ Summary:        Server and Client software to interoperate with Windows machines
 License:        GPL-3.0-or-later AND LGPL-3.0-or-later
 URL:            https://www.samba.org
 
-# This is a xz recompressed file of https://ftp.samba.org/pub/samba/samba-%%{version}%%{pre_release}.tar.gz
-#Source0:        https://ftp.samba.org/pub/samba/samba-%%{version}%%{pre_release}.tar.gz
-#Source1:        https://ftp.samba.org/pub/samba/samba-%%{version}%%{pre_release}.tar.asc
-Source0:        https://ftp.samba.org/pub/samba/rc/samba-%{version}%{pre_release}.tar.gz
-Source1:        https://ftp.samba.org/pub/samba/rc/samba-%{version}%{pre_release}.tar.asc
+# This is a xz recompressed file of https://download.samba.org/pub/samba/samba-%%{version}%%{pre_release}.tar.gz
+Source0:        https://download.samba.org/pub/samba/samba-%{version}%{pre_release}.tar.gz
+Source1:        https://download.samba.org/pub/samba/samba-%{version}%{pre_release}.tar.asc
+#Source0:        https://download.samba.org/pub/samba/rc/samba-%%{version}%%{pre_release}.tar.gz
+#Source1:        https://download.samba.org/pub/samba/rc/samba-%%{version}%%{pre_release}.tar.asc
 Source2:        samba-pubkey_AA99442FB680B620.gpg
 
 # Red Hat specific replacement-files
@@ -1540,14 +1540,17 @@ export WINBINDD_DONT_LOG_STDOUT=1
 %post
 %systemd_post smb.service
 %systemd_post nmb.service
+%systemd_post samba-bgqd.service
 
 %preun
 %systemd_preun smb.service
 %systemd_preun nmb.service
+%systemd_preun samba-bgqd.service
 
 %postun
 %systemd_postun_with_restart smb.service
 %systemd_postun_with_restart nmb.service
+%systemd_postun_with_restart samba-bgqd.service
 
 %pre common
 # This creates the group 'printadmin'
@@ -1743,6 +1746,8 @@ fi
 
 %{_unitdir}/nmb.service
 %{_unitdir}/smb.service
+%{_unitdir}/samba-bgqd.service
+
 %dir %{_sysconfdir}/openldap/schema
 %config %{_sysconfdir}/openldap/schema/samba.schema
 %config(noreplace) %{_sysconfdir}/pam.d/samba
@@ -3189,6 +3194,10 @@ fi
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/check_output.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/claims.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/downgradedatabase.*.pyc
+%{python3_sitearch}/samba/tests/blackbox/__pycache__/http_chunk.*.opt-1.pyc
+%{python3_sitearch}/samba/tests/blackbox/__pycache__/http_chunk.*.pyc
+%{python3_sitearch}/samba/tests/blackbox/__pycache__/http_content.*.opt-1.pyc
+%{python3_sitearch}/samba/tests/blackbox/__pycache__/http_content.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/mdsearch.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/ndrdump.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/netads_dns.*.pyc
@@ -3209,6 +3218,8 @@ fi
 %{python3_sitearch}/samba/tests/blackbox/check_output.py
 %{python3_sitearch}/samba/tests/blackbox/claims.py
 %{python3_sitearch}/samba/tests/blackbox/downgradedatabase.py
+%{python3_sitearch}/samba/tests/blackbox/http_chunk.py
+%{python3_sitearch}/samba/tests/blackbox/http_content.py
 %{python3_sitearch}/samba/tests/blackbox/mdsearch.py
 %{python3_sitearch}/samba/tests/blackbox/ndrdump.py
 %{python3_sitearch}/samba/tests/blackbox/netads_dns.py
