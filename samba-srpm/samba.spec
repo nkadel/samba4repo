@@ -4646,6 +4646,10 @@ fi
 %endif
 
 %changelog
+* Sun May 12 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0
+- Update to 4.20.0
+- Update Source URL
+
 * Wed Feb 28 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0rc3
 - Stop deleting heimdal if system_mit_krb5 is not enabled
 - Add BuildRequires: perl(JSON::PP) requirement
