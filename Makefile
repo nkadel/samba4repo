@@ -9,8 +9,9 @@
 
 REPOBASE=file://$(PWD)
 
-#SAMBAPKGS+=python-iso86001-0.1.x-srpm
-SAMBAPKGS+=python-pyasn1-0.4.x-srpm
+#SAMBAPKGS+=python-iso86001-srpm
+SAMBAPKGS+=python-pyasn1-srpm
+SAMBAPKGS+=python-setproctitle-srpm
 #SAMBAPKGS+=python-nose-srpm
 
 ## Compiled directly into Samba package to avoid conflict with sssd
@@ -29,6 +30,7 @@ SAMBAPKGS+=samba-srpm
 
 REPOS+=samba4repo/el/8
 REPOS+=samba4repo/el/9
+REPOS+=samba4repo/el/10
 REPOS+=samba4repo/fedora/40
 REPOS+=samba4repo/amazon/2023
 
@@ -36,6 +38,7 @@ REPODIRS := $(patsubst %,%/x86_64/repodata,$(REPOS)) $(patsubst %,%/SRPMS/repoda
 
 CFGS+=samba4repo-8-x86_64.cfg
 CFGS+=samba4repo-9-x86_64.cfg
+CFGS+=samba4repo-10-x86_64.cfg
 CFGS+=samba4repo-f40-x86_64.cfg
 # Amazon 2 config
 CFGS+=samba4repo-amz2023-x86_64.cfg
@@ -45,6 +48,7 @@ CFGS+=samba4repo-amz2023-x86_64.cfg
 # Link from /etc/mock
 MOCKCFGS+=alma+epel-8-x86_64.cfg
 MOCKCFGS+=alma+epel-9-x86_64.cfg
+MOCKCFGS+=alma+epel-10-x86_64.cfg
 MOCKCFGS+=fedora-40-x86_64.cfg
 MOCKCFGS+=amazonlinux-2023-x86_64.cfg
 
@@ -125,6 +129,23 @@ samba4repo-9-x86_64.cfg: /etc/mock/alma+epel-9-x86_64.cfg
 	@echo 'name=samba4repo' | tee -a $@
 	@echo 'enabled=1' | tee -a $@
 	@echo 'baseurl=$(REPOBASE)/samba4repo/el/9/x86_64/' | tee -a $@
+	@echo 'skip_if_unavailable=False' | tee -a $@
+	@echo 'metadata_expire=0' | tee -a $@
+	@echo 'gpgcheck=0' >> $@
+	@echo 'priority=20' >> $@
+	@echo '"""' >> $@
+
+samba4repo-10-x86_64.cfg: /etc/mock/alma+epel-10-x86_64.cfg
+	@echo Generating $@ from $?
+	@echo "include('$?')" | tee $@
+	@echo "config_opts['dnf_vars'] = { 'best': 'False' }" | tee -a $@
+	@echo Resetting root directory
+	@echo "config_opts['root'] = 'samba4repo-{{ releasever }}-{{ target_arch }}'" | tee -a $@
+	@echo "config_opts['dnf.conf'] += \"\"\"" | tee -a $@
+	@echo '[samba4repo]' | tee -a $@
+	@echo 'name=samba4repo' | tee -a $@
+	@echo 'enabled=1' | tee -a $@
+	@echo 'baseurl=$(REPOBASE)/samba4repo/el/10/x86_64/' | tee -a $@
 	@echo 'skip_if_unavailable=False' | tee -a $@
 	@echo 'metadata_expire=0' | tee -a $@
 	@echo 'gpgcheck=0' >> $@

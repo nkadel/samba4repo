@@ -5,11 +5,17 @@
 # Assure that sorting is case sensitive
 LANG=C
 
-#MOCKS+=samba4repo-f40-x86_64
-#MOCKS+=samba4repo-10-x86_64
-MOCKS+=samba4repo-9-x86_64
-MOCKS+=samba4repo-8-x86_64
-#MOCKS+=samba4repo-amz2023-x86_64
+#MOCKS+=fedora-40-x86_64
+MOCKS+=alma+epel-10-x86_64
+#MOCKS+=alma+epel-9-x86_64
+#MOCKS+=alma+epel-8-x86_64
+#MOCKS+=amazonlinux-2023-x86_64
+
+#MOCKCFGS+=samba4repo-f40-x86_64
+MOCKCFGS+=samba4repo-10-x86_64
+#MOCKCFGS+=samba4repo-9-x86_64
+#MOCKCFGS+=samba4repo-8-x86_64
+#MOCKCFGS+=samba4repo-amz2023-x86_64
 
 REPOBASEDIR:=`/bin/pwd`/../samba4repo
 
@@ -56,8 +62,8 @@ install:: $(MOCKS)
 	@for repo in $(MOCKS); do \
 	    echo Installing $$repo; \
 	    case $$repo in \
-		amazonlinux-2023-x86_64) yumrelease=amazon/2023; yumarch=x86_64; ;; \
-		*-amz2023-x86_64) yumrelease=amazon/2023; yumarch=x86_64; ;; \
+		amazonlinux-2-x86_64) yumrelease=amazon/2; yumarch=x86_64; ;; \
+		*-amz2-x86_64) yumrelease=amazon/2; yumarch=x86_64; ;; \
 		*-8-x86_64) yumrelease=el/8; yumarch=x86_64; ;; \
 		*-9-x86_64) yumrelease=el/9; yumarch=x86_64; ;; \
 		*-10-x86_64) yumrelease=el/10; yumarch=x86_64; ;; \
@@ -75,7 +81,7 @@ install:: $(MOCKS)
 	    rsync -av $$repo/*.rpm --exclude=*.src.rpm --exclude=*debuginfo*.rpm --no-owner --no-group $$repo/*.rpm $$rpmdir/. || exit 1; \
 	    createrepo_c -q $$rpmdir/.; \
 	done
-	@for repo in $(MOCKS); do \
+	@for repo in $(MOCKCFGS); do \
 	    echo "Touching $(PWD)/../$$repo.cfg"; \
 	    /bin/touch --no-dereference $(PWD)/../$$repo.cfg; \
 	done

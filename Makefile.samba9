@@ -6,11 +6,10 @@
 LANG=C
 
 #MOCKS+=samba4repo-f40-x86_64
+#MOCKS+=samba4repo-10-x86_64
 MOCKS+=samba4repo-9-x86_64
 #MOCKS+=samba4repo-8-x86_64
 #MOCKS+=samba4repo-amz2023-x86_64
-
-MOCKCFGS+=$(MOCKS)
 
 REPOBASEDIR:=`/bin/pwd`/../samba4repo
 
@@ -61,6 +60,7 @@ install:: $(MOCKS)
 		*-amz2023-x86_64) yumrelease=amazon/2023; yumarch=x86_64; ;; \
 		*-8-x86_64) yumrelease=el/8; yumarch=x86_64; ;; \
 		*-9-x86_64) yumrelease=el/9; yumarch=x86_64; ;; \
+		*-10-x86_64) yumrelease=el/10; yumarch=x86_64; ;; \
 		*-40-x86_64) yumrelease=fedora/40; yumarch=x86_64; ;; \
 		*-f40-x86_64) yumrelease=fedora/40; yumarch=x86_64; ;; \
 		*-rawhide-x86_64) yumrelease=fedora/rawhide; yumarch=x86_64; ;; \
@@ -75,7 +75,7 @@ install:: $(MOCKS)
 	    rsync -av $$repo/*.rpm --exclude=*.src.rpm --exclude=*debuginfo*.rpm --no-owner --no-group $$repo/*.rpm $$rpmdir/. || exit 1; \
 	    createrepo_c -q $$rpmdir/.; \
 	done
-	@for repo in $(MOCKCFGS); do \
+	@for repo in $(MOCKS); do \
 	    echo "Touching $(PWD)/../$$repo.cfg"; \
 	    /bin/touch --no-dereference $(PWD)/../$$repo.cfg; \
 	done
