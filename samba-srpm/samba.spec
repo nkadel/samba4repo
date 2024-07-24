@@ -3537,6 +3537,7 @@ fi
 %{python3_sitearch}/samba/tests/samba_tool/__pycache__/user_virtualCryptSHA_userPassword.*.pyc
 %{python3_sitearch}/samba/tests/samba_tool/__pycache__/user_wdigest.*.pyc
 %{python3_sitearch}/samba/tests/samba_tool/__pycache__/visualize.*.pyc
+%{python3_sitearch}/samba/tests/samba_tool/__pycache__/visualize_drs.*.pyc
 %{python3_sitearch}/samba/tests/samba_tool/base.py
 %{python3_sitearch}/samba/tests/samba_tool/computer.py
 %{python3_sitearch}/samba/tests/samba_tool/contact.py
@@ -4645,6 +4646,9 @@ fi
 %endif
 
 %changelog
+* Tue Jul 24 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.2
+- Update to 4.20.2
+
 * Sun May 12 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0
 - Update to 4.20.0
 - Update Source URL
