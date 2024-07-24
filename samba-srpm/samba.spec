@@ -144,7 +144,7 @@
 
 %define samba_requires_eq()  %(LC_ALL="C" echo '%*' | xargs -r rpm -q --qf 'Requires: %%{name} = %%{epoch}:%%{version}\\n' | sed -e 's/ (none):/ /' -e 's/ 0:/ /' | grep -v "is not")
 
-%global samba_version 4.20.1
+%global samba_version 4.20.2
 %global baserelease 2
 # This should be rc1 or %%nil
 %global pre_release %nil
@@ -2518,9 +2518,9 @@ fi
 %{python3_sitearch}/samba/__pycache__/auth_util.*.pyc
 %{python3_sitearch}/samba/__pycache__/colour.*.pyc
 %{python3_sitearch}/samba/__pycache__/common.*.pyc
-%{python3_sitearch}/samba/__pycache__/dbchecker.*.pyc
 %{python3_sitearch}/samba/__pycache__/descriptor.*.pyc
 %{python3_sitearch}/samba/__pycache__/dnsresolver.*.pyc
+%{python3_sitearch}/samba/__pycache__/dbchecker.*.pyc
 %{python3_sitearch}/samba/__pycache__/drs_utils.*.pyc
 %{python3_sitearch}/samba/__pycache__/functional_level.*.pyc
 %{python3_sitearch}/samba/__pycache__/getopt.*.pyc
@@ -3194,10 +3194,9 @@ fi
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/check_output.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/claims.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/downgradedatabase.*.pyc
-%{python3_sitearch}/samba/tests/blackbox/__pycache__/http_chunk.*.opt-1.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/http_chunk.*.pyc
-%{python3_sitearch}/samba/tests/blackbox/__pycache__/http_content.*.opt-1.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/http_content.*.pyc
+%{python3_sitearch}/samba/tests/blackbox/__pycache__/misc_dfs_widelink.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/mdsearch.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/ndrdump.*.pyc
 %{python3_sitearch}/samba/tests/blackbox/__pycache__/netads_dns.*.pyc
@@ -3221,6 +3220,7 @@ fi
 %{python3_sitearch}/samba/tests/blackbox/http_chunk.py
 %{python3_sitearch}/samba/tests/blackbox/http_content.py
 %{python3_sitearch}/samba/tests/blackbox/mdsearch.py
+%{python3_sitearch}/samba/tests/blackbox/misc_dfs_widelink.py
 %{python3_sitearch}/samba/tests/blackbox/ndrdump.py
 %{python3_sitearch}/samba/tests/blackbox/netads_dns.py
 %{python3_sitearch}/samba/tests/blackbox/netads_json.py
@@ -3537,7 +3537,6 @@ fi
 %{python3_sitearch}/samba/tests/samba_tool/__pycache__/user_virtualCryptSHA_userPassword.*.pyc
 %{python3_sitearch}/samba/tests/samba_tool/__pycache__/user_wdigest.*.pyc
 %{python3_sitearch}/samba/tests/samba_tool/__pycache__/visualize.*.pyc
-%{python3_sitearch}/samba/tests/samba_tool/__pycache__/visualize_drs.*.pyc
 %{python3_sitearch}/samba/tests/samba_tool/base.py
 %{python3_sitearch}/samba/tests/samba_tool/computer.py
 %{python3_sitearch}/samba/tests/samba_tool/contact.py
