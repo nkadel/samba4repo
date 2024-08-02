@@ -144,7 +144,7 @@
 
 %define samba_requires_eq()  %(LC_ALL="C" echo '%*' | xargs -r rpm -q --qf 'Requires: %%{name} = %%{epoch}:%%{version}\\n' | sed -e 's/ (none):/ /' -e 's/ 0:/ /' | grep -v "is not")
 
-%global samba_version 4.20.2
+%global samba_version 4.20.3
 %global baserelease 2
 # This should be rc1 or %%nil
 %global pre_release %nil
@@ -224,8 +224,8 @@ URL:            https://www.samba.org
 # This is a xz recompressed file of https://download.samba.org/pub/samba/samba-%%{version}%%{pre_release}.tar.gz
 Source0:        https://download.samba.org/pub/samba/samba-%{version}%{pre_release}.tar.gz
 Source1:        https://download.samba.org/pub/samba/samba-%{version}%{pre_release}.tar.asc
-#Source0:        https://download.samba.org/pub/samba/rc/samba-%%{version}%%{pre_release}.tar.gz
-#Source1:        https://download.samba.org/pub/samba/rc/samba-%%{version}%%{pre_release}.tar.asc
+#Source0:        https://download.samba.org/pub/samba/rc/samba-%{version}%{pre_release}.tar.gz
+#Source1:        https://download.samba.org/pub/samba/rc/samba-%{version}%{pre_release}.tar.asc
 Source2:        samba-pubkey_AA99442FB680B620.gpg
 
 # Red Hat specific replacement-files
@@ -4646,7 +4646,7 @@ fi
 %endif
 
 %changelog
-* Tue Jul 24 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.2
+* Wed Jul 24 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.2
 - Update to 4.20.2
 
 * Sun May 12 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0
