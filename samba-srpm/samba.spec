@@ -4646,6 +4646,9 @@ fi
 %endif
 
 %changelog
+* Fri Aug 2 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.3
+- Update to 4.20.3
+
 * Wed Jul 24 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.2
 - Update to 4.20.2
 
