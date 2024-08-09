@@ -10,6 +10,13 @@ partly because those are incompatible with the default Kerberos built
 into Fedora and RHEL. The experiemental Samba support for that default
 Kerberos is tentative and not yet suitable for production.
 
+AlmaLinux 10 builds
+===================
+
+"epel-rpm-macros" from EPEL is needed for successful compilation. But EPEL 10 does not exist yet.
+
+Instal tools form https://github.com/nkadel/epelrpmmacrorepo .
+
 Git Checkout
 ===========
 
