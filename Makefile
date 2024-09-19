@@ -11,7 +11,6 @@ REPOBASE=file://$(PWD)
 
 #SAMBAPKGS+=python-iso86001-srpm
 SAMBAPKGS+=python-pyasn1-srpm
-SAMBAPKGS+=python-setproctitle-srpm
 #SAMBAPKGS+=python-nose-srpm
 
 ## Compiled directly into Samba package to avoid conflict with sssd
