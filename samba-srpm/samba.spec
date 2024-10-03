@@ -319,11 +319,11 @@ BuildRequires: perl(Archive::Tar)
 BuildRequires: perl(JSON::PP)
 BuildRequires: perl(Test::More)
 BuildRequires: popt-devel
-BuildRequires: python3-cryptography
-BuildRequires: python3-devel
-BuildRequires: python3-dns
-BuildRequires: python3-requests
-BuildRequires: python3-setuptools
+BuildRequires: python%{python3_pkgversion}-cryptography
+BuildRequires: python%{python3_pkgversion}-devel
+BuildRequires: python%{python3_pkgversion}-dns
+BuildRequires: python%{python3_pkgversion}-requests
+BuildRequires: python%{python3_pkgversion}-setuptools
 BuildRequires: quota-devel
 BuildRequires: readline-devel
 BuildRequires: rpcgen
@@ -365,7 +365,7 @@ BuildRequires: pcp-libs-devel
 BuildRequires: librados-devel
 %endif
 %if %{with etcd_mutex}
-BuildRequires: python3-etcd
+BuildRequires: python%{python3_pkgversion}-etcd
 %endif
 
 %if %{with gpupdate}
@@ -379,17 +379,17 @@ BuildRequires: perl(Parse::Yapp)
 
 %if %{without includelibs}
 BuildRequires: libtalloc-devel >= %{talloc_version}
-BuildRequires: python3-talloc-devel >= %{talloc_version}
+BuildRequires: python%{python3_pkgversion}-talloc-devel >= %{talloc_version}
 
 BuildRequires: libtevent-devel >= %{tevent_version}
-BuildRequires: python3-tevent >= %{tevent_version}
+BuildRequires: python%{python3_pkgversion}-tevent >= %{tevent_version}
 
 BuildRequires: libtdb-devel >= %{tdb_version}
-BuildRequires: python3-tdb >= %{tdb_version}
+BuildRequires: python%{python3_pkgversion}-tdb >= %{tdb_version}
 
 BuildRequires: libldb-devel >= %{ldb_version}
-BuildRequires: python3-ldb >= %{ldb_version}
-BuildRequires: python3-ldb-devel >= %{ldb_version}
+BuildRequires: python%{python3_pkgversion}-ldb >= %{ldb_version}
+BuildRequires: python%{python3_pkgversion}-ldb-devel >= %{ldb_version}
 %endif
 
 %if %{with includelibs} || %{with testsuite}
@@ -405,14 +405,14 @@ BuildRequires: bind
 BuildRequires: krb5-server >= %{required_mit_krb5}
 %endif
 %if 0%{?fedora} || 0%{?rhel} >= 9
-BuildRequires: python3-dateutil
+BuildRequires: python%{python3_pkgversion}-dateutil
 %else
-BuildRequires: python3-iso8601
+BuildRequires: python%{python3_pkgversion}-iso8601
 %endif
-BuildRequires: python3-gpg
-BuildRequires: python3-markdown
-BuildRequires: python3-pyasn1 >= 0.4.8
-BuildRequires: python3-setproctitle
+BuildRequires: python%{python3_pkgversion}-gpg
+BuildRequires: python%{python3_pkgversion}-markdown
+BuildRequires: python%{python3_pkgversion}-pyasn1 >= 0.4.8
+BuildRequires: python%{python3_pkgversion}-setproctitle
 
 %if %{without includelibs}
 BuildRequires: tdb-tools
@@ -554,15 +554,15 @@ The samba-common-tools package contains tools for SMB/CIFS clients.
 ### SAMBA-TOOLS
 %package tools
 Summary: Tools for Samba servers
-# samba-tool needs python3-samba
-Requires: python3-%{name} = %{samba_depver}
-# samba-tool needs python3-samba-dc also on non-dc build
-Requires: python3-%{name}-dc = %{samba_depver}
+# samba-tool needs python%{python3_pkgversion}-samba
+Requires: python%{python3_pkgversion}-%{name} = %{samba_depver}
+# samba-tool needs python%{python3_pkgversion}-samba-dc also on non-dc build
+Requires: python%{python3_pkgversion}-%{name}-dc = %{samba_depver}
 %if %{with dc}
 # samba-tool needs mdb_copy and tdbackup for domain backup or upgrade provision
 Requires: lmdb
 Requires: tdb-tools
-Requires: python3-gpg
+Requires: python%{python3_pkgversion}-gpg
 %endif
 
 %description tools
@@ -603,14 +603,14 @@ Requires: libwbclient = %{samba_depver}
 %endif
 
 Requires: ldb-tools
-Requires: python3-setproctitle
+Requires: python%{python3_pkgversion}-setproctitle
 # Force using libldb version to be the same as build version
 # Otherwise LDB modules will not be loaded and samba-tool will fail
 # See bug 1507420
 %samba_requires_eq libldb
 
-Requires: python3-%{name} = %{samba_depver}
-Requires: python3-%{name}-dc = %{samba_depver}
+Requires: python%{python3_pkgversion}-%{name} = %{samba_depver}
+Requires: python%{python3_pkgversion}-%{name}-dc = %{samba_depver}
 %if %{with system_mit_krb5}
 Requires: krb5-server >= %{required_mit_krb5}
 %endif
@@ -749,9 +749,9 @@ Requires: cepces
 Requires: cepces-certmonger
 Requires: certmonger
 Requires: %{name}-ldb-ldap-modules = %{samba_depver}
-Requires: python3-%{name} = %{samba_depver}
-# samba-tool needs python3-samba-dc also on non-dc build
-Requires: python3-%{name}-dc = %{samba_depver}
+Requires: python%{python3_pkgversion}-%{name} = %{samba_depver}
+# samba-tool needs python%{python3_pkgversion}-samba-dc also on non-dc build
+Requires: python%{python3_pkgversion}-%{name}-dc = %{samba_depver}
 
 %description gpupdate
 This package provides the samba-gpupdate tool to apply Group Policy Objects
@@ -874,19 +874,19 @@ library.
 %endif
 
 ### PYTHON3
-%package -n python3-%{name}
+%package -n python%{python3_pkgversion}-%{name}
 Summary: Samba Python3 libraries
 Requires: %{name}-client-libs = %{samba_depver}
 Requires: %{name}-common-libs = %{samba_depver}
 Requires: %{name}-libs = %{samba_depver}
 Requires: %{name}-dc-libs = %{samba_depver}
-Requires: python3-cryptography
-Requires: python3-dns
-Requires: python3-ldb
-Requires: python3-requests
-Requires: python3-talloc
-Requires: python3-tdb
-Requires: python3-tevent
+Requires: python%{python3_pkgversion}-cryptography
+Requires: python%{python3_pkgversion}-dns
+Requires: python%{python3_pkgversion}-ldb
+Requires: python%{python3_pkgversion}-requests
+Requires: python%{python3_pkgversion}-talloc
+Requires: python%{python3_pkgversion}-tdb
+Requires: python%{python3_pkgversion}-tevent
 %if %{with libsmbclient}
 Requires: libsmbclient = %{samba_depver}
 %endif
@@ -896,37 +896,37 @@ Requires: libwbclient = %{samba_depver}
 
 Provides: bundled(libreplace)
 
-%description -n python3-%{name}
-The python3-%{name} package contains the Python 3 libraries needed by programs
+%description -n python%{python3_pkgversion}-%{name}
+The python%{python3_pkgversion}-%{name} package contains the Python 3 libraries needed by programs
 that use SMB, RPC and other Samba provided protocols in Python 3 programs.
 
-%package -n python3-%{name}-devel
+%package -n python%{python3_pkgversion}-%{name}-devel
 Summary: Samba python devel files
-Requires: python3-%{name} = %{samba_depver}
+Requires: python%{python3_pkgversion}-%{name} = %{samba_depver}
 
-%description -n python3-%{name}-devel
-The python3-%{name}-devel package contains the Python 3 devel files.
+%description -n python%{python3_pkgversion}-%{name}-devel
+The python%{python3_pkgversion}-%{name}-devel package contains the Python 3 devel files.
 
-%package -n python3-samba-test
+%package -n python%{python3_pkgversion}-samba-test
 Summary: Samba Python libraries
-Requires: python3-%{name} = %{samba_depver}
+Requires: python%{python3_pkgversion}-%{name} = %{samba_depver}
 Requires: %{name}-client-libs = %{samba_depver}
 Requires: %{name}-libs = %{samba_depver}
 
-%description -n python3-samba-test
-The python3-%{name}-test package contains the Python libraries used by the test suite of Samba.
+%description -n python%{python3_pkgversion}-samba-test
+The python%{python3_pkgversion}-%{name}-test package contains the Python libraries used by the test suite of Samba.
 If you want to run full set of Samba tests, you need to install this package.
 
-%package -n python3-samba-dc
+%package -n python%{python3_pkgversion}-samba-dc
 Summary: Samba Python libraries for Samba AD
 Requires: %{name}-client-libs = %{samba_depver}
 Requires: %{name}-dc-libs = %{samba_depver}
-Requires: python3-%{name} = %{samba_depver}
+Requires: python%{python3_pkgversion}-%{name} = %{samba_depver}
 # for ms_forest_updates_markdown.py and ms_schema_markdown.py
-Requires: python3-markdown
+Requires: python%{python3_pkgversion}-markdown
 
-%description -n python3-samba-dc
-The python3-%{name}-dc package contains the Python libraries needed by programs
+%description -n python%{python3_pkgversion}-samba-dc
+The python%{python3_pkgversion}-%{name}-dc package contains the Python libraries needed by programs
 to manage Samba AD.
 
 ### PIDL
@@ -966,7 +966,7 @@ Requires: libsmbclient = %{samba_depver}
 %if %{with libwbclient}
 Requires: libwbclient = %{samba_depver}
 %endif
-Requires: python3-%{name} = %{samba_depver}
+Requires: python%{python3_pkgversion}-%{name} = %{samba_depver}
 Requires: perl(Archive::Tar)
 
 Provides: samba4-test = %{samba_depver}
@@ -1202,7 +1202,7 @@ Performance Co-Pilot (PCP) support for CTDB
 %package -n ctdb-etcd-mutex
 Summary: CTDB ETCD mutex helper
 Requires: ctdb = %{samba_depver}
-Requires: python3-etcd
+Requires: python%{python3_pkgversion}-etcd
 
 %description -n ctdb-etcd-mutex
 Support for using an existing ETCD cluster as a mutex helper for CTDB
@@ -2510,7 +2510,7 @@ fi
 %attr(644,root,root) %{_mandir}/man3/Parse::Pidl::Wireshark::NDR.3pm*
 
 ### PYTHON3
-%files -n python3-%{name}
+%files -n python%{python3_pkgversion}-%{name}
 %dir %{python3_sitearch}/samba/
 %{python3_sitearch}/samba/__init__.py
 %dir %{python3_sitearch}/samba/__pycache__
@@ -2974,11 +2974,11 @@ fi
 #endif with includelibs
 %endif
 
-%files -n python3-%{name}-devel
+%files -n python%{python3_pkgversion}-%{name}-devel
 %{_libdir}/libsamba-policy.*.so
 %{_libdir}/pkgconfig/samba-policy.*.pc
 
-%files -n python3-%{name}-dc
+%files -n python%{python3_pkgversion}-%{name}-dc
 %{python3_sitearch}/samba/samdb.py
 %{python3_sitearch}/samba/schema.py
 
@@ -3037,7 +3037,7 @@ fi
 %{python3_sitearch}/samba/remove_dc.py
 %{python3_sitearch}/samba/uptodateness.py
 
-%files -n python3-%{name}-test
+%files -n python%{python3_pkgversion}-%{name}-test
 %dir %{python3_sitearch}/samba/tests
 %{python3_sitearch}/samba/tests/__init__.py
 %dir %{python3_sitearch}/samba/tests/__pycache__
@@ -4646,27 +4646,90 @@ fi
 %endif
 
 %changelog
-* Sat Aug 9 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.4
-- Update to 4.20.4
+## START: Generated by rpmautospec
+* Wed Sep 25 2024 Yaakov Selkowitz <yselkowi@redhat.com> - 2:4.21.0-12
+- Always include libsamba-policy and libsamba-net-private-samba
 
-* Fri Aug 2 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.3
-- Update to 4.20.3
+* Tue Sep 24 2024 Yaakov Selkowitz <yselkowi@redhat.com> - 2:4.21.0-11
+- Fix ELN build
 
-* Wed Jul 24 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.2
-- Update to 4.20.2
+* Mon Sep 23 2024 Andreas Schneider <asn@cryptomilk.org> - 2:4.21.0-10
+- Add cert directories to samba-common
 
-* Sun May 12 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0
-- Update to 4.20.0
-- Update Source URL
+* Fri Sep 13 2024 Alexander Bokovoy <abokovoy@redhat.com> - 2:4.21.0-9
+- Fix Samba integration with FreeIPA
+- resolves: rhbz#2309199
 
-* Wed Feb 28 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0rc3
-- Stop deleting heimdal if system_mit_krb5 is not enabled
-- Add BuildRequires: perl(JSON::PP) requirement
+* Mon Sep 02 2024 Günther Deschner <gd@samba.org> - 2:4.21.0-8
+- Update required tdb version
+- related: rhbz#2309153
 
-* Thu Feb 15 2024 Nico Kadel-Garcia <nkadel@gmail.com>- 4.20.0rc2
-- Update from Fedora development package
-- Use includelibs for RHEL 8 and 9
-- Add system_mit_krb5 to compile with Heimdall on RHEL
+* Mon Sep 02 2024 Günther Deschner <gd@samba.org> - 2:4.21.0-7
+- Update to version 4.21.0
+- resolves: rhbz#2309153
+
+* Wed Aug 28 2024 Günther Deschner <gd@samba.org> - 2:4.21.0-0.6.rc4
+- Update to version 4.21.0rc4
+- resolves: rhbz#2300469
+
+* Wed Aug 21 2024 Andreas Schneider <asn@cryptomilk.org> - 2:4.21.0-0.5.rc3
+- Fix ldb requires and provides
+- related: rhbz#230046
+
+* Wed Aug 21 2024 Andreas Schneider <asn@cryptomilk.org> - 2:4.21.0-0.4.rc3
+- Fix manpages for libldb
+
+* Wed Aug 21 2024 Andreas Schneider <asn@cryptomilk.org> - 2:4.21.0-0.3.rc3
+- Update to version 4.21.0rc3
+- related: rhbz#230046
+
+* Wed Aug 21 2024 Andreas Schneider <asn@cryptomilk.org> - 2:4.21.0-0.2.rc2
+- Remove also python-ldb-devel-common
+- related: rhbz#230046
+
+* Tue Aug 20 2024 Günther Deschner <gd@samba.org> - 2:4.21.0-0.1.rc2
+- Update to Samba 4.21.0rc2
+- Package libldb a public library
+- resolves: #2300469
+
+* Sat Aug 17 2024 Peter Robinson <pbrobinson@gmail.com> - 2:4.20.4-1
+- Update to version 4.20.4
+
+* Mon Aug 05 2024 Christoph Erhardt <fedora@sicherha.de> - 2:4.20.2-5
+- Re-enable linking with mold on i686
+
+* Sat Jul 20 2024 Fedora Release Engineering <releng@fedoraproject.org> - 2:4.20.2-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
+
+* Mon Jul 01 2024 Andreas Schneider <asn@cryptomilk.org> - 2:4.20.2-3
+- Move README.md and WHATSNEW.txt to samba-common
+
+* Tue Jun 25 2024 Günther Deschner <gd@samba.org> - 2:4.20.2-2
+- resolves: #2293108 - Move LICENSE file to samba-common
+
+* Wed Jun 19 2024 Günther Deschner <gd@samba.org> - 2:4.20.2-1
+- resolves: #2293100 - Update to version 4.20.2
+
+* Mon Jun 10 2024 Python Maint <python-maint@redhat.com> - 2:4.20.1-4
+- Rebuilt for Python 3.13
+
+* Wed May 08 2024 Guenther Deschner <gdeschner@redhat.com> - 4.20.1-1
+- resolves: #2279780 - Update to version 4.20.1
+
+* Wed Mar 27 2024 Guenther Deschner <gdeschner@redhat.com> - 4.20.0-7
+- resolves: #2271916 - Update to version 4.20.0
+
+* Tue Mar 12 2024 Richard W.M. Jones <rjones@redhat.com> - 2:4.20.0-0.6.rc4
+- Bump and rebuild package (for riscv64)
+
+* Mon Mar 11 2024 Guenther Deschner <gdeschner@redhat.com> - 4.20.0rc4-5
+- resolves: #2269037 - Update to version 4.20.0rc4
+
+* Mon Feb 26 2024 Guenther Deschner <gdeschner@redhat.com> - 4.20.0rc3-4
+- resolves: #2266039 - Update to version 4.20.0rc3
+
+* Mon Feb 12 2024 Guenther Deschner <gdeschner@redhat.com> - 4.20.0rc2-3
+- resolves: #2263874 - Update to version 4.20.0rc2
 
 * Thu Feb 01 2024 Pete Walter <pwalter@fedoraproject.org> - 2:4.20.0-0.2.rc1
 - Rebuild for ICU 74
@@ -6639,7 +6702,7 @@ fi
 - Numerous improvements and bugfixes included
 - package libsmbsharemodes too
 - remove smbldap-tools as they are already packaged separately in Fedora
-- Fix bug 245506 
+- Fix bug 245506
 
 * Tue Oct 2 2007 Simo Sorce <ssorce@redhat.com> 3.0.26a-1.fc8
 - rebuild with AD DNS Update support
@@ -7041,7 +7104,7 @@ fi
   bugzilla #121356
 
 * Mon Apr 5 2004 Jay Fenlason <fenlason@redhat.com> 3.0.3-2.pre2
-- New upstream version  
+- New upstream version
 - Updated configure line to remove --with-fhs and to explicitly set all
   the directories that --with-fhs was setting.  We were overriding most of
   them anyway.  This closes #118598
@@ -7059,7 +7122,7 @@ fi
 * Mon Feb 16 2004 Jay Fenlason <fenlason@redhat.com> 3.0.2a-1
 - Upgrade to 3.0.2a
 
-* Mon Feb 16 2004 Karsten Hopp <karsten@redhat.de> 3.0.2-7 
+* Mon Feb 16 2004 Karsten Hopp <karsten@redhat.de> 3.0.2-7
 - fix ownership in -common package
 
 * Fri Feb 13 2004 Elliot Lee <sopwith@redhat.com>
@@ -7195,7 +7258,7 @@ fi
 
 * Fri Jul 26 2002 Trond Eivind Glomsrød <teg@redhat.com> 2.2.5-7
 - Enable VFS support and compile the "recycling" module (#69796)
-- more selective includes of the examples dir 
+- more selective includes of the examples dir
 
 * Tue Jul 23 2002 Trond Eivind Glomsrød <teg@redhat.com> 2.2.5-6
 - Fix the lpq parser for better handling of LPRng systems (#69352)
@@ -7216,11 +7279,11 @@ fi
 - 2.2.5
 
 * Fri Jun 14 2002 Trond Eivind Glomsrød <teg@redhat.com> 2.2.4-5
-- Move the post/preun of winbind into the -common subpackage, 
+- Move the post/preun of winbind into the -common subpackage,
   where the script is (#66128)
 
 * Tue Jun  4 2002 Trond Eivind Glomsrød <teg@redhat.com> 2.2.4-4
-- Fix pidfile locations so it runs properly again (2.2.4 
+- Fix pidfile locations so it runs properly again (2.2.4
   added a new directtive - #65007)
 
 * Thu May 23 2002 Tim Powers <timp@redhat.com>
@@ -7241,7 +7304,7 @@ fi
 - Add libsmbclient.a w/headerfile for KDE (#62202)
 
 * Tue Mar 26 2002 Trond Eivind Glomsrød <teg@redhat.com> 2.2.3a-4
-- Make the logrotate script look the correct place for the pid files 
+- Make the logrotate script look the correct place for the pid files
 
 * Thu Mar 14 2002 Nalin Dahyabhai <nalin@redhat.com> 2.2.3a-3
 - include interfaces.o in pam_smbpass.so, which needs symbols from interfaces.o
@@ -7264,12 +7327,12 @@ fi
 
 * Tue Nov 13 2001 Trond Eivind Glomsrød <teg@redhat.com> 2.2.2-6
 - Move winbind files to samba-common. Add separate initscript for
-  winbind 
+  winbind
 - Fixes for winbind - protect global variables with mutex, use
   more secure getenv
 
 * Thu Nov  8 2001 Trond Eivind Glomsrød <teg@redhat.com> 2.2.2-5
-- Teach smbadduser about "getent passwd" 
+- Teach smbadduser about "getent passwd"
 - Fix more pid-file references
 - Add (conditional) winbindd startup to the initscript, configured in
   /etc/sysconfig/samba
@@ -7300,8 +7363,8 @@ fi
   encrypted passwords off the choice is available. (#31351)
 
 * Wed Aug  8 2001 Trond Eivind Glomsrød <teg@redhat.com>
-- Use /var/cache/samba instead of /var/lock/samba 
-- Remove "domain controller" keyword from smb.conf, it's 
+- Use /var/cache/samba instead of /var/lock/samba
+- Remove "domain controller" keyword from smb.conf, it's
   deprecated (from #13704)
 - Sync some examples with smb.conf.default
 - Fix password synchronization (#16987)
@@ -7341,26 +7404,26 @@ fi
 * Fri Jun  8 2001 Preston Brown <pbrown@redhat.com>
 - enable encypted passwords by default
 
-* Thu Jun  7 2001 Helge Deller <hdeller@redhat.de> 
+* Thu Jun  7 2001 Helge Deller <hdeller@redhat.de>
 - build as 2.2.0-1 release
 - skip the documentation-directories docbook, manpages and yodldocs
 - don't include *.sgml documentation in package
 - moved codepage-directory to /usr/share/samba/codepages
-- make it compile with glibc-2.2.3-10 and kernel-headers-2.4.2-2   
+- make it compile with glibc-2.2.3-10 and kernel-headers-2.4.2-2
 
-* Mon May 21 2001 Helge Deller <hdeller@redhat.de> 
+* Mon May 21 2001 Helge Deller <hdeller@redhat.de>
 - updated to samba 2.2.0
 - moved codepages to %%{_datadir}/samba/codepages
 - use all available CPUs for building rpm packages
 - use %%{_xxx} defines at most places in spec-file
 - "License:" replaces "Copyright:"
 - dropped excludearch sparc
-- de-activated japanese patches 100 and 200 for now 
+- de-activated japanese patches 100 and 200 for now
   (they need to be fixed and tested wth 2.2.0)
 - separated swat.desktop file from spec-file and added
   german translations
 - moved /etc/sysconfig/samba to a separate source-file
-- use htmlview instead of direct call to netscape in 
+- use htmlview instead of direct call to netscape in
   swat.desktop-file
 
 * Mon May  7 2001 Bill Nottingham <notting@redhat.com>
@@ -7450,7 +7513,7 @@ fi
 
 * Sat Jul 15 2000 Bill Nottingham <notting@redhat.com>
 - move initscript back
-- remove 'Using Samba' book from %%doc 
+- remove 'Using Samba' book from %%doc
 - move stuff to /etc/samba (#13708)
 - default configuration tweaks (#13704)
 - some logrotate tweaks
@@ -7629,7 +7692,7 @@ fi
 * Tue Mar 23 1999 Bill Nottingham <notting@redhat.com>
 - logrotate changes
 
-* Sun Mar 21 1999 Cristian Gafton <gafton@redhat.com> 
+* Sun Mar 21 1999 Cristian Gafton <gafton@redhat.com>
 - auto rebuild in the new build environment (release 3)
 
 * Fri Mar 19 1999 Preston Brown <pbrown@redhat.com>
@@ -7689,3 +7752,5 @@ fi
 - Added a number of options to smb.conf file
 - Added smbadduser command (missed from all previous RPMs) - Doooh!
 - Added smbuser file and smb.conf file updates for username map
+
+## END: Generated by rpmautospec
