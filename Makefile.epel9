@@ -6,9 +6,9 @@
 LANG=C
 
 #MOCKS+=fedora-40-x86_64
-#MOCKS+=alma+epel-10-x86_64
-MOCKS+=alma+epel-9-x86_64
-#MOCKS+=alma+epel-8-x86_64
+#MOCKS+=centos-stream+epel-10-x86_64
+MOCKS+=centos-stream+epel-9-x86_64
+#MOCKS+=centos-stream+epel-8-x86_64
 #MOCKS+=amazonlinux-2023-x86_64
 
 #MOCKCFGS+=samba4repo-f40-x86_64

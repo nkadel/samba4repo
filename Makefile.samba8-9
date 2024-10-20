@@ -6,7 +6,7 @@
 LANG=C
 
 #MOCKS+=samba4repo-f40-x86_64
-#MOCKS+=samba4repo-10-x86_64
+MOCKS+=samba4repo-10-x86_64
 MOCKS+=samba4repo-9-x86_64
 MOCKS+=samba4repo-8-x86_64
 #MOCKS+=samba4repo-amz2023-x86_64
