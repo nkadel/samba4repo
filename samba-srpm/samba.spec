@@ -144,7 +144,7 @@
 
 %define samba_requires_eq()  %(LC_ALL="C" echo '%*' | xargs -r rpm -q --qf 'Requires: %%{name} = %%{epoch}:%%{version}\\n' | sed -e 's/ (none):/ /' -e 's/ 0:/ /' | grep -v "is not")
 
-%global samba_version 4.20.5
+%global samba_version 4.20.6
 %global baserelease 2
 # This should be rc1 or %%nil
 %global pre_release %nil
@@ -277,14 +277,22 @@ Obsoletes: samba4-swat < %{samba_depver}
 
 Provides: bundled(libreplace)
 
+%if "%{dist}"  == ".el8"
+# Deal with python-platform confusion
+BuildRequires: %{_bindir}/python%{python3_pkgversion}
+%endif
+
+
 BuildRequires: make
 BuildRequires: gcc
 BuildRequires: glibc-gconv-extra
 BuildRequires: avahi-devel
 BuildRequires: bison
+BuildRequires: python%{python3_pkgversion}
 BuildRequires: cups-devel
 BuildRequires: dbus-devel
 BuildRequires: docbook-style-xsl
+BuildRequires: dnf-plugins-core
 BuildRequires: e2fsprogs-devel
 BuildRequires: flex
 BuildRequires: gawk
@@ -313,13 +321,16 @@ BuildRequires: mingw64-gcc
 BuildRequires: ncurses-devel
 BuildRequires: openldap-devel
 BuildRequires: pam-devel
+BuildRequires: perl
 BuildRequires: perl-interpreter
 BuildRequires: perl-generators
 BuildRequires: perl(Archive::Tar)
 BuildRequires: perl(JSON::PP)
 BuildRequires: perl(Test::More)
 BuildRequires: popt-devel
+BuildRequires: python%{python3_pkgversion}
 BuildRequires: python%{python3_pkgversion}-cryptography
+BuildRequires: python%{python3_pkgversion}-devel
 BuildRequires: python%{python3_pkgversion}-devel
 BuildRequires: python%{python3_pkgversion}-dns
 BuildRequires: python%{python3_pkgversion}-requests
@@ -2593,6 +2604,7 @@ fi
 %{python3_sitearch}/samba/dcerpc/security.*.so
 %{python3_sitearch}/samba/dcerpc/server_id.*.so
 %{python3_sitearch}/samba/dcerpc/smb_acl.*.so
+%{python3_sitearch}/samba/dcerpc/schannel.*.so
 %{python3_sitearch}/samba/dcerpc/smb3posix.*.so
 %{python3_sitearch}/samba/dcerpc/smbXsrv.*.so
 %{python3_sitearch}/samba/dcerpc/spoolss.*.so
