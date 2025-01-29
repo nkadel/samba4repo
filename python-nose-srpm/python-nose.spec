@@ -8,10 +8,6 @@
 # Python 3 and thus cannot be built with Python 3 version of Sphinx.
 %bcond_with docs
 
-# python2X and python3X are built form the same module, so we need a conditional for python2 bits
-# the state of the conditional is not important in the spec, it is set in modulemd
-%bcond_with python2
-
 %global desc nose extends the test loading and running features of unit test, making\
 it easier to write, find and run tests.\
 \
@@ -40,19 +36,19 @@ URL:            https://nose.readthedocs.org/en/latest/
 Source0:        https://pypi.python.org/packages/source/n/nose/nose-%{version}.tar.gz
 # Make compatible with coverage 4.1
 # https://github.com/nose-devs/nose/pull/1004
-Patch0:         python-nose-coverage4.patch
+##Patch0:         python-nose-coverage4.patch
 # Fix python 3.5 compat
 # https://github.com/nose-devs/nose/pull/983
-Patch1:         python-nose-py35.patch
+##Patch1:         python-nose-py35.patch
 # Fix UnicodeDecodeError with captured output
 # https://github.com/nose-devs/nose/pull/988
-Patch2:         python-nose-unicode.patch
+##Patch2:         python-nose-unicode.patch
 # Allow docutils to read utf-8 source
-Patch3:         python-nose-readunicode.patch
+##Patch3:         python-nose-readunicode.patch
 # Fix Python 3.6 compatibility
 # Python now returns ModuleNotFoundError instead of the previous ImportError
 # https://github.com/nose-devs/nose/pull/1029
-Patch4:         python-nose-py36.patch
+##Patch4:         python-nose-py36.patch
 
 BuildRequires:  dos2unix
 
@@ -61,29 +57,13 @@ BuildRequires:  dos2unix
 
 %package docs
 Summary:        Nose Documentation
-%if %{with python3}
 %if %{with docs}
-BuildRequires:  %{_bindir}/sphinx-build-3
-%endif
+BuildRequires:  %{_bindir}/sphinx-build-%{?python3_pkgverson}
 %endif
 
 %description docs
 Documentation for Nose.
 
-%if %{with python2}
-%package -n python2-%{modname}
-Summary:        %{summary}
-BuildRequires:  python2-devel
-BuildRequires:  python2-setuptools
-BuildRequires:  python2-coverage >= 3.4-1
-Requires:       python2-setuptools
-%{?python_provide:%python_provide python2-%{modname}}
-
-%description -n python2-%{modname}
-%{desc}
-%endif
-
-%if %{with python3}
 %package -n python%{python3_pkgversion}-%{modname}
 Summary:        %{summary}
 BuildRequires:  python%{python3_pkgversion}-devel
@@ -101,7 +81,6 @@ Requires:       python%{python3_pkgversion}-setuptools
 
 This package installs the nose module and nosetests3 program that can discover
 python3 unit tests.
-%endif
 
 %prep
 %setup -qc
@@ -111,40 +90,16 @@ dos2unix examples/attrib_plugin.py
 cp -pr lgpl.txt AUTHORS CHANGELOG examples NEWS README.txt ..
 popd
 
-%if %{with python3}
 mv %{modname}-%{version} python3
-%endif
-%if %{with python2}
-mv %{modname}-%{version} python2
-%endif
 
 %build
-%if %{with python2}
-pushd python2
-%py2_build
-popd
-%endif
-
-%if %{with python3}
 pushd python3
 %py3_build
 popd
-%endif
 
 %install
 mkdir -p %{buildroot}%{_mandir}/man1
 
-%if %{with python2}
-pushd python2
-%py2_install
-mv %{buildroot}%{_bindir}/nosetests{,-%{python2_version}}
-ln -sf nosetests-%{python2_version} %{buildroot}%{_bindir}/nosetests-2
-mv %{buildroot}%{_prefix}/man/man1/nosetests.1 %{buildroot}%{_mandir}/man1/nosetests-%{python2_version}.1
-ln -sf nosetests-%{python2_version}.1 %{buildroot}%{_mandir}/man1/nosetests-2.1
-popd
-%endif
-
-%if %{with python3}
 pushd python3
 %py3_install
 mv %{buildroot}%{_bindir}/nosetests{,-%{python3_version}}
@@ -152,13 +107,7 @@ touch %{buildroot}%{_bindir}/nosetests-3 # for alternatives
 mv %{buildroot}%{_prefix}/man/man1/nosetests.1 %{buildroot}%{_mandir}/man1/nosetests-%{python3_version}.1
 touch %{buildroot}%{_mandir}/man1/nosetests-3.1 # for alternatives
 popd
-%endif
 
-%if %{with python2}
-ln -sf nosetests-2.1 %{buildroot}%{_mandir}/man1/nosetests.1
-%endif
-
-%if %{with python3}
 %if %{with docs}
 pushd python3/doc
   sphinx-build-${python3_pkgversion} -b html -d .build/doctrees . .build/html
@@ -169,24 +118,14 @@ popd
 %endif
 cp -a python3/doc reST
 rm -vrf reST/{.static,.templates}
-%endif
 
 # Disable checks until further notice <nkadel@gmail.com>
 #%check
-#%if %{with python2}
-#pushd python2
-#%{__python2} selftest.py
-#popd
-#%endif
-#
-#%if %{with python3}
 #pushd python3
 #%{__python3} setup.py build_tests
 #%{__python3} selftest.py
 #popd
-#%endif
 
-%if %{with python3}
 %post -n python%{python3_pkgversion}-%{modname}
 alternatives --add-slave python3 %{_bindir}/python%{python3_version} \
     %{_bindir}/nosetests-3 \
@@ -206,21 +145,7 @@ if [ $1 -eq 0 ]; then
   alternatives --keep-foreign --remove-slave python3 \
       %{_bindir}/python%{python3_version} nosetests-3-man
 fi
-%endif
 
-%if %{with python2}
-%files -n python2-%{modname}
-%license lgpl.txt
-%{_bindir}/nosetests-2
-%{_bindir}/nosetests-%{python2_version}
-%{_mandir}/man1/nosetests.1*
-%{_mandir}/man1/nosetests-2.1*
-%{_mandir}/man1/nosetests-%{python2_version}.1*
-%{python2_sitelib}/nose-*.egg-info/
-%{python2_sitelib}/nose/
-%endif
-
-%if %{with python3}
 %files -n python%{python3_pkgversion}-%{modname}
 %license lgpl.txt
 %ghost %{_bindir}/nosetests-3
@@ -229,16 +154,13 @@ fi
 %{_mandir}/man1/nosetests-%{python3_version}.1*
 %{python3_sitelib}/nose-*.egg-info/
 %{python3_sitelib}/nose/
-%endif
 
 %files docs
 %license lgpl.txt
 %doc AUTHORS CHANGELOG examples NEWS README.txt
-%if %{with python3}
 %if %{with docs}
 %doc html reST
 %endif  # with docs
-%endif  # with python3
 
 %changelog
 * Fri Jul 30 2021 Tomas Orsava <torsava@redhat.com> - 1.3.7-31
